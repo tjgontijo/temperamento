@@ -1,0 +1,684 @@
+[
+  {
+    "id": 1,
+    "tipo": "temperamento",
+    "pergunta": "Vocês planejaram um jantar especial, mas o restaurante cancela a reserva de última hora. Como {nome} provavelmente reagiria?",
+    "peso": 2,
+    "respostas": {
+      "resposta_1": "Fica irritado e começa a buscar imediatamente outra opção.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Fica desapontado e começa a refletir sobre como o plano deu errado.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Diz que não tem problema e sugere algo simples, como pedir comida em casa.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Ri da situação e sugere algo espontâneo, como um food truck.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+  {
+    "id": 2,
+    "tipo": "temperamento",
+    "pergunta": "Em uma discussão com amigos, {nome} percebe que alguém está completamente errado. O que ele faria?",
+    "peso": 3,
+    "respostas": {
+      "resposta_1": "Corrige a pessoa com firmeza, explicando o ponto certo.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Pensa bastante antes de falar algo, tentando ser preciso e cuidadoso.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Evita se envolver diretamente para não gerar conflitos.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Faz uma piada ou muda o assunto para evitar tensão.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+  {
+    "id": 3,
+    "tipo": "temperamento",
+    "pergunta": "Vocês estão organizando uma viagem com amigos, mas os planos estão confusos e ninguém decide nada. Como {nome} agiria?",
+    "peso": 3,
+    "respostas": {
+      "resposta_1": "Assume o controle e decide os detalhes da viagem.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Sugere um plano detalhado, mas deixa os outros decidirem.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Segue o que os outros decidirem, sem interferir muito.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Propõe algo divertido e improvisado, sem muito planejamento.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+  {
+    "id": 4,
+    "tipo": "temperamento",
+    "pergunta": "Imagine que vocês estão atrasados para um compromisso importante. Qual seria a atitude de {nome}?",
+    "peso": 2,
+    "respostas": {
+      "resposta_1": "Fica nervoso e apressa todos para saírem logo.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Fica tenso, mas prefere organizar tudo com calma para evitar erros.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Diz que está tudo bem e que não é preciso se preocupar tanto.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Faz piadas sobre o atraso e tenta aliviar o clima.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+  {
+    "id": 5,
+    "tipo": "temperamento",
+    "pergunta": "Se {nome} precisa tomar uma decisão importante, como ele age?",
+    "peso": 3,
+    "respostas": {
+      "resposta_1": "Toma decisões rápidas e firmes.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Pensa bastante antes de decidir.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Prefere pedir conselhos e avaliar opções com calma.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Evita decisões sérias por um tempo.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+    {
+      "id": 6,
+      "tipo": "temperamento",
+      "pergunta": "Se {nome} recebe uma notícia inesperada, como ele geralmente reage?",
+      "peso": 2,
+      "respostas": {
+        "resposta_1": "Pensa rapidamente no que precisa ser feito e age imediatamente.",
+        "representa_resposta_1": "Colérico",
+        "resposta_2": "Reflete sobre a notícia e como ela pode impactar o futuro.",
+        "representa_resposta_2": "Melancólico",
+        "resposta_3": "Tenta manter a calma e tranquilizar os outros ao seu redor.",
+        "representa_resposta_3": "Fleumático",
+        "resposta_4": "Brinca sobre a situação para deixar tudo mais leve.",
+        "representa_resposta_4": "Sanguíneo"
+      }
+    },
+    {
+      "id": 7,
+      "tipo": "temperamento",
+      "pergunta": "Vocês estão assistindo a um jogo e o time de {nome} perde. Qual seria sua provável reação?",
+      "peso": 2,
+      "respostas": {
+        "resposta_1": "Fica irritado e critica as escolhas do técnico ou dos jogadores.",
+        "representa_resposta_1": "Colérico",
+        "resposta_2": "Fica introspectivo e desapontado, mas não comenta muito.",
+        "representa_resposta_2": "Melancólico",
+        "resposta_3": "Fala que está tudo bem, tentando evitar atritos com os outros.",
+        "representa_resposta_3": "Fleumático",
+        "resposta_4": "Ri e diz que foi só um jogo, tentando manter o clima leve.",
+        "representa_resposta_4": "Sanguíneo"
+      }
+    },
+    {
+      "id": 8,
+      "tipo": "temperamento",
+      "pergunta": "Se uma festa está totalmente desorganizada, como {nome} reagiria ao perceber isso?",
+      "peso": 3,
+      "respostas": {
+        "resposta_1": "Começa a organizar e dar ordens para melhorar a situação.",
+        "representa_resposta_1": "Colérico",
+        "resposta_2": "Nota os detalhes que estão errados, mas fala apenas se for questionado.",
+        "representa_resposta_2": "Melancólico",
+        "resposta_3": "Continua tranquilo e tenta aproveitar a festa mesmo assim.",
+        "representa_resposta_3": "Fleumático",
+        "resposta_4": "Torna a desorganização motivo de piadas para entreter os outros.",
+        "representa_resposta_4": "Sanguíneo"
+      }
+    },
+    {
+      "id": 9,
+      "tipo": "temperamento",
+      "pergunta": "Durante uma conversa séria entre vocês, {nome} percebe que você está chateada. O que ele provavelmente faria?",
+      "peso": 2,
+      "respostas": {
+        "resposta_1": "Pergunta o que está errado e tenta resolver imediatamente.",
+        "representa_resposta_1": "Colérico",
+        "resposta_2": "Fica em silêncio, refletindo sobre o motivo da sua chateação.",
+        "representa_resposta_2": "Melancólico",
+        "resposta_3": "Diz que está tudo bem e tenta evitar que a conversa vire um conflito.",
+        "representa_resposta_3": "Fleumático",
+        "resposta_4": "Tenta te distrair ou fazer algo engraçado para animar o clima.",
+        "representa_resposta_4": "Sanguíneo"
+      }
+    },
+    {
+      "id": 10,
+      "tipo": "temperamento",
+      "pergunta": "Se {nome} tivesse que lidar com uma pessoa difícil no trabalho, como você acha que ele agiria?",
+      "peso": 3,
+      "respostas": {
+        "resposta_1": "Confrontaria a pessoa e resolveria o problema de forma direta.",
+        "representa_resposta_1": "Colérico",
+        "resposta_2": "Toleraria a pessoa, mas ficaria incomodado internamente.",
+        "representa_resposta_2": "Melancólico",
+        "resposta_3": "Tentaria evitar conflitos e manter a relação harmoniosa.",
+        "representa_resposta_3": "Fleumático",
+        "resposta_4": "Usaria humor para lidar com a situação de forma leve.",
+        "representa_resposta_4": "Sanguíneo"
+      }
+    },  
+      {
+        "id": 11,
+        "tipo": "linguagem",
+        "pergunta": "{nome} acabou de receber uma notícia incrível, como uma promoção no trabalho. Qual seria a forma mais significativa para ele celebrar com você?",
+        "peso": 3,
+        "respostas": {
+          "resposta_1": "Ele gostaria de ouvir palavras de incentivo e orgulho pelo esforço dele.",
+          "representa_resposta_1": "Palavras de afirmação",
+          "resposta_2": "Ele preferiria passar a noite comemorando juntos, só vocês dois.",
+          "representa_resposta_2": "Tempo de qualidade",
+          "resposta_3": "Ele apreciaria que você organizasse algo prático, como um jantar especial em casa.",
+          "representa_resposta_3": "Atos de serviço",
+          "resposta_4": "Ele ficaria feliz se você desse a ele um presente simbólico para marcar a conquista.",
+          "representa_resposta_4": "Presentes",
+          "resposta_5": "Ele adoraria que você o abraçasse com carinho e o mantivesse próximo.",
+          "representa_resposta_5": "Toque físico"
+        }
+      },
+      {
+        "id": 12,
+        "tipo": "linguagem",
+        "pergunta": "Imagine que {nome} teve um dia muito difícil e está claramente estressado. O que você acha que o ajudaria a se sentir melhor?",
+        "peso": 3,
+        "respostas": {
+          "resposta_1": "Ouvir palavras tranquilizadoras que reforcem o valor dele.",
+          "representa_resposta_1": "Palavras de afirmação",
+          "resposta_2": "Passar tempo juntos em silêncio ou conversando calmamente.",
+          "representa_resposta_2": "Tempo de qualidade",
+          "resposta_3": "Você cuidar de algo prático, como preparar uma refeição ou arrumar o ambiente.",
+          "representa_resposta_3": "Atos de serviço",
+          "resposta_4": "Dar a ele algo especial, como uma lembrança ou um doce favorito.",
+          "representa_resposta_4": "Presentes",
+          "resposta_5": "Um abraço longo e afetuoso sem precisar de palavras.",
+          "representa_resposta_5": "Toque físico"
+        }
+      },
+      {
+        "id": 13,
+        "tipo": "linguagem",
+        "pergunta": "É aniversário de {nome} e você quer fazer algo especial. O que o deixaria mais animado?",
+        "peso": 3,
+        "respostas": {
+          "resposta_1": "Receber uma mensagem ou declaração cheia de palavras carinhosas.",
+          "representa_resposta_1": "Palavras de afirmação",
+          "resposta_2": "Passar o dia inteiro ao seu lado, sem distrações.",
+          "representa_resposta_2": "Tempo de qualidade",
+          "resposta_3": "Você preparar algo significativo, como o bolo ou a organização da festa.",
+          "representa_resposta_3": "Atos de serviço",
+          "resposta_4": "Ser surpreendido com um presente especial.",
+          "representa_resposta_4": "Presentes",
+          "resposta_5": "Receber muitos abraços e carinho ao longo do dia.",
+          "representa_resposta_5": "Toque físico"
+        }
+      },
+      {
+        "id": 14,
+        "tipo": "linguagem",
+        "pergunta": "Vocês estão conversando sobre algo importante para {nome}. Qual seria a melhor forma de você mostrar apoio?",
+        "peso": 2,
+        "respostas": {
+          "resposta_1": "Dizer palavras motivadoras e reafirmar sua confiança nele.",
+          "representa_resposta_1": "Palavras de afirmação",
+          "resposta_2": "Desligar o celular e dedicar total atenção à conversa.",
+          "representa_resposta_2": "Tempo de qualidade",
+          "resposta_3": "Ajudar com algo relacionado ao assunto, como um problema prático.",
+          "representa_resposta_3": "Atos de serviço",
+          "resposta_4": "Presentear com algo simbólico relacionado ao tema da conversa.",
+          "representa_resposta_4": "Presentes",
+          "resposta_5": "Segurar a mão dele ou dar um abraço enquanto ouve.",
+          "representa_resposta_5": "Toque físico"
+        }
+      },
+      {
+        "id": 15,
+        "tipo": "linguagem",
+        "pergunta": "Se {nome} está se preparando para um momento importante, como uma apresentação, como você pode ajudá-lo?",
+        "peso": 3,
+        "respostas": {
+          "resposta_1": "Dizendo o quanto você acredita no potencial dele.",
+          "representa_resposta_1": "Palavras de afirmação",
+          "resposta_2": "Sentando ao lado dele enquanto ele se prepara.",
+          "representa_resposta_2": "Tempo de qualidade",
+          "resposta_3": "Organizando materiais ou ajudando em algo prático.",
+          "representa_resposta_3": "Atos de serviço",
+          "resposta_4": "Dando a ele algo que simbolize boa sorte, como um presente.",
+          "representa_resposta_4": "Presentes",
+          "resposta_5": "Dando um abraço encorajador antes da apresentação.",
+          "representa_resposta_5": "Toque físico"
+        }
+      },    
+        {
+          "id": 16,
+          "tipo": "linguagem",
+          "pergunta": "Vocês estão planejando um dia especial. O que você acha que {nome} mais gostaria?",
+          "peso": 2,
+          "respostas": {
+            "resposta_1": "Conversas profundas e palavras que fortaleçam a conexão entre vocês.",
+            "representa_resposta_1": "Palavras de afirmação",
+            "resposta_2": "Um passeio ou atividade que permita tempo exclusivo juntos.",
+            "representa_resposta_2": "Tempo de qualidade",
+            "resposta_3": "Você preparando tudo para que o dia seja prático e relaxante.",
+            "representa_resposta_3": "Atos de serviço",
+            "resposta_4": "Dar a ele um presente especial para marcar o momento.",
+            "representa_resposta_4": "Presentes",
+            "resposta_5": "Segurar a mão dele ou manter contato físico durante o dia.",
+            "representa_resposta_5": "Toque físico"
+          }
+        },
+        {
+          "id": 17,
+          "tipo": "linguagem",
+          "pergunta": "Vocês estão caminhando juntos e passam por algo que {nome} gosta muito, como um café ou uma loja. Como ele reagiria ao gesto de você fazer algo para agradá-lo?",
+          "peso": 3,
+          "respostas": {
+            "resposta_1": "Ele ficaria emocionado se você dissesse algo positivo sobre ele.",
+            "representa_resposta_1": "Palavras de afirmação",
+            "resposta_2": "Ele ficaria feliz se você o convidasse para aproveitar esse momento juntos.",
+            "representa_resposta_2": "Tempo de qualidade",
+            "resposta_3": "Ele valorizaria se você cuidasse de algo por ele nesse contexto, como pedir o café preferido dele.",
+            "representa_resposta_3": "Atos de serviço",
+            "resposta_4": "Ele adoraria se você comprasse algo para lembrá-lo desse momento.",
+            "representa_resposta_4": "Presentes",
+            "resposta_5": "Ele ficaria satisfeito com um gesto afetuoso, como segurar o braço dele.",
+            "representa_resposta_5": "Toque físico"
+          }
+        },
+        {
+          "id": 18,
+          "tipo": "linguagem",
+          "pergunta": "Depois de um dia corrido, {nome} chega em casa. O que ele gostaria mais que você fizesse?",
+          "peso": 3,
+          "respostas": {
+            "resposta_1": "Recebê-lo com palavras de carinho e motivação.",
+            "representa_resposta_1": "Palavras de afirmação",
+            "resposta_2": "Passar um tempo tranquilo ao lado dele, sem pressa.",
+            "representa_resposta_2": "Tempo de qualidade",
+            "resposta_3": "Preparar algo que mostre cuidado, como uma refeição especial.",
+            "representa_resposta_3": "Atos de serviço",
+            "resposta_4": "Surpreendê-lo com algo pequeno, como o doce favorito dele.",
+            "representa_resposta_4": "Presentes",
+            "resposta_5": "Dar a ele um abraço caloroso e manter contato físico.",
+            "representa_resposta_5": "Toque físico"
+          }
+        },
+        {
+          "id": 19,
+          "tipo": "linguagem",
+          "pergunta": "Se {nome} estiver se sentindo inseguro em relação a algo, o que mais o confortaria?",
+          "peso": 2,
+          "respostas": {
+            "resposta_1": "Dizer palavras de apoio e lembrá-lo de suas qualidades.",
+            "representa_resposta_1": "Palavras de afirmação",
+            "resposta_2": "Passar um tempo juntos para ajudá-lo a se sentir apoiado.",
+            "representa_resposta_2": "Tempo de qualidade",
+            "resposta_3": "Ajudá-lo com alguma tarefa para aliviar suas preocupações.",
+            "representa_resposta_3": "Atos de serviço",
+            "resposta_4": "Dar a ele algo simbólico, como um presente que tenha significado.",
+            "representa_resposta_4": "Presentes",
+            "resposta_5": "Segurar a mão dele ou dar um abraço reconfortante.",
+            "representa_resposta_5": "Toque físico"
+          }
+        },
+        {
+          "id": 20,
+          "tipo": "linguagem",
+          "pergunta": "{nome} quer te mostrar algo que ele está orgulhoso, como um projeto ou ideia. Como você acha que ele gostaria que você reagisse?",
+          "peso": 3,
+          "respostas": {
+            "resposta_1": "Elogiando com palavras que mostrem admiração.",
+            "representa_resposta_1": "Palavras de afirmação",
+            "resposta_2": "Dedicando tempo exclusivo para ouvir e discutir sobre isso.",
+            "representa_resposta_2": "Tempo de qualidade",
+            "resposta_3": "Ajudando com algo prático para contribuir com o sucesso dele.",
+            "representa_resposta_3": "Atos de serviço",
+            "resposta_4": "Presenteando com algo simbólico que o incentive ainda mais.",
+            "representa_resposta_4": "Presentes",
+            "resposta_5": "Demonstrando entusiasmo com gestos físicos, como um abraço.",
+            "representa_resposta_5": "Toque físico"
+          }
+        },
+          {
+            "id": 21,
+            "tipo": "temperamento_autor",
+            "pergunta": "Você está em uma reunião importante e percebe que os outros estão tomando uma decisão com a qual você não concorda. O que você faz?",
+            "peso": 3,
+            "respostas": {
+              "resposta_1": "Apresento meu ponto de vista com firmeza e tento convencê-los.",
+              "representa_resposta_1": "Colérico",
+              "resposta_2": "Analiso os argumentos deles e decido se vale a pena insistir.",
+              "representa_resposta_2": "Melancólico",
+              "resposta_3": "Prefiro não me envolver diretamente e aceito a decisão do grupo.",
+              "representa_resposta_3": "Fleumático",
+              "resposta_4": "Faço uma brincadeira para aliviar o clima e deixo as coisas seguirem naturalmente.",
+              "representa_resposta_4": "Sanguíneo"
+            }
+          },
+          {
+            "id": 22,
+            "tipo": "temperamento_autor",
+            "pergunta": "Você organizou um evento e, no dia, algo sai completamente errado. Como você age?",
+            "peso": 3,
+            "respostas": {
+              "resposta_1": "Tomo a frente para resolver o problema rapidamente.",
+              "representa_resposta_1": "Colérico",
+              "resposta_2": "Fico analisando os detalhes para entender o que deu errado.",
+              "representa_resposta_2": "Melancólico",
+              "resposta_3": "Procuro alguém que possa ajudar enquanto tento manter a calma.",
+              "representa_resposta_3": "Fleumático",
+              "resposta_4": "Transformo o erro em uma piada para descontrair o ambiente.",
+              "representa_resposta_4": "Sanguíneo"
+            }
+          },
+          {
+            "id": 23,
+            "tipo": "temperamento_autor",
+            "pergunta": "Durante uma viagem com amigos, um dos planos é cancelado inesperadamente. O que você faz?",
+            "peso": 2,
+            "respostas": {
+              "resposta_1": "Proponho imediatamente outra atividade para não perder tempo.",
+              "representa_resposta_1": "Colérico",
+              "resposta_2": "Fico um pouco frustrada(o), mas tento reorganizar os planos com cuidado.",
+              "representa_resposta_2": "Melancólico",
+              "resposta_3": "Aceito o cancelamento e sugiro algo simples e tranquilo.",
+              "representa_resposta_3": "Fleumático",
+              "resposta_4": "Brinco sobre o ocorrido e sugiro algo divertido e espontâneo.",
+              "representa_resposta_4": "Sanguíneo"
+            }
+          },
+          {
+            "id": 24,
+            "tipo": "temperamento_autor",
+            "pergunta": "Você está jogando um jogo competitivo com amigos e percebe que está perdendo. Qual é sua reação?",
+            "peso": 2,
+            "respostas": {
+              "resposta_1": "Fico mais focada(o) e tento virar o jogo a todo custo.",
+              "representa_resposta_1": "Colérico",
+              "resposta_2": "Começo a pensar nos erros que cometi e tento melhorar.",
+              "representa_resposta_2": "Melancólico",
+              "resposta_3": "Continuo jogando sem me preocupar com o resultado.",
+              "representa_resposta_3": "Fleumático",
+              "resposta_4": "Faço piadas sobre como estou perdendo e torno a situação mais leve.",
+              "representa_resposta_4": "Sanguíneo"
+            }
+          },
+          {
+            "id": 25,
+            "tipo": "temperamento_autor",
+            "pergunta": "Durante um projeto no trabalho, sua equipe se atrasa e o prazo está se aproximando. O que você faz?",
+            "peso": 3,
+            "respostas": {
+              "resposta_1": "Assumo o controle e divido as tarefas para garantir que tudo seja entregue a tempo.",
+              "representa_resposta_1": "Colérico",
+              "resposta_2": "Reorganizo as tarefas e penso em formas de melhorar o processo.",
+              "representa_resposta_2": "Melancólico",
+              "resposta_3": "Sugiro uma abordagem mais calma e busco consenso para reduzir a pressão.",
+              "representa_resposta_3": "Fleumático",
+              "resposta_4": "Motivo a equipe com bom humor e incentivo todos a darem o seu melhor.",
+              "representa_resposta_4": "Sanguíneo"
+            }
+          },
+
+
+  {
+    "id": 26,
+    "tipo": "temperamento_autor",
+    "pergunta": "Você está em um restaurante e percebe que o pedido veio errado. O que você faz?",
+    "peso": 2,
+    "respostas": {
+      "resposta_1": "Chamo o garçom imediatamente e exijo que o pedido seja corrigido.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Explico educadamente o erro e espero pela solução.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Aceito o pedido como está para evitar problemas.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Faço uma brincadeira sobre o erro e como poderia ser pior.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+  {
+    "id": 27,
+    "tipo": "temperamento_autor",
+    "pergunta": "Você está em um evento social e percebe que uma conversa importante está ficando tensa. Qual é sua reação?",
+    "peso": 3,
+    "respostas": {
+      "resposta_1": "Intervém de forma assertiva para resolver o conflito.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Observa cuidadosamente antes de decidir o que dizer.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Tenta tranquilizar todos e desviar o foco do conflito.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Faz uma piada para aliviar a tensão e mudar o clima.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+  {
+    "id": 28,
+    "tipo": "temperamento_autor",
+    "pergunta": "Você planejou uma apresentação no trabalho e percebe que esqueceu parte do material. O que faz?",
+    "peso": 3,
+    "respostas": {
+      "resposta_1": "Improvisa rapidamente uma solução e continua com confiança.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Fica incomodada(o) e tenta reorganizar mentalmente o que será apresentado.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Tranquiliza-se e adapta a apresentação com o que tem disponível.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Brinca sobre o esquecimento e transforma isso em um momento leve.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+  {
+    "id": 29,
+    "tipo": "temperamento_autor",
+    "pergunta": "Você percebe que alguém próximo a você está chateado e prefere não falar sobre isso. O que você faz?",
+    "peso": 2,
+    "respostas": {
+      "resposta_1": "Confronto a pessoa diretamente para entender o que está acontecendo.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Ofereço apoio sutil e espero que ela fale quando estiver pronta.",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Evito pressionar e deixo claro que estarei disponível se precisar.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Tento animar a pessoa com brincadeiras e bom humor.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+  {
+    "id": 30,
+    "tipo": "temperamento_autor",
+    "pergunta": "Você está organizando uma viagem e alguém na equipe se esquece de cumprir sua parte. Qual é sua reação?",
+    "peso": 3,
+    "respostas": {
+      "resposta_1": "Confronto a pessoa e redistribuo as tarefas imediatamente.",
+      "representa_resposta_1": "Colérico",
+      "resposta_2": "Reorganizo tudo cuidadosamente, mas fico desapontada(o).",
+      "representa_resposta_2": "Melancólico",
+      "resposta_3": "Sugiro uma solução calma e procuro evitar conflitos.",
+      "representa_resposta_3": "Fleumático",
+      "resposta_4": "Brinco sobre o esquecimento e adapto os planos sem estresse.",
+      "representa_resposta_4": "Sanguíneo"
+    }
+  },
+    {
+      "id": 31,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você acabou de alcançar uma conquista importante no trabalho. Como gostaria que as pessoas ao seu redor reconhecessem isso?",
+      "peso": 3,
+      "respostas": {
+        "resposta_1": "Ouvir elogios e palavras de admiração pelo meu esforço.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Passar um tempo especial celebrando com alguém próximo.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Que alguém me ajudasse com algo prático ou me desse apoio para novas conquistas.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Receber um presente que simbolize esse momento especial.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Um abraço ou gesto físico que demonstre carinho.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 32,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você teve um dia exaustivo e está precisando de apoio. Qual atitude de alguém próximo faria você se sentir melhor?",
+      "peso": 3,
+      "respostas": {
+        "resposta_1": "Ouvir palavras encorajadoras e que reconheçam meu esforço.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Passar um tempo tranquilo juntos, sem distrações.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Que a pessoa fizesse algo por mim, como preparar uma refeição.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Receber um presente ou algo que mostre consideração.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Um abraço ou gesto físico reconfortante.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 33,
+      "tipo": "linguagem_autor",
+      "pergunta": "É seu aniversário e você gostaria de sentir-se especial. O que mais faria seu dia inesquecível?",
+      "peso": 3,
+      "respostas": {
+        "resposta_1": "Receber mensagens ou declarações carinhosas.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Passar o dia com alguém que realmente importa para mim.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Que alguém fizesse algo significativo, como organizar uma surpresa.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Ganhar um presente especial e pensado para mim.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Receber muitos abraços e demonstrações físicas de carinho.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 34,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você está prestes a enfrentar um desafio importante. Como gostaria que alguém próximo demonstrasse apoio?",
+      "peso": 2,
+      "respostas": {
+        "resposta_1": "Me encorajando com palavras motivadoras.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Estando ao meu lado durante a preparação ou o momento do desafio.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Ajudando de forma prática, como com algo que eu precise.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Dando-me algo que simbolize boa sorte.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Dando-me um abraço ou toque encorajador.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 35,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você e um amigo estão planejando algo juntos. O que mais importa para você nesse momento?",
+      "peso": 2,
+      "respostas": {
+        "resposta_1": "Ouvir palavras que mostrem que ele valoriza minha opinião.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Dedicar tempo de qualidade para discutir os detalhes comigo.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Que ele me ajude com algo prático relacionado ao plano.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Receber algo simbólico que celebre nossa parceria.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Um gesto físico, como um aperto de mão ou abraço, para selar nosso acordo.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 36,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você está se sentindo inseguro sobre uma decisão importante. O que alguém poderia fazer para te ajudar?",
+      "peso": 3,
+      "respostas": {
+        "resposta_1": "Dizer palavras que reforcem minha confiança e capacidade.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Passar um tempo conversando comigo sobre minhas opções.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Ajudar de forma prática com algo relacionado à decisão.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Oferecer um presente ou gesto simbólico de apoio.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Dar um abraço ou toque que transmita conforto.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 37,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você está organizando uma pequena reunião em casa. O que te faria se sentir mais valorizado?",
+      "peso": 2,
+      "respostas": {
+        "resposta_1": "Ouvir as pessoas elogiando o ambiente ou o que preparei.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Que alguém dedique tempo para me ajudar na organização.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Que um amigo ajude a preparar ou cuidar de algo prático durante o evento.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Receber um presente de agradecimento de um dos convidados.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Abraços ou gestos físicos de carinho durante a reunião.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 38,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você está contando para alguém sobre um momento muito importante na sua vida. O que tornaria essa conversa mais significativa?",
+      "peso": 3,
+      "respostas": {
+        "resposta_1": "Receber palavras de apoio e reconhecimento pelo que vivi.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Ter a atenção total da pessoa enquanto falo.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Que a pessoa se ofereça para ajudar com algo relacionado ao assunto.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Receber algo simbólico que marque esse momento.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Um abraço ou gesto físico que demonstre empatia.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 39,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você está tentando resolver um problema difícil. Como a ajuda de alguém próximo seria mais significativa?",
+      "peso": 3,
+      "respostas": {
+        "resposta_1": "Que a pessoa me encoraje com palavras motivadoras.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Passar um tempo comigo para entender melhor o problema.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Que ela resolva ou ajude em alguma parte prática do problema.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Receber algo que simbolize apoio ou incentivo.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Que ela demonstre carinho físico enquanto oferece suporte.",
+        "representa_resposta_5": "Toque físico"
+      }
+    },
+    {
+      "id": 40,
+      "tipo": "linguagem_autor",
+      "pergunta": "Você foi convidado para um evento especial. O que mais faria você se sentir valorizado pelos anfitriões?",
+      "peso": 2,
+      "respostas": {
+        "resposta_1": "Que eles expressem gratidão por minha presença com palavras.",
+        "representa_resposta_1": "Palavras de afirmação",
+        "resposta_2": "Que dediquem tempo exclusivo para conversar comigo durante o evento.",
+        "representa_resposta_2": "Tempo de qualidade",
+        "resposta_3": "Que me ajudem com algo prático relacionado à ocasião.",
+        "representa_resposta_3": "Atos de serviço",
+        "resposta_4": "Receber uma lembrança ou algo simbólico do evento.",
+        "representa_resposta_4": "Presentes",
+        "resposta_5": "Receber um abraço caloroso ao chegar ou sair.",
+        "representa_resposta_5": "Toque físico"
+      }
+    }
+  ]
