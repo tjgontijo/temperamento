@@ -10,21 +10,21 @@ export interface ResultadoContagem {
 // Função para inicializar contadores de temperamento
 function inicializarContadoresTemperamento(): Record<string, number> {
   return {
-    'Sanguíneo': 0,
-    'Colérico': 0,
-    'Melancólico': 0,
-    'Fleumático': 0
+    'sanguinio': 0,
+    'colerico': 0,
+    'melancolico': 0,
+    'fleumatico': 0
   };
 }
 
 // Função para inicializar contadores de linguagem
 function inicializarContadoresLinguagem(): Record<string, number> {
   return {
-    'Palavras de Afirmação': 0,
-    'Tempo de Qualidade': 0,
-    'Presentes': 0,
-    'Atos de Serviço': 0,
-    'Toque Físico': 0
+    'palavra_afirmacao': 0,
+    'tempo_qualidade': 0,
+    'presentes': 0,
+    'atos_servico': 0,
+    'toque_fisico': 0
   };
 }
 
@@ -39,9 +39,9 @@ export function processarQuestionario(questionario: ResultadoProps): ResultadoCo
 
   // Filtra as questões por tipo
   const questoesTemperamento = questionario.questoes.filter(q => q.tipo === 'Temperamento');
-  const questoesTemperamentoAutor = questionario.questoes.filter(q => q.tipo === 'Temperamento do Autor');
-  const questoesLinguagem = questionario.questoes.filter(q => q.tipo === 'Linguagem do Amor');
-  const questoesLinguagemAutor = questionario.questoes.filter(q => q.tipo === 'Linguagem do Amor do Autor');
+  const questoesTemperamentoAutor = questionario.questoes.filter(q => q.tipo === 'temperamento_autor');
+  const questoesLinguagem = questionario.questoes.filter(q => q.tipo === 'linguagem');
+  const questoesLinguagemAutor = questionario.questoes.filter(q => q.tipo === 'linguagem_autor');
 
   // Processa cada tipo de questão
   questoesTemperamento.forEach(questao => {
@@ -119,13 +119,13 @@ export function calcularResultado(
           case 'Temperamento':
             resultado.temperamento[categoria] += peso;
             break;
-          case 'Temperamento do Autor':
+          case 'temperamento_autor':
             resultado.temperamentoAutor[categoria] += peso;
             break;
-          case 'Linguagem do Amor':
+          case 'linguagem':
             resultado.linguagem[categoria] += peso;
             break;
-          case 'Linguagem do Amor do Autor':
+          case 'linguagem_autor':
             resultado.linguagemAutor[categoria] += peso;
             break;
         }

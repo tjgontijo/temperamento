@@ -1,5 +1,5 @@
-export type CategoriaTemperamento = 'Sanguíneo' | 'Colérico' | 'Melancólico' | 'Fleumático';
-export type CategoriaLinguagem = 'Palavras de Afirmação' | 'Tempo de Qualidade' | 'Presentes' | 'Atos de Serviço' | 'Toque Físico';
+export type CategoriaTemperamento = 'sanguinio' | 'colerico' | 'melancolico' | 'fleumatico';
+export type CategoriaLinguagem = 'palavra_afirmacao' | 'tempo_qualidade' | 'presentes' | 'atos_servico' | 'toque_fisico';
 
 export type ContadoresTemperamento = {
   [K in CategoriaTemperamento]: number;
@@ -17,7 +17,7 @@ export interface Contadores {
 }
 
 export interface QuestaoBase {
-  id: string | number;
+  id: number;
   tipo: string;
   pergunta: string;
   complemento?: string;
@@ -27,28 +27,34 @@ export interface QuestaoInput extends QuestaoBase {
   tipo: 'input';
 }
 
-export type TipoQuestao = 'Temperamento' | 'Temperamento do Autor' | 'Linguagem do Amor' | 'Linguagem do Amor do Autor';
-
-export interface RespostaTemperamento {
+export interface Resposta {
   texto: string;
-  categoria: CategoriaTemperamento;
+  categoria?: string;
 }
-
-export interface RespostaLinguagem {
-  texto: string;
-  categoria: CategoriaLinguagem;
-}
-
-export type Resposta = RespostaTemperamento | RespostaLinguagem;
 
 export interface QuestaoTemperamento extends QuestaoBase {
-  tipo: TipoQuestao;
-  respostas: {
-    [key: number]: Resposta;
-  };
+  tipo: 'temperamento' | 'linguagem' | 'temperamento_autor' | 'linguagem_autor';
+  respostas: Record<number, { texto: string }>;
 }
 
-export type QuestaoType = QuestaoInput | QuestaoTemperamento;
+export interface QuestaoLinguagem extends QuestaoBase {
+  tipo: 'linguagem' | 'linguagem_autor';
+  respostas: Resposta[];
+}
+
+export type QuestaoType = QuestaoInput | QuestaoTemperamento | QuestaoLinguagem;
+
+export interface TemperamentoResultado {
+  valor: number;
+  segundo: number;
+  total: number;
+}
+
+export interface LinguagemResultado {
+  valor: number;
+  segundo: number;
+  total: number;
+}
 
 export interface ResultadoProps {
   nome: string;
@@ -59,10 +65,12 @@ export interface ResultadoProps {
 }
 
 export interface ResultadoCalculado {
-  nome: string;
-  pretendente: string;
-  temperamento: ContadoresTemperamento;
-  temperamentoAutor: ContadoresTemperamento;
-  linguagem: ContadoresLinguagem;
-  linguagemAutor: ContadoresLinguagem;
+  informacoes: {
+    nome_autor: string;
+    nome_pretendente: string;
+  };
+  temperamento: TemperamentoResultado;
+  linguagem: LinguagemResultado;
+  temperamento_autor: TemperamentoResultado;
+  linguagem_autor: LinguagemResultado;
 }
