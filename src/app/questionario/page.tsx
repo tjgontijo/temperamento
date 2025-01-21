@@ -6,6 +6,8 @@ import { QuestaoType } from '@/types/questionario';
 import { gerarQuestionario } from '@/data';
 import { Questao } from '@/components/questionario/questao';
 import { Loading } from '@/components/ui/loading';
+import { LoadingQuestionario } from '@/components/ui/loading-questionario';
+import { Introducao } from '@/components/questionario/introducao';
 import { salvarQuestoes, salvarResposta, obterDados, obterResposta, limparDados } from '@/utils/storage';
 
 export default function QuestionarioPage() {
@@ -14,6 +16,7 @@ export default function QuestionarioPage() {
   const [questoes, setQuestoes] = useState<QuestaoType[]>([]);
   const [nomePretendente, setNomePretendente] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
+  const [mostrarIntroducao, setMostrarIntroducao] = useState(true);
 
   // Inicializa as questões e limpa dados anteriores
   useEffect(() => {
@@ -22,10 +25,10 @@ export default function QuestionarioPage() {
     
     // Gera novas questões
     const novasQuestoes = gerarQuestionario({
-      quantidadeTemperamento: 2,
-      quantidadeLinguagem: 2,
-      quantidadeTemperamentoAutor: 2,
-      quantidadeLinguagemAutor: 2,
+      quantidadeTemperamento: 8,
+      quantidadeLinguagem: 8,
+      quantidadeTemperamentoAutor: 8,
+      quantidadeLinguagemAutor: 8,
     });
     setQuestoes(novasQuestoes);
     salvarQuestoes(novasQuestoes);
@@ -42,16 +45,17 @@ export default function QuestionarioPage() {
   // Debug do estado atual
   useEffect(() => {
     if (questoes.length > 0) {
-      const questao = questoes[questaoAtual];
-      console.group('=== Estado Atual do Questionário ===');
-      console.log('Questão Atual:', questao);
-      console.log('\nRespostas Acumuladas:', obterDados());
-      console.groupEnd();
+      console.log('questaoAtual:', questaoAtual);
+      console.log('questoes:', questoes);
     }
   }, [questaoAtual, questoes]);
 
   if (questoes.length === 0) {
-    return <div>Carregando...</div>;
+    return <LoadingQuestionario />;
+  }
+
+  if (mostrarIntroducao) {
+    return <Introducao onStart={() => setMostrarIntroducao(false)} />;
   }
 
   const questao = questoes[questaoAtual];
@@ -62,12 +66,16 @@ export default function QuestionarioPage() {
   const handleResposta = async (valor: string) => {
     salvarResposta(questao, valor);
     
-    // Se for a última questão, mostra loading e redireciona
+    // Se for a última questão, redireciona direto
     if (questaoAtual === questoes.length - 1) {
       setIsLoading(true);
-      // Simula um tempo de processamento para melhor UX
-      await new Promise(resolve => setTimeout(resolve, 4000));
-      router.push('/resultado');
+      try {
+        // Aguarda um pequeno delay para garantir que a resposta foi salva
+        await new Promise(resolve => setTimeout(resolve, 100));
+        router.replace('/resultado');
+      } finally {
+        setIsLoading(false);
+      }
       return;
     }
     
@@ -83,12 +91,16 @@ export default function QuestionarioPage() {
       return;
     }
 
-    // Se for a última questão, mostra loading e redireciona
+    // Se for a última questão, redireciona direto
     if (questaoAtual === questoes.length - 1) {
       setIsLoading(true);
-      // Simula um tempo de processamento para melhor UX
-      await new Promise(resolve => setTimeout(resolve, 4000));
-      router.push('/resultado');
+      try {
+        // Aguarda um pequeno delay para garantir que a resposta foi salva
+        await new Promise(resolve => setTimeout(resolve, 100));
+        router.replace('/resultado');
+      } finally {
+        setIsLoading(false);
+      }
       return;
     }
 

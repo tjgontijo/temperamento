@@ -5,6 +5,7 @@ import { linguagem_autor } from './linguagem-autor';
 import { informacoes } from './informacoes';
 import { QuestaoType, QuestaoTemperamento } from '@/types/questionario';
 import { salvarInformacoes } from '@/utils/storage';
+import { analisarCasal } from '@/services/openai';
 
 interface ConfiguracaoQuestionario {
   quantidadeTemperamento?: number;
@@ -80,7 +81,54 @@ interface Contadores {
   linguagem_autor: ContadoresLinguagem;
 }
 
-export function calcularResultado(questoes: QuestaoType[], respostas: Record<string, string>) {
+interface Resultado {
+  informacoes: {
+    nome_autor: string;
+    nome_pretendente: string;
+  };
+  temperamento: {
+    valor: number;
+    segundo: number;
+    total: number;
+  };
+  linguagem: {
+    valor: number;
+    segundo: number;
+    total: number;
+  };
+  temperamento_autor: {
+    valor: number;
+    segundo: number;
+    total: number;
+  };
+  linguagem_autor: {
+    valor: number;
+    segundo: number;
+    total: number;
+  };
+  analise: {
+    titulo: string;
+    subtitulo: string;
+    paragrafos: string[];
+  };
+}
+
+const TEMPERAMENTOS: { [key: number]: string } = {
+  1: 'Sanguíneo',
+  2: 'Colérico',
+  3: 'Melancólico',
+  4: 'Fleumático',
+};
+
+const LINGUAGENS: { [key: number]: string } = {
+  1: 'Visual',
+  2: 'Auditivo',
+  3: 'Kinestésico',
+  4: 'Lógico',
+  5: 'Verbal',
+};
+
+export async function calcularResultado(questoes: QuestaoType[], respostas: Record<string, string>): Promise<Resultado | null> {
   if (!questoes.length) return null;
 
   // Inicializa os contadores
@@ -133,28 +181,63 @@ export function calcularResultado(questoes: QuestaoType[], respostas: Record<str
     };
   };
 
-  // Calcula os resultados
+  // Calcula os resultados finais
+  const resultadoTemperamento = getDoisMaiores(contadores.temperamento);
+  const resultadoLinguagem = getDoisMaiores(contadores.linguagem);
+  const resultadoTemperamentoAutor = getDoisMaiores(contadores.temperamento_autor);
+  const resultadoLinguagemAutor = getDoisMaiores(contadores.linguagem_autor);
+
+  // Converte os números em nomes para a análise
+  const temperamentoPretendente = TEMPERAMENTOS[resultadoTemperamento.primeiro.key];
+  const temperamentoSecundarioPretendente = TEMPERAMENTOS[resultadoTemperamento.segundo.key];
+  const linguagemPretendente = LINGUAGENS[resultadoLinguagem.primeiro.key];
+  const linguagemSecundariaPretendente = LINGUAGENS[resultadoLinguagem.segundo.key];
+  const temperamentoAutor = TEMPERAMENTOS[resultadoTemperamentoAutor.primeiro.key];
+  const temperamentoSecundarioAutor = TEMPERAMENTOS[resultadoTemperamentoAutor.segundo.key];
+  const linguagemAutor = LINGUAGENS[resultadoLinguagemAutor.primeiro.key];
+  const linguagemSecundariaAutor = LINGUAGENS[resultadoLinguagemAutor.segundo.key];
+
+  // Gera a análise do casal usando os nomes em vez dos números
+  const analiseResponse = await analisarCasal(
+    informacoes.nome_autor,
+    informacoes.nome_pretendente,
+    temperamentoPretendente,
+    temperamentoSecundarioPretendente,
+    linguagemPretendente,
+    linguagemSecundariaPretendente,
+    temperamentoAutor,
+    temperamentoSecundarioAutor,
+    linguagemAutor,
+    linguagemSecundariaAutor
+  );
+
+  // Retorna os resultados e a análise
   return {
     informacoes,
     temperamento: {
-      valor: getDoisMaiores(contadores.temperamento).primeiro.key,
-      segundo: getDoisMaiores(contadores.temperamento).segundo.key,
+      valor: resultadoTemperamento.primeiro.key,
+      segundo: resultadoTemperamento.segundo.key,
       total: Object.values(contadores.temperamento).reduce((a, b) => a + b, 0),
     },
     linguagem: {
-      valor: getDoisMaiores(contadores.linguagem).primeiro.key,
-      segundo: getDoisMaiores(contadores.linguagem).segundo.key,
+      valor: resultadoLinguagem.primeiro.key,
+      segundo: resultadoLinguagem.segundo.key,
       total: Object.values(contadores.linguagem).reduce((a, b) => a + b, 0),
     },
     temperamento_autor: {
-      valor: getDoisMaiores(contadores.temperamento_autor).primeiro.key,
-      segundo: getDoisMaiores(contadores.temperamento_autor).segundo.key,
+      valor: resultadoTemperamentoAutor.primeiro.key,
+      segundo: resultadoTemperamentoAutor.segundo.key,
       total: Object.values(contadores.temperamento_autor).reduce((a, b) => a + b, 0),
     },
     linguagem_autor: {
-      valor: getDoisMaiores(contadores.linguagem_autor).primeiro.key,
-      segundo: getDoisMaiores(contadores.linguagem_autor).segundo.key,
+      valor: resultadoLinguagemAutor.primeiro.key,
+      segundo: resultadoLinguagemAutor.segundo.key,
       total: Object.values(contadores.linguagem_autor).reduce((a, b) => a + b, 0),
+    },
+    analise: {
+      titulo: analiseResponse.titulo,
+      subtitulo: analiseResponse.subtitulo,
+      paragrafos: analiseResponse.paragrafos,
     },
   };
 }

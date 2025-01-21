@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Clock, Heart, MessageCircle, ShieldCheck, Target } from 'lucide-react';
@@ -9,7 +9,7 @@ import { calcularResultado } from '@/data';
 import { obterDados } from '@/utils/storage';
 import { TEMPERAMENTOS, LINGUAGENS } from '@/data/constantes';
 import { Countdown } from '@/components/countdown';
-import { analisarCasal } from '@/services/openai';
+import { Loading } from '@/components/ui/loading';
 
 function Headline({ nomeAutor, nomePretendente }: { nomeAutor: string; nomePretendente: string }) {
   return (
@@ -83,82 +83,20 @@ function ResultadosIniciais({
   temperamentoPrincipal, 
   temperamentoSecundario,
   linguagemPrincipal,
-  linguagemSecundaria 
+  linguagemSecundaria,
+  analise
 }: { 
   nomePretendente: string;
   temperamentoPrincipal: string;
   temperamentoSecundario: string;
   linguagemPrincipal: string;
   linguagemSecundaria: string;
-}) {
-  const [analise, setAnalise] = useState<{
+  analise: {
     titulo: string;
     subtitulo: string;
     paragrafos: string[];
-  }>({
-    titulo: "",
-    subtitulo: "",
-    paragrafos: []
-  });
-  const [carregandoAnalise, setCarregandoAnalise] = useState(true);
-
-  useEffect(() => {
-    async function gerarAnalise() {
-      try {
-        const data = obterDados();
-        if (!data || !data.informacoes || !data.questoes || !data.respostas) {
-          console.error('Dados incompletos:', data);
-          setAnalise({
-            titulo: "Dados Incompletos",
-            subtitulo: "Não foi possível recuperar todas as informações necessárias",
-            paragrafos: ["Por favor, certifique-se de completar o questionário antes de ver a análise."]
-          });
-          setCarregandoAnalise(false);
-          return;
-        }
-
-        const nomeAutor = data.informacoes.nome_autor || '';
-        const resultadoAutor = calcularResultado(data.questoes, data.respostas);
-        
-        if (!resultadoAutor || !resultadoAutor.temperamento || !resultadoAutor.linguagem) {
-          console.error('Resultado do autor incompleto:', resultadoAutor);
-          setAnalise({
-            titulo: "Resultado Incompleto",
-            subtitulo: "Não foi possível calcular todos os aspectos necessários",
-            paragrafos: ["Por favor, certifique-se de responder todas as perguntas do questionário."]
-          });
-          setCarregandoAnalise(false);
-          return;
-        }
-
-        const analiseTexto = await analisarCasal(
-          nomeAutor,
-          nomePretendente,
-          temperamentoPrincipal,
-          temperamentoSecundario,
-          linguagemPrincipal,
-          linguagemSecundaria,
-          TEMPERAMENTOS[resultadoAutor.temperamento.valor],
-          TEMPERAMENTOS[resultadoAutor.temperamento.segundo],
-          LINGUAGENS[resultadoAutor.linguagem.valor],
-          LINGUAGENS[resultadoAutor.linguagem.segundo]
-        );
-        setAnalise(analiseTexto);
-      } catch (error) {
-        console.error('Erro ao gerar análise:', error);
-        setAnalise({
-          titulo: "Erro ao Gerar Análise",
-          subtitulo: "Ocorreu um problema ao processar as informações",
-          paragrafos: ["Por favor, tente novamente mais tarde. Se o problema persistir, entre em contato conosco."]
-        });
-      } finally {
-        setCarregandoAnalise(false);
-      }
-    }
-
-    gerarAnalise();
-  }, [nomePretendente, temperamentoPrincipal, temperamentoSecundario, linguagemPrincipal, linguagemSecundaria]);
-
+  }
+}) {
   return (
     <div className="bg-gradient-to-br from-gray-50 to-purple-50 py-16 md:py-20 px-4">
       <div className="max-w-4xl mx-auto">
@@ -244,33 +182,20 @@ function ResultadosIniciais({
                 {analise.subtitulo}
               </p>
 
-              {carregandoAnalise ? (
-                <div className="flex flex-col items-center justify-center py-8">
-                  <div className="w-10 h-10 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mb-4" />
-                  <p className="text-gray-600">Gerando análise personalizada...</p>
+              <div className="relative max-w-4xl mx-auto">
+                <div className="absolute -left-2 -top-4 text-6xl text-purple-400 opacity-50">&quot;</div>
+                <div className="absolute -right-2 -bottom-4 text-6xl text-purple-400 opacity-50 transform rotate-180">&quot;</div>
+                <div className="space-y-6 px-8 py-4">
+                  {analise.paragrafos?.map((paragrafo, index) => (
+                    <p 
+                      key={index} 
+                      className="text-lg text-gray-700 leading-relaxed text-left"
+                    >
+                      {paragrafo}
+                    </p>
+                  ))}
                 </div>
-              ) : (
-                <div className="relative max-w-4xl mx-auto">
-                  <div className="absolute -left-2 -top-4 text-6xl text-purple-200 opacity-50">"</div>
-                  <div className="absolute -right-2 -bottom-4 text-6xl text-purple-200 opacity-50 transform rotate-180">"</div>
-                  <div className="space-y-6 px-8 py-4">
-                    {typeof analise === 'string' ? (
-                      <p className="text-lg text-gray-700 leading-relaxed text-justify">
-                        {analise}
-                      </p>
-                    ) : (
-                      analise.paragrafos?.map((paragrafo, index) => (
-                        <p 
-                          key={index} 
-                          className="text-lg text-gray-700 leading-relaxed text-justify"
-                        >
-                          {paragrafo}
-                        </p>
-                      ))
-                    )}
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -636,24 +561,69 @@ function Urgencia({ nomePretendente }: { nomePretendente: string }) {
 export default function Resultado() {
   const router = useRouter();
   const [resultado, setResultado] = useState<ResultadoCalculado | null>(null);
+  const [carregando, setCarregando] = useState(true);
+  const calculandoRef = useRef(false);
 
   useEffect(() => {
-    const data = obterDados();
-    if (!data.questoes.length) {
-      router.push('/');
-      return;
+    let mounted = true;
+
+    async function carregarResultado() {
+      if (calculandoRef.current || resultado) return;
+
+      try {
+        const data = obterDados();
+        if (!data.questoes.length) {
+          router.push('/');
+          return;
+        }
+
+        calculandoRef.current = true;
+        console.log('Iniciando cálculo do resultado...');
+        const resultadoCalculado = await calcularResultado(data.questoes, data.respostas);
+        
+        if (mounted) {
+          console.log('Resultado calculado, atualizando estado...');
+          setResultado(resultadoCalculado);
+        }
+      } catch (error) {
+        console.error('Erro ao calcular resultado:', error);
+        router.push('/');
+      } finally {
+        if (mounted) {
+          setCarregando(false);
+          calculandoRef.current = false;
+        }
+      }
     }
 
-    const resultadoCalculado = calcularResultado(data.questoes, data.respostas);
-    console.log('Resultado calculado:', resultadoCalculado);
-    setResultado(resultadoCalculado);
-  }, [router]);
+    carregarResultado();
+
+    return () => {
+      mounted = false;
+    };
+  }, [router, resultado]);
+
+  if (carregando) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <Loading message="Analisando suas respostas e gerando sua análise personalizada..." />
+        </div>
+      </div>
+    );
+  }
 
   if (!resultado || !resultado.informacoes) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-xl text-gray-600">Carregando resultados...</p>
+          <p className="text-xl text-gray-600">Não foi possível carregar os resultados</p>
+          <button 
+            onClick={() => router.push('/')}
+            className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+          >
+            Voltar ao início
+          </button>
         </div>
       </div>
     );
@@ -664,6 +634,7 @@ export default function Resultado() {
   const temperamentoSecundario = TEMPERAMENTOS[resultado.temperamento.segundo];
   const linguagemPrincipal = LINGUAGENS[resultado.linguagem.valor];
   const linguagemSecundaria = LINGUAGENS[resultado.linguagem.segundo];
+  const analise = resultado.analise;
 
   return (
     <div className="min-h-screen bg-white">
@@ -675,6 +646,7 @@ export default function Resultado() {
         temperamentoSecundario={temperamentoSecundario}
         linguagemPrincipal={linguagemPrincipal}
         linguagemSecundaria={linguagemSecundaria}
+        analise={analise}
       />
       <ApresentacaoGuia nomePretendente={nome_pretendente} />
       <Beneficios 

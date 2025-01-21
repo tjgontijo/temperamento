@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 
-export function Loading() {
+interface LoadingProps {
+  message?: string;
+}
+
+export function Loading({ message = "Calculando sua compatibilidade..." }: LoadingProps) {
   return (
     <div className="fixed inset-0 bg-purple-950/60 backdrop-blur-sm flex flex-col items-center justify-center z-50">
       <motion.div
@@ -32,7 +36,7 @@ export function Loading() {
           className="space-y-4"
         >
           <h2 className="text-2xl font-semibold text-white">
-            Calculando sua compatibilidade...
+            {message}
           </h2>
           <p className="text-gray-200">
             Estamos analisando suas respostas para criar um resultado personalizado
@@ -49,7 +53,7 @@ export function Loading() {
             animate={{ width: "100%" }}
             transition={{ 
               duration: 3.5,
-              ease: "easeInOut",
+              repeat: Infinity,
             }}
           />
         </motion.div>

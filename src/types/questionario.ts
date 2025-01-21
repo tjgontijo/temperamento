@@ -73,4 +73,9 @@ export interface ResultadoCalculado {
   linguagem: LinguagemResultado;
   temperamento_autor: TemperamentoResultado;
   linguagem_autor: LinguagemResultado;
+  analise: {
+    titulo: string;
+    subtitulo: string;
+    paragrafos: string[];
+  };
 }

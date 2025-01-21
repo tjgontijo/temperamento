@@ -25,16 +25,16 @@ export async function analisarCasal(
     Analise estas informações valiosas que obtivemos através de nosso questionário especializado:
 
     ${nomeAutor} revelou um perfil fascinante:
-    - Temperamento principal: ${temperamentoPrincipalAutor}
-    - Temperamento secundário: ${temperamentoSecundarioAutor}
-    - Linguagem do amor principal: ${linguagemPrincipalAutor}
-    - Linguagem do amor secundária: ${linguagemSecundariaAutor}
+    - Temperamento principal: ${temperamentoPrincipalAutor} (Personalidade dominante)
+    - Temperamento secundário: ${temperamentoSecundarioAutor} (Influência secundária)
+    - Linguagem do amor principal: ${linguagemPrincipalAutor} (Como melhor expressa amor)
+    - Linguagem do amor secundária: ${linguagemSecundariaAutor} (Forma secundária de expressão)
 
     E descobrimos estas características intrigantes sobre ${nomePretendente}:
-    - Temperamento principal: ${temperamentoPrincipalPretendente}
-    - Temperamento secundário: ${temperamentoSecundarioPretendente}
-    - Linguagem do amor principal: ${linguagemPrincipalPretendente}
-    - Linguagem do amor secundária: ${linguagemSecundariaPretendente}
+    - Temperamento principal: ${temperamentoPrincipalPretendente} (Personalidade dominante)
+    - Temperamento secundário: ${temperamentoSecundarioPretendente} (Influência secundária)
+    - Linguagem do amor principal: ${linguagemPrincipalPretendente} (Como melhor recebe amor)
+    - Linguagem do amor secundária: ${linguagemSecundariaPretendente} (Forma secundária de recepção)
 
     Diretrizes para a análise:
     1. Comece destacando o potencial único e especial desta combinação de temperamentos
@@ -43,8 +43,8 @@ export async function analisarCasal(
     4. Sugira que há níveis mais profundos de conexão possíveis com o conhecimento adequado
 
     Pontos cruciais a abordar:
-    - Mostre o potencial extraordinário do relacionamento
-    - Destaque momentos e conexões especiais que são possíveis
+    - Mostre o potencial extraordinário do relacionamento usando os temperamentos específicos
+    - Destaque como as linguagens do amor de cada um podem se complementar
     - Indique sutilmente que há desafios que precisarão ser navegados com sabedoria
     - Sugira que há técnicas e conhecimentos específicos que podem transformar a dinâmica do relacionamento
     - Desperte curiosidade sobre como alcançar esse potencial
@@ -53,25 +53,25 @@ export async function analisarCasal(
     Estruture a resposta em exatamente 4 parágrafos, cada um com um propósito específico:
 
     Parágrafo 1 - O Potencial Único:
-    - Destaque a combinação especial dos temperamentos
+    - Destaque a combinação específica dos temperamentos (${temperamentoPrincipalPretendente} com ${temperamentoPrincipalAutor})
     - Mostre como essa combinação é rara e valiosa
     - Crie uma visão inspiradora do que é possível
     - Foque nas características complementares
 
     Parágrafo 2 - A Magia das Linguagens do Amor:
-    - Explore como as linguagens do amor se entrelaçam
-    - Mostre momentos mágicos que podem surgir
+    - Explore como as linguagens específicas (${linguagemPrincipalPretendente} e ${linguagemPrincipalAutor}) se entrelaçam
+    - Mostre momentos mágicos que podem surgir dessa combinação
     - Sugira possibilidades inexploradas
     - Deixe claro que há técnicas específicas para maximizar essa conexão
 
     Parágrafo 3 - Os Desafios e Mistérios:
-    - Mencione sutilmente os desafios naturais dessa combinação
+    - Mencione sutilmente os desafios naturais dessa combinação específica
     - Sugira que há conhecimentos específicos necessários
     - Indique que ${nomeAutor} precisará de certas habilidades
     - Desperte curiosidade sobre como desenvolver essas habilidades
 
     Parágrafo 4 - O Chamado à Ação Sutil:
-    - Reforce o potencial extraordinário
+    - Reforce o potencial extraordinário desta combinação específica
     - Sugira que há níveis mais profundos a serem descobertos
     - Deixe questões estratégicas em aberto
     - Crie um senso de urgência sutil para buscar mais conhecimento
@@ -82,6 +82,7 @@ export async function analisarCasal(
     - Sugestivo sobre a necessidade de conhecimento específico
     - Inspirador e motivador
     - Evite mencionar produtos ou serviços diretamente
+    - Use os nomes dos temperamentos e linguagens, nunca números
 
     IMPORTANTE: Retorne apenas o objeto JSON sem formatação ou caracteres extras. Use exatamente esta estrutura:
     {"titulo":"título aqui","subtitulo":"subtítulo aqui","paragrafos":["parágrafo 1","parágrafo 2","parágrafo 3","parágrafo 4"]}
