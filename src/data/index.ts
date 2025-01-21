@@ -4,6 +4,7 @@ import { temperamento_autor } from './temperamento-autor';
 import { linguagem_autor } from './linguagem-autor';
 import { informacoes } from './informacoes';
 import { QuestaoType, QuestaoTemperamento } from '@/types/questionario';
+import { salvarInformacoes } from '@/utils/storage';
 
 interface ConfiguracaoQuestionario {
   quantidadeTemperamento?: number;
@@ -95,6 +96,9 @@ export function calcularResultado(questoes: QuestaoType[], respostas: Record<str
     nome_autor: respostas['input_nome_autor'] || '',
     nome_pretendente: respostas['input_nome_pretendente'] || '',
   };
+
+  // Salva as informações separadamente
+  salvarInformacoes({ nome_autor: informacoes.nome_autor });
 
   // Processa cada questão
   questoes.forEach(questao => {

@@ -1,11 +1,19 @@
 import { QuestaoType } from '@/types/questionario';
 
 const STORAGE_KEY = 'questionario';
+const INFO_KEY = 'informacoes';
 
 interface StorageData {
   questoes: QuestaoType[];
   respostas: Record<string, string>;
+  informacoes: {
+    nome_autor?: string;
+  };
 }
+
+export const salvarInformacoes = (informacoes: { nome_autor: string }) => {
+  localStorage.setItem(INFO_KEY, JSON.stringify(informacoes));
+};
 
 export const salvarResposta = (questao: QuestaoType, resposta: string) => {
   const data = obterDados();
@@ -33,18 +41,31 @@ export const salvarQuestoes = (questoes: QuestaoType[]) => {
 };
 
 export const obterDados = (): StorageData => {
-  const data = localStorage.getItem(STORAGE_KEY);
-  if (!data) {
-    return {
-      questoes: [],
-      respostas: {}
-    };
+  const questionarioData = localStorage.getItem(STORAGE_KEY);
+  const informacoesData = localStorage.getItem(INFO_KEY);
+
+  const baseData = {
+    questoes: [],
+    respostas: {},
+    informacoes: {}
+  };
+
+  if (!questionarioData && !informacoesData) {
+    return baseData;
   }
-  return JSON.parse(data);
+
+  const questionario = questionarioData ? JSON.parse(questionarioData) : baseData;
+  const informacoes = informacoesData ? JSON.parse(informacoesData) : {};
+
+  return {
+    ...questionario,
+    informacoes
+  };
 };
 
 export const limparDados = () => {
   localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(INFO_KEY);
 };
 
 export const obterResposta = (questao: QuestaoType): string | undefined => {

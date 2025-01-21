@@ -5,12 +5,15 @@ import { useRouter } from 'next/navigation';
 import { QuestaoType } from '@/types/questionario';
 import { gerarQuestionario } from '@/data';
 import { Questao } from '@/components/questionario/questao';
+import { Loading } from '@/components/ui/loading';
 import { salvarQuestoes, salvarResposta, obterDados, obterResposta, limparDados } from '@/utils/storage';
 
 export default function QuestionarioPage() {
   const router = useRouter();
   const [questaoAtual, setQuestaoAtual] = useState(0);
   const [questoes, setQuestoes] = useState<QuestaoType[]>([]);
+  const [nomePretendente, setNomePretendente] = useState<string>();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Inicializa as questões e limpa dados anteriores
   useEffect(() => {
@@ -27,6 +30,14 @@ export default function QuestionarioPage() {
     setQuestoes(novasQuestoes);
     salvarQuestoes(novasQuestoes);
   }, []);
+
+  // Atualiza o nome do pretendente quando ele é informado
+  useEffect(() => {
+    const dados = obterDados();
+    if (dados.respostas?.['input_nome_pretendente']) {
+      setNomePretendente(dados.respostas['input_nome_pretendente']);
+    }
+  }, [questaoAtual]);
 
   // Debug do estado atual
   useEffect(() => {
@@ -48,11 +59,14 @@ export default function QuestionarioPage() {
   const isPrimeira = questaoAtual === 0;
   const isUltima = questaoAtual === questoes.length - 1;
 
-  const handleResposta = (valor: string) => {
+  const handleResposta = async (valor: string) => {
     salvarResposta(questao, valor);
     
-    // Se for a última questão, redireciona
+    // Se for a última questão, mostra loading e redireciona
     if (questaoAtual === questoes.length - 1) {
+      setIsLoading(true);
+      // Simula um tempo de processamento para melhor UX
+      await new Promise(resolve => setTimeout(resolve, 4000));
       router.push('/resultado');
       return;
     }
@@ -63,14 +77,17 @@ export default function QuestionarioPage() {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const respostaAtual = obterResposta(questao);
     if (!respostaAtual) {
       return;
     }
 
-    // Se for a última questão, redireciona
+    // Se for a última questão, mostra loading e redireciona
     if (questaoAtual === questoes.length - 1) {
+      setIsLoading(true);
+      // Simula um tempo de processamento para melhor UX
+      await new Promise(resolve => setTimeout(resolve, 4000));
       router.push('/resultado');
       return;
     }
@@ -91,18 +108,22 @@ export default function QuestionarioPage() {
   };
 
   return (
-    <Questao
-      pergunta={questao.pergunta}
-      complemento={questao.complemento}
-      tipo={questao.tipo}
-      opcoes={getOpcoesFormatadas()}
-      valor={obterResposta(questao) || ''}
-      onChange={handleResposta}
-      onNext={handleNext}
-      onBack={handleBack}
-      progresso={progresso}
-      isUltima={isUltima}
-      isPrimeira={isPrimeira}
-    />
+    <>
+      <Questao
+        pergunta={questao.pergunta}
+        complemento={questao.complemento}
+        tipo={questao.tipo}
+        opcoes={getOpcoesFormatadas()}
+        valor={obterResposta(questao) || ''}
+        onChange={handleResposta}
+        onNext={handleNext}
+        onBack={handleBack}
+        progresso={progresso}
+        isUltima={isUltima}
+        isPrimeira={isPrimeira}
+        nomePretendente={nomePretendente}
+      />
+      {isLoading && <Loading />}
+    </>
   );
 }

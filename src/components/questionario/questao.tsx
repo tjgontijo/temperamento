@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { formatarTextoComNome } from "@/utils/format";
 
 interface QuestaoProps {
   pergunta: string;
@@ -19,6 +20,7 @@ interface QuestaoProps {
   progresso: number;
   isUltima?: boolean;
   isPrimeira?: boolean;
+  nomePretendente?: string;
 }
 
 export function Questao({
@@ -33,6 +35,7 @@ export function Questao({
   progresso,
   isUltima = false,
   isPrimeira = false,
+  nomePretendente,
 }: QuestaoProps) {
   const [localValor, setLocalValor] = useState(valor);
 
@@ -79,7 +82,7 @@ export function Questao({
             >
               <motion.h2 
                 className="text-2xl font-medium text-gray-900 leading-tight"
-                dangerouslySetInnerHTML={{ __html: pergunta }}
+                dangerouslySetInnerHTML={{ __html: formatarTextoComNome(pergunta, nomePretendente) }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -91,7 +94,7 @@ export function Questao({
               {complemento && (
                 <motion.p 
                   className="text-base font-normal text-gray-500 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: complemento }}
+                  dangerouslySetInnerHTML={{ __html: formatarTextoComNome(complemento, nomePretendente) }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
