@@ -222,9 +222,9 @@ function Urgencia({ nomePretendente }: { nomePretendente: string }) {
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-200 flex-shrink-0" />
             <div>
               <p className="text-sm md:text-base text-gray-700 italic">
-                "Depois de usar o Match Perfeito, percebi que entendê-lo de verdade fazia toda a diferença. 
+                Depois de usar o Match Perfeito, percebi que entendê-lo de verdade fazia toda a diferença. 
                 Hoje, ele me diz que nunca se sentiu tão compreendido – e nossa relação está melhor do que 
-                eu poderia imaginar."
+                eu poderia imaginar.
               </p>
               <p className="text-xs md:text-sm text-gray-500 mt-2">- Maria S.</p>
             </div>

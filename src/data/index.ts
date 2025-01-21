@@ -3,7 +3,7 @@ import { linguagem } from './linguagem';
 import { temperamento_autor } from './temperamento-autor';
 import { linguagem_autor } from './linguagem-autor';
 import { informacoes } from './informacoes';
-import { QuestaoType, QuestaoInput, QuestaoTemperamento } from '@/types/questionario';
+import { QuestaoType, QuestaoTemperamento } from '@/types/questionario';
 
 interface ConfiguracaoQuestionario {
   quantidadeTemperamento?: number;
@@ -32,7 +32,7 @@ function pegarQuestoes<T>(questoes: T[], quantidade?: number): T[] {
 
 export function gerarQuestionario(config: ConfiguracaoQuestionario = {}): QuestaoType[] {
   // Sempre inclui todas as questões de informações no início
-  const questionarioFinal: QuestaoType[] = [...informacoes as QuestaoInput[]];
+  const questionarioFinal: QuestaoType[] = [...informacoes];
 
   // Pega a quantidade configurada (ou todas) de cada tipo de questão e embaralha
   const questoesTemperamento = pegarQuestoes(temperamento as QuestaoTemperamento[], config.quantidadeTemperamento);
@@ -53,11 +53,37 @@ export function gerarQuestionario(config: ConfiguracaoQuestionario = {}): Questa
 // Array com todas as questões (mantido para compatibilidade)
 export const todasQuestoes = gerarQuestionario();
 
+interface ContadoresBase {
+  [key: number]: number;
+}
+
+interface ContadoresTemperamento extends ContadoresBase {
+  1: number;
+  2: number;
+  3: number;
+  4: number;
+}
+
+interface ContadoresLinguagem extends ContadoresBase {
+  1: number;
+  2: number;
+  3: number;
+  4: number;
+  5: number;
+}
+
+interface Contadores {
+  temperamento: ContadoresTemperamento;
+  linguagem: ContadoresLinguagem;
+  temperamento_autor: ContadoresTemperamento;
+  linguagem_autor: ContadoresLinguagem;
+}
+
 export function calcularResultado(questoes: QuestaoType[], respostas: Record<string, string>) {
   if (!questoes.length) return null;
 
   // Inicializa os contadores
-  const contadores = {
+  const contadores: Contadores = {
     temperamento: { 1: 0, 2: 0, 3: 0, 4: 0 },
     linguagem: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
     temperamento_autor: { 1: 0, 2: 0, 3: 0, 4: 0 },
@@ -83,7 +109,10 @@ export function calcularResultado(questoes: QuestaoType[], respostas: Record<str
     if (questao.tipo !== 'input') {
       const valor = Number(resposta);
       if (questao.tipo in contadores) {
-        contadores[questao.tipo as keyof typeof contadores][valor]++;
+        const contador = contadores[questao.tipo as keyof Contadores];
+        if (valor in contador) {
+          contador[valor]++;
+        }
       }
     }
   });

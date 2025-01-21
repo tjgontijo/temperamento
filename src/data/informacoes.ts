@@ -1,3 +1,5 @@
+import { QuestaoInput } from '@/types/questionario';
+
 export interface Questao {
   id: string;
   tipo: string;
@@ -5,7 +7,7 @@ export interface Questao {
   complemento?: string;
 }
 
-export const informacoes: Questao[] = [
+export const informacoes: QuestaoInput[] = [
   {
     id: 'nome_autor',
     tipo: 'input',

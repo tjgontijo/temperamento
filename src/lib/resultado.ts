@@ -1,4 +1,4 @@
-import { QuestaoType, ResultadoProps } from '@/types/questionario';
+import { QuestaoType, ResultadoProps, QuestaoTemperamento } from '@/types/questionario';
 
 export interface ResultadoContagem {
   temperamento: Record<string, number>;
@@ -38,48 +38,52 @@ export function processarQuestionario(questionario: ResultadoProps): ResultadoCo
   };
 
   // Filtra as questões por tipo
-  const questoesTemperamento = questionario.questoes.filter(q => q.tipo === 'Temperamento');
-  const questoesTemperamentoAutor = questionario.questoes.filter(q => q.tipo === 'temperamento_autor');
-  const questoesLinguagem = questionario.questoes.filter(q => q.tipo === 'linguagem');
-  const questoesLinguagemAutor = questionario.questoes.filter(q => q.tipo === 'linguagem_autor');
+  const questoesTemperamento = questionario.questoes.filter((q): q is QuestaoTemperamento => q.tipo === 'temperamento');
+  const questoesTemperamentoAutor = questionario.questoes.filter((q): q is QuestaoTemperamento => q.tipo === 'temperamento_autor');
+  const questoesLinguagem = questionario.questoes.filter((q): q is QuestaoTemperamento => q.tipo === 'linguagem');
+  const questoesLinguagemAutor = questionario.questoes.filter((q): q is QuestaoTemperamento => q.tipo === 'linguagem_autor');
 
   // Processa cada tipo de questão
   questoesTemperamento.forEach(questao => {
-    if ('respostas' in questao) {
-      const resposta = questionario.respostas[questao.id];
-      if (resposta && questao.respostas[resposta]) {
-        const categoria = questao.respostas[resposta].categoria;
-        resultado.temperamento[categoria] += questao.peso || 1;
+    const resposta = questionario.respostas[String(questao.id)];
+    if (resposta && typeof resposta === 'string') {
+      const respostaNum = Number(resposta);
+      const respostaObj = questao.respostas[respostaNum];
+      if (respostaObj && respostaObj.categoria) {
+        resultado.temperamento[respostaObj.categoria] += 1;
       }
     }
   });
 
   questoesTemperamentoAutor.forEach(questao => {
-    if ('respostas' in questao) {
-      const resposta = questionario.respostas[questao.id];
-      if (resposta && questao.respostas[resposta]) {
-        const categoria = questao.respostas[resposta].categoria;
-        resultado.temperamentoAutor[categoria] += questao.peso || 1;
+    const resposta = questionario.respostas[String(questao.id)];
+    if (resposta && typeof resposta === 'string') {
+      const respostaNum = Number(resposta);
+      const respostaObj = questao.respostas[respostaNum];
+      if (respostaObj && respostaObj.categoria) {
+        resultado.temperamentoAutor[respostaObj.categoria] += 1;
       }
     }
   });
 
   questoesLinguagem.forEach(questao => {
-    if ('respostas' in questao) {
-      const resposta = questionario.respostas[questao.id];
-      if (resposta && questao.respostas[resposta]) {
-        const categoria = questao.respostas[resposta].categoria;
-        resultado.linguagem[categoria] += questao.peso || 1;
+    const resposta = questionario.respostas[String(questao.id)];
+    if (resposta && typeof resposta === 'string') {
+      const respostaNum = Number(resposta);
+      const respostaObj = questao.respostas[respostaNum];
+      if (respostaObj && respostaObj.categoria) {
+        resultado.linguagem[respostaObj.categoria] += 1;
       }
     }
   });
 
   questoesLinguagemAutor.forEach(questao => {
-    if ('respostas' in questao) {
-      const resposta = questionario.respostas[questao.id];
-      if (resposta && questao.respostas[resposta]) {
-        const categoria = questao.respostas[resposta].categoria;
-        resultado.linguagemAutor[categoria] += questao.peso || 1;
+    const resposta = questionario.respostas[String(questao.id)];
+    if (resposta && typeof resposta === 'string') {
+      const respostaNum = Number(resposta);
+      const respostaObj = questao.respostas[respostaNum];
+      if (respostaObj && respostaObj.categoria) {
+        resultado.linguagemAutor[respostaObj.categoria] += 1;
       }
     }
   });
@@ -106,28 +110,36 @@ export function calcularResultado(
 
     // Verifica se tem respostas
     if ('respostas' in questao) {
-      const respostaIndex = respostasUsuario[questao.id];
+      const respostaRaw = respostasUsuario[questao.id];
+      const respostaIndex = typeof respostaRaw === 'string' ? parseInt(respostaRaw, 10) : respostaRaw;
       
-      // Verifica se a resposta existe
-      if (respostaIndex && questao.respostas[respostaIndex]) {
+      // Verifica se a resposta existe e é um número válido
+      if (typeof respostaIndex === 'number' && !isNaN(respostaIndex) && questao.respostas[respostaIndex]) {
         const resposta = questao.respostas[respostaIndex];
-        const categoria = resposta.categoria;
-        const peso = questao.peso || 1;
-
-        // Incrementa o contador apropriado baseado no tipo da questão
-        switch (questao.tipo) {
-          case 'Temperamento':
-            resultado.temperamento[categoria] += peso;
-            break;
-          case 'temperamento_autor':
-            resultado.temperamentoAutor[categoria] += peso;
-            break;
-          case 'linguagem':
-            resultado.linguagem[categoria] += peso;
-            break;
-          case 'linguagem_autor':
-            resultado.linguagemAutor[categoria] += peso;
-            break;
+        if (resposta && resposta.categoria) {
+          // Incrementa o contador apropriado baseado no tipo da questão
+          switch (questao.tipo) {
+            case 'temperamento':
+              if (resposta.categoria in resultado.temperamento) {
+                resultado.temperamento[resposta.categoria] += 1;
+              }
+              break;
+            case 'temperamento_autor':
+              if (resposta.categoria in resultado.temperamentoAutor) {
+                resultado.temperamentoAutor[resposta.categoria] += 1;
+              }
+              break;
+            case 'linguagem':
+              if (resposta.categoria in resultado.linguagem) {
+                resultado.linguagem[resposta.categoria] += 1;
+              }
+              break;
+            case 'linguagem_autor':
+              if (resposta.categoria in resultado.linguagemAutor) {
+                resultado.linguagemAutor[resposta.categoria] += 1;
+              }
+              break;
+          }
         }
       }
     }

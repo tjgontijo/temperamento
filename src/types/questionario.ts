@@ -17,7 +17,7 @@ export interface Contadores {
 }
 
 export interface QuestaoBase {
-  id: number;
+  id: string | number;
   tipo: string;
   pergunta: string;
   complemento?: string;
@@ -34,7 +34,7 @@ export interface Resposta {
 
 export interface QuestaoTemperamento extends QuestaoBase {
   tipo: 'temperamento' | 'linguagem' | 'temperamento_autor' | 'linguagem_autor';
-  respostas: Record<number, { texto: string }>;
+  respostas: Record<number, { texto: string; categoria?: string }>;
 }
 
 export interface QuestaoLinguagem extends QuestaoBase {
