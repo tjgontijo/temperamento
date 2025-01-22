@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { QuestaoType } from '@/types/questionario';
-import { gerarQuestionario } from '@/data';
+import { buscarQuestoesPorTipo } from '@/lib/actions/questionario-actions';
 import { Questao } from '@/components/questionario/questao';
 import { Loading } from '@/components/ui/loading';
 import { LoadingQuestionario } from '@/components/ui/loading-questionario';
@@ -20,18 +20,23 @@ export default function QuestionarioPage() {
 
   // Inicializa as questões e limpa dados anteriores
   useEffect(() => {
-    // Limpa dados anteriores
-    limparDados();
-    
-    // Gera novas questões
-    const novasQuestoes = gerarQuestionario({
-      quantidadeTemperamento: 8,
-      quantidadeLinguagem: 8,
-      quantidadeTemperamentoAutor: 8,
-      quantidadeLinguagemAutor: 8,
-    });
-    setQuestoes(novasQuestoes);
-    salvarQuestoes(novasQuestoes);
+    async function carregarQuestoes() {
+      // Limpa dados anteriores
+      limparDados();
+      
+      // Gera novas questões usando server action
+      const novasQuestoes = await buscarQuestoesPorTipo([
+        'temperamento', 
+        'linguagem', 
+        'temperamento_autor', 
+        'linguagem_autor'
+      ], 2);
+
+      setQuestoes(novasQuestoes);
+      salvarQuestoes(novasQuestoes);
+    }
+
+    carregarQuestoes();
   }, []);
 
   // Atualiza o nome do pretendente quando ele é informado
@@ -45,8 +50,6 @@ export default function QuestionarioPage() {
   // Debug do estado atual
   useEffect(() => {
     if (questoes.length > 0) {
-      console.log('questaoAtual:', questaoAtual);
-      console.log('questoes:', questoes);
     }
   }, [questaoAtual, questoes]);
 
@@ -64,16 +67,24 @@ export default function QuestionarioPage() {
   const isUltima = questaoAtual === questoes.length - 1;
 
   const handleResposta = async (valor: string) => {
+    // Salva a resposta primeiro
     salvarResposta(questao, valor);
     
-    // Se for a última questão, redireciona direto
+    // Se for a última questão
     if (questaoAtual === questoes.length - 1) {
       setIsLoading(true);
       try {
-        // Aguarda um pequeno delay para garantir que a resposta foi salva
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Garante que todas as respostas foram salvas
+        const dados = obterDados();
+        if (!dados.questoes.length || !dados.respostas) {
+          console.error('Dados incompletos:', dados);
+          return;
+        }
+        
+        // Redireciona para a página de resultados
         router.replace('/resultado');
-      } finally {
+      } catch (error) {
+        console.error('Erro ao processar respostas:', error);
         setIsLoading(false);
       }
       return;
@@ -91,14 +102,21 @@ export default function QuestionarioPage() {
       return;
     }
 
-    // Se for a última questão, redireciona direto
+    // Se for a última questão
     if (questaoAtual === questoes.length - 1) {
       setIsLoading(true);
       try {
-        // Aguarda um pequeno delay para garantir que a resposta foi salva
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Garante que todas as respostas foram salvas
+        const dados = obterDados();
+        if (!dados.questoes.length || !dados.respostas) {
+          console.error('Dados incompletos:', dados);
+          return;
+        }
+        
+        // Redireciona para a página de resultados
         router.replace('/resultado');
-      } finally {
+      } catch (error) {
+        console.error('Erro ao processar respostas:', error);
         setIsLoading(false);
       }
       return;
@@ -119,6 +137,10 @@ export default function QuestionarioPage() {
     }));
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <Questao
@@ -135,7 +157,6 @@ export default function QuestionarioPage() {
         isPrimeira={isPrimeira}
         nomePretendente={nomePretendente}
       />
-      {isLoading && <Loading />}
     </>
   );
 }

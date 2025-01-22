@@ -1,21 +1,10 @@
-export type CategoriaTemperamento = 'sanguinio' | 'colerico' | 'melancolico' | 'fleumatico';
-export type CategoriaLinguagem = 'palavra_afirmacao' | 'tempo_qualidade' | 'presentes' | 'atos_servico' | 'toque_fisico';
+import { Temperamentos, Linguagens } from '@/data/constantes';
 
-export type ContadoresTemperamento = {
-  [K in CategoriaTemperamento]: number;
-};
+// Tipos base para categorias
+export type CategoriaTemperamento = keyof Temperamentos;
+export type CategoriaLinguagem = keyof Linguagens;
 
-export type ContadoresLinguagem = {
-  [K in CategoriaLinguagem]: number;
-};
-
-export interface Contadores {
-  temperamento: ContadoresTemperamento;
-  temperamentoAutor: ContadoresTemperamento;
-  linguagem: ContadoresLinguagem;
-  linguagemAutor: ContadoresLinguagem;
-}
-
+// Tipos para questões
 export interface QuestaoBase {
   id: string | number;
   tipo: string;
@@ -27,52 +16,38 @@ export interface QuestaoInput extends QuestaoBase {
   tipo: 'input';
 }
 
-export interface Resposta {
-  texto: string;
-  categoria?: string;
-}
-
-export interface QuestaoTemperamento extends QuestaoBase {
+export interface QuestaoMultiplaEscolha extends QuestaoBase {
   tipo: 'temperamento' | 'linguagem' | 'temperamento_autor' | 'linguagem_autor';
-  respostas: Record<number, { texto: string; categoria?: string }>;
+  respostas: Record<number, {
+    texto: string;
+    categoria: CategoriaTemperamento | CategoriaLinguagem;
+  }>;
 }
 
-export interface QuestaoLinguagem extends QuestaoBase {
-  tipo: 'linguagem' | 'linguagem_autor';
-  respostas: Resposta[];
-}
+export type QuestaoType = QuestaoInput | QuestaoMultiplaEscolha;
 
-export type QuestaoType = QuestaoInput | QuestaoTemperamento | QuestaoLinguagem;
-
-export interface TemperamentoResultado {
-  valor: number;
-  segundo: number;
-  total: number;
-}
-
-export interface LinguagemResultado {
-  valor: number;
-  segundo: number;
-  total: number;
-}
-
-export interface ResultadoProps {
+// Tipos para resultados
+export interface ResultadoItem {
+  tipo: string;
   nome: string;
-  pretendente: string;
-  questoes: QuestaoType[];
-  respostas: Record<string | number, string>;
-  contadores: Contadores;
+  pontuacao: number;
+}
+
+export interface ResultadoCategoria {
+  predominante: ResultadoItem;
+  secundario: ResultadoItem;
+  totalRespostas: number;
 }
 
 export interface ResultadoCalculado {
   informacoes: {
-    nome_autor: string;
-    nome_pretendente: string;
+    nomeAutor: string;
+    nomePretendente: string;
   };
-  temperamento: TemperamentoResultado;
-  linguagem: LinguagemResultado;
-  temperamento_autor: TemperamentoResultado;
-  linguagem_autor: LinguagemResultado;
+  temperamentoPretendente: ResultadoCategoria;
+  linguagemAmorPretendente: ResultadoCategoria;
+  temperamentoAutor: ResultadoCategoria;
+  linguagemAmorAutor: ResultadoCategoria;
   analise: {
     titulo: string;
     subtitulo: string;

@@ -1,11 +1,10 @@
-import { TemperamentoResultado, LinguagemResultado } from '@/types/questionario';
-import { TEMPERAMENTOS, LINGUAGENS } from '@/data/constantes';
+import { ResultadoCategoria } from '@/types/questionario';
 
 interface ResultadoSectionProps {
   titulo: string;
   nome: string;
-  temperamento: TemperamentoResultado;
-  linguagem: LinguagemResultado;
+  temperamento: ResultadoCategoria;
+  linguagem: ResultadoCategoria;
 }
 
 export function ResultadoSection({ titulo, nome, temperamento, linguagem }: ResultadoSectionProps) {
@@ -13,18 +12,42 @@ export function ResultadoSection({ titulo, nome, temperamento, linguagem }: Resu
     <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
       <h2 className="text-2xl font-semibold mb-4 text-purple-800">{titulo}</h2>
       
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div>
-          <h3 className="text-xl font-medium mb-2">Temperamento</h3>
-          <p className="text-gray-700">
-            {nome}, identificamos que você possui um temperamento principal de {TEMPERAMENTOS[temperamento.valor]} e um temperamento secundário de {TEMPERAMENTOS[temperamento.segundo]}.
+          <h3 className="text-xl font-medium mb-3">Perfil de Temperamento</h3>
+          <div className="space-y-2">
+            <div>
+              <p className="font-medium text-gray-700">Temperamento Principal</p>
+              <p className="text-purple-600">{temperamento.predominante.nome} ({temperamento.predominante.pontuacao} respostas)</p>
+            </div>
+            {temperamento.secundario.pontuacao > 0 && (
+              <div>
+                <p className="font-medium text-gray-700">Influência Secundária</p>
+                <p className="text-purple-600">{temperamento.secundario.nome} ({temperamento.secundario.pontuacao} respostas)</p>
+              </div>
+            )}
+          </div>
+          <p className="text-sm text-gray-500 mt-2">
+            Baseado em {temperamento.totalRespostas} respostas analisadas
           </p>
         </div>
 
         <div>
-          <h3 className="text-xl font-medium mb-2">Linguagem</h3>
-          <p className="text-gray-700">
-            {nome}, identificamos que você possui uma linguagem principal de {LINGUAGENS[linguagem.valor]} e uma linguagem secundária de {LINGUAGENS[linguagem.segundo]}.
+          <h3 className="text-xl font-medium mb-3">Linguagem do Amor</h3>
+          <div className="space-y-2">
+            <div>
+              <p className="font-medium text-gray-700">Linguagem Principal</p>
+              <p className="text-purple-600">{linguagem.predominante.nome} ({linguagem.predominante.pontuacao} respostas)</p>
+            </div>
+            {linguagem.secundario.pontuacao > 0 && (
+              <div>
+                <p className="font-medium text-gray-700">Linguagem Secundária</p>
+                <p className="text-purple-600">{linguagem.secundario.nome} ({linguagem.secundario.pontuacao} respostas)</p>
+              </div>
+            )}
+          </div>
+          <p className="text-sm text-gray-500 mt-2">
+            Baseado em {linguagem.totalRespostas} respostas analisadas
           </p>
         </div>
       </div>

@@ -562,6 +562,7 @@ export default function Resultado() {
   const router = useRouter();
   const [resultado, setResultado] = useState<ResultadoCalculado | null>(null);
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState<string | null>(null);
   const calculandoRef = useRef(false);
 
   useEffect(() => {
@@ -571,26 +572,51 @@ export default function Resultado() {
       if (calculandoRef.current || resultado) return;
 
       try {
-        const data = obterDados();
-        if (!data.questoes.length) {
-          router.push('/');
+        // Verifica se há dados salvos
+        const dados = obterDados();
+        if (!dados.questoes.length) {
+          router.replace('/');
+          return;
+        }
+
+        // Verifica se todas as questões foram respondidas
+        const questoesRespondidas = dados.questoes.every(q => 
+          q.tipo === 'input' ? 
+            dados.respostas[`input_${q.id}`] : 
+            dados.respostas[`${q.tipo}_${q.id}`]
+        );
+
+        if (!questoesRespondidas) {
+          setErro('Algumas questões não foram respondidas');
+          setCarregando(false);
           return;
         }
 
         calculandoRef.current = true;
         console.log('Iniciando cálculo do resultado...');
-        const resultadoCalculado = await calcularResultado(data.questoes, data.respostas);
         
+        // Calcula o resultado
+        const resultadoCalculado = await calcularResultado(dados.questoes, dados.respostas);
+        
+        if (!resultadoCalculado) {
+          setErro('Não foi possível calcular o resultado');
+          setCarregando(false);
+          return;
+        }
+
         if (mounted) {
           console.log('Resultado calculado, atualizando estado...');
           setResultado(resultadoCalculado);
+          setCarregando(false);
         }
       } catch (error) {
         console.error('Erro ao calcular resultado:', error);
-        router.push('/');
+        if (mounted) {
+          setErro('Ocorreu um erro ao calcular o resultado');
+          setCarregando(false);
+        }
       } finally {
         if (mounted) {
-          setCarregando(false);
           calculandoRef.current = false;
         }
       }
@@ -603,6 +629,24 @@ export default function Resultado() {
     };
   }, [router, resultado]);
 
+  // Mostra mensagem de erro
+  if (erro) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-xl text-red-600 mb-4">{erro}</p>
+          <button 
+            onClick={() => router.push('/')}
+            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+          >
+            Voltar ao início
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostra loading
   if (carregando) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -629,32 +673,29 @@ export default function Resultado() {
     );
   }
 
-  const { nome_autor, nome_pretendente } = resultado.informacoes;
-  const temperamentoPrincipal = TEMPERAMENTOS[resultado.temperamento.valor];
-  const temperamentoSecundario = TEMPERAMENTOS[resultado.temperamento.segundo];
-  const linguagemPrincipal = LINGUAGENS[resultado.linguagem.valor];
-  const linguagemSecundaria = LINGUAGENS[resultado.linguagem.segundo];
+  const { nomeAutor, nomePretendente } = resultado.informacoes;
+  const { temperamentoPretendente, linguagemAmorPretendente } = resultado;
   const analise = resultado.analise;
 
   return (
     <div className="min-h-screen bg-white">
-      <Headline nomeAutor={nome_autor} nomePretendente={nome_pretendente} />
-      <Introducao nomePretendente={nome_pretendente} />
+      <Headline nomeAutor={nomeAutor} nomePretendente={nomePretendente} />
+      <Introducao nomePretendente={nomePretendente} />
       <ResultadosIniciais 
-        nomePretendente={nome_pretendente}
-        temperamentoPrincipal={temperamentoPrincipal}
-        temperamentoSecundario={temperamentoSecundario}
-        linguagemPrincipal={linguagemPrincipal}
-        linguagemSecundaria={linguagemSecundaria}
+        nomePretendente={nomePretendente}
+        temperamentoPrincipal={temperamentoPretendente.predominante.nome}
+        temperamentoSecundario={temperamentoPretendente.secundario.nome}
+        linguagemPrincipal={linguagemAmorPretendente.predominante.nome}
+        linguagemSecundaria={linguagemAmorPretendente.secundario.nome}
         analise={analise}
       />
-      <ApresentacaoGuia nomePretendente={nome_pretendente} />
+      <ApresentacaoGuia nomePretendente={nomePretendente} />
       <Beneficios 
-        temperamentoPrincipal={temperamentoPrincipal}
-        linguagemPrincipal={linguagemPrincipal}
+        temperamentoPrincipal={temperamentoPretendente.predominante.nome}
+        linguagemPrincipal={linguagemAmorPretendente.predominante.nome}
       />
-      <Oferta nomePretendente={nome_pretendente} />
-      <Urgencia nomePretendente={nome_pretendente} />
+      <Oferta nomePretendente={nomePretendente} />
+      <Urgencia nomePretendente={nomePretendente} />
     </div>
   );
 }
