@@ -1,14 +1,8 @@
 import { cache } from 'react'
 import prisma from '@/lib/prisma'
 import { 
-  QuestaoCreateInput, 
-  AlternativaCreateInput,
   QuestaoWithRelations
 } from '@/types/prisma'
-import { 
-  createQuestao, 
-  createQuestaoWithAlternativas 
-} from '@/lib/actions/questao-actions'
 
 export const QuestaoRepository = {
   findById: cache(async (id: string): Promise<QuestaoWithRelations | null> => {
@@ -37,11 +31,5 @@ export const QuestaoRepository = {
         }
       }
     })
-  }),
-
-  // Usa a server action importada
-  create: createQuestao,
-
-  // Usa a server action importada
-  createWithAlternativas: createQuestaoWithAlternativas
+  })
 }

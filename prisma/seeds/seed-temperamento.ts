@@ -1,5 +1,15 @@
 import { PrismaClient, TipoQuestao, TipoAlternativa } from '@prisma/client';
 
+// Função para embaralhar array
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 export const seedTemperamento = async (prisma: PrismaClient) => {
   // Buscar o ID do tipo de questão de temperamento
   const tipoQuestao: TipoQuestao | null = await prisma.tipoQuestao.findUnique({
@@ -31,7 +41,7 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
     complemento: string;
     alternativas: {
       texto: string;
-      tipoAlternativaId: string;
+      tipoAlternativa: string;
     }[];
   };
 
@@ -44,19 +54,19 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
       alternativas: [
         {
           texto: "Tento aliviar a tensão com humor enquanto expresso minha opinião.",
-          tipoAlternativaId: tiposPorNome['SANGUINIO']
+          tipoAlternativa: 'SANGUINIO'
         },
         {
           texto: "Expresso minha opinião de forma direta e firme.",
-          tipoAlternativaId: tiposPorNome['COLERICO']
+          tipoAlternativa: 'COLERICO'
         },
         {
           texto: "Analiso cuidadosamente antes de apresentar meus argumentos.",
-          tipoAlternativaId: tiposPorNome['MELANCOLICO']
+          tipoAlternativa: 'MELANCOLICO'
         },
         {
           texto: "Mantenho a calma e busco um meio-termo.",
-          tipoAlternativaId: tiposPorNome['FLEUMATICO']
+          tipoAlternativa: 'FLEUMATICO'
         }
       ]
     },
@@ -67,19 +77,19 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
       alternativas: [
         {
           texto: "Tento transformar a situação em algo mais leve e divertido.",
-          tipoAlternativaId: tiposPorNome['SANGUINIO']
+          tipoAlternativa: 'SANGUINIO'
         },
         {
           texto: "Defendo meu ponto de vista com convicção.",
-          tipoAlternativaId: tiposPorNome['COLERICO']
+          tipoAlternativa: 'COLERICO'
         },
         {
           texto: "Analizo profundamente a crítica e reflito sobre ela.",
-          tipoAlternativaId: tiposPorNome['MELANCOLICO']
+          tipoAlternativa: 'MELANCOLICO'
         },
         {
           texto: "Ouço sem me alterar e considero o que foi dito.",
-          tipoAlternativaId: tiposPorNome['FLEUMATICO']
+          tipoAlternativa: 'FLEUMATICO'
         }
       ]
     },
@@ -90,19 +100,19 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
       alternativas: [
         {
           texto: "Sou o centro das atenções, conversando e fazendo todos rirem.",
-          tipoAlternativaId: tiposPorNome['SANGUINIO']
+          tipoAlternativa: 'SANGUINIO'
         },
         {
           texto: "Lidero conversas e tomo iniciativa de interagir.",
-          tipoAlternativaId: tiposPorNome['COLERICO']
+          tipoAlternativa: 'COLERICO'
         },
         {
           texto: "Observo e analiso o ambiente antes de me envolver.",
-          tipoAlternativaId: tiposPorNome['MELANCOLICO']
+          tipoAlternativa: 'MELANCOLICO'
         },
         {
           texto: "Converso tranquilamente com algumas pessoas próximas.",
-          tipoAlternativaId: tiposPorNome['FLEUMATICO']
+          tipoAlternativa: 'FLEUMATICO'
         }
       ]
     },
@@ -113,19 +123,19 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
       alternativas: [
         {
           texto: "Rapidamente improviso e transformo em algo divertido.",
-          tipoAlternativaId: tiposPorNome['SANGUINIO']
+          tipoAlternativa: 'SANGUINIO'
         },
         {
           texto: "Reorganizo tudo com determinação para manter o controle.",
-          tipoAlternativaId: tiposPorNome['COLERICO']
+          tipoAlternativa: 'COLERICO'
         },
         {
           texto: "Analizo detalhadamente o impacto da mudança.",
-          tipoAlternativaId: tiposPorNome['MELANCOLICO']
+          tipoAlternativa: 'MELANCOLICO'
         },
         {
           texto: "Aceito tranquilamente e me adapto sem grandes problemas.",
-          tipoAlternativaId: tiposPorNome['FLEUMATICO']
+          tipoAlternativa: 'FLEUMATICO'
         }
       ]
     },
@@ -136,19 +146,19 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
       alternativas: [
         {
           texto: "Busco inspiração criativa e solução rápida.",
-          tipoAlternativaId: tiposPorNome['SANGUINIO']
+          tipoAlternativa: 'SANGUINIO'
         },
         {
           texto: "Ataco o problema com estratégia e determinação.",
-          tipoAlternativaId: tiposPorNome['COLERICO']
+          tipoAlternativa: 'COLERICO'
         },
         {
           texto: "Analizo meticulosamente todos os detalhes.",
-          tipoAlternativaId: tiposPorNome['MELANCOLICO']
+          tipoAlternativa: 'MELANCOLICO'
         },
         {
           texto: "Resolvo calmamente, sem me estressar.",
-          tipoAlternativaId: tiposPorNome['FLEUMATICO']
+          tipoAlternativa: 'FLEUMATICO'
         }
       ]
     },
@@ -159,19 +169,19 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
       alternativas: [
         {
           texto: "Tento animar e trazer leveza à situação.",
-          tipoAlternativaId: tiposPorNome['SANGUINIO']
+          tipoAlternativa: 'SANGUINIO'
         },
         {
           texto: "Ofereço soluções práticas e diretas.",
-          tipoAlternativaId: tiposPorNome['COLERICO']
+          tipoAlternativa: 'COLERICO'
         },
         {
           texto: "Escuto atentamente e ofereço apoio emocional profundo.",
-          tipoAlternativaId: tiposPorNome['MELANCOLICO']
+          tipoAlternativa: 'MELANCOLICO'
         },
         {
           texto: "Estou presente de forma calma e acolhedora.",
-          tipoAlternativaId: tiposPorNome['FLEUMATICO']
+          tipoAlternativa: 'FLEUMATICO'
         }
       ]
     },
@@ -182,19 +192,19 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
       alternativas: [
         {
           texto: "Faço na hora, com energia e criatividade.",
-          tipoAlternativaId: tiposPorNome['SANGUINIO']
+          tipoAlternativa: 'SANGUINIO'
         },
         {
           texto: "Sou rigoroso e disciplinado com meus compromissos.",
-          tipoAlternativaId: tiposPorNome['COLERICO']
+          tipoAlternativa: 'COLERICO'
         },
         {
           texto: "Planejo detalhadamente e sigo o plano à risca.",
-          tipoAlternativaId: tiposPorNome['MELANCOLICO']
+          tipoAlternativa: 'MELANCOLICO'
         },
         {
           texto: "Cumpro tranquilamente, sem estresse.",
-          tipoAlternativaId: tiposPorNome['FLEUMATICO']
+          tipoAlternativa: 'FLEUMATICO'
         }
       ]
     },
@@ -205,19 +215,19 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
       alternativas: [
         {
           texto: "Trago energia e motivo o grupo com entusiasmo.",
-          tipoAlternativaId: tiposPorNome['SANGUINIO']
+          tipoAlternativa: 'SANGUINIO'
         },
         {
           texto: "Lidero e direciono as ações para alcançar resultados.",
-          tipoAlternativaId: tiposPorNome['COLERICO']
+          tipoAlternativa: 'COLERICO'
         },
         {
-          texto: "Analiso detalhes e contribuo com planejamento.",
-          tipoAlternativaId: tiposPorNome['MELANCOLICO']
+          texto: "Analizo detalhes e contribuo com planejamento.",
+          tipoAlternativa: 'MELANCOLICO'
         },
         {
           texto: "Ajudo a manter o clima harmonioso e colaborativo.",
-          tipoAlternativaId: tiposPorNome['FLEUMATICO']
+          tipoAlternativa: 'FLEUMATICO'
         }
       ]
     }
@@ -230,14 +240,18 @@ export const seedTemperamento = async (prisma: PrismaClient) => {
         pergunta: questao.pergunta,
         complemento: questao.complemento,
         alternativas: {
-          create: questao.alternativas.map(alt => ({
-            texto: alt.texto,
-            tipoAlternativa: { 
-              connect: { 
-                id: alt.tipoAlternativaId
-              } 
-            }
-          }))
+          create: await Promise.all(
+            shuffleArray(questao.alternativas).map(async (alternativa) => {
+              const tipoAlternativaId = tiposPorNome[alternativa.tipoAlternativa];
+              if (!tipoAlternativaId) {
+                throw new Error(`Tipo de alternativa ${alternativa.tipoAlternativa} não encontrado`);
+              }
+              return {
+                texto: alternativa.texto,
+                tipoAlternativaId: tipoAlternativaId
+              }
+            })
+          )
         }
       }
     });

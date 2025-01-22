@@ -1,77 +1,221 @@
-import { QuestaoType } from '@/types/questionario';
+'use client';
 
-const STORAGE_KEY = 'questionario';
-const INFO_KEY = 'informacoes';
+import { ResultadoCalculado } from '@/types/questionario';
 
-interface StorageData {
-  questoes: QuestaoType[];
-  respostas: Record<string, string>;
-  informacoes: {
-    nome_autor?: string;
+const RESPOSTAS_STORAGE_KEY = 'respostas_data';
+const CONTEXTO_STORAGE_KEY = 'contexto_data';
+const ANALISE_STORAGE_KEY = 'analise_data';
+const RESULTADOS_STORAGE_KEY = 'resultados_questionario';
+const TIPOS_STORAGE_KEY = 'tipos_questionario';
+
+interface RespostaData {
+  tipoQuestaoId: string;
+  tipoAlternativaId: string;
+}
+
+interface ContextoData {
+  nome_autor: string;
+  nome_pretendente: string;
+  historia_relacionamento: string;
+}
+
+interface TiposQuestionario {
+  temperamento: {
+    principal: string;
+    secundario: string;
+  };
+  linguagem: {
+    principal: string;
+    secundario: string;
+  };
+  temperamentoAutor: {
+    principal: string;
+    secundario: string;
+  };
+  linguagemAutor: {
+    principal: string;
+    secundario: string;
   };
 }
 
-export const salvarInformacoes = (informacoes: { nome_autor: string }) => {
-  localStorage.setItem(INFO_KEY, JSON.stringify(informacoes));
-};
-
-export const salvarResposta = (questao: QuestaoType, resposta: string) => {
-  const data = obterDados();
-  const chaveResposta = questao.tipo === 'input' ? 
-    `input_${questao.id}` : 
-    `${questao.tipo}_${questao.id}`;
-
-  const novasRespostas = {
-    ...data.respostas,
-    [chaveResposta]: resposta
-  };
-  
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    ...data,
-    respostas: novasRespostas
-  }));
-};
-
-export const salvarQuestoes = (questoes: QuestaoType[]) => {
-  const data = obterDados();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    ...data,
-    questoes
-  }));
-};
-
-export const obterDados = (): StorageData => {
-  const questionarioData = localStorage.getItem(STORAGE_KEY);
-  const informacoesData = localStorage.getItem(INFO_KEY);
-
-  const baseData = {
-    questoes: [],
-    respostas: {},
-    informacoes: {}
-  };
-
-  if (!questionarioData && !informacoesData) {
-    return baseData;
+export const salvarResposta = (
+  questaoId: string,
+  tipoQuestaoId: string,
+  tipoAlternativaId: string
+) => {
+  if (!questaoId || !tipoQuestaoId || !tipoAlternativaId) {
+    console.error('Dados inválidos para salvar resposta:', { questaoId, tipoQuestaoId, tipoAlternativaId });
+    return;
   }
 
-  const questionario = questionarioData ? JSON.parse(questionarioData) : baseData;
-  const informacoes = informacoesData ? JSON.parse(informacoesData) : {};
-
-  return {
-    ...questionario,
-    informacoes
-  };
+  try {
+    const data = localStorage.getItem(RESPOSTAS_STORAGE_KEY);
+    const respostas = data ? JSON.parse(data) : {};
+    
+    const novasRespostas = {
+      ...respostas,
+      [questaoId]: {
+        tipoQuestaoId,
+        tipoAlternativaId
+      }
+    };
+    
+    localStorage.setItem(RESPOSTAS_STORAGE_KEY, JSON.stringify(novasRespostas));
+  } catch (error) {
+    console.error('Erro ao salvar resposta:', error);
+  }
 };
 
-export const limparDados = () => {
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem(INFO_KEY);
+export const obterRespostas = (): Record<string, RespostaData> => {
+  if (typeof window === 'undefined') {
+    return {};
+  }
+
+  const data = localStorage.getItem(RESPOSTAS_STORAGE_KEY);
+  if (!data) {
+    return {};
+  }
+
+  try {
+    const respostas = JSON.parse(data);
+    return respostas;
+  } catch (error) {
+    console.error('Erro ao parsear respostas:', error);
+    return {};
+  }
 };
 
-export const obterResposta = (questao: QuestaoType): string | undefined => {
-  const data = obterDados();
-  const chaveResposta = questao.tipo === 'input' ? 
-    `input_${questao.id}` : 
-    `${questao.tipo}_${questao.id}`;
-  return data.respostas[chaveResposta];
+export const salvarDadosContexto = (dados: ContextoData) => {
+  localStorage.setItem(CONTEXTO_STORAGE_KEY, JSON.stringify(dados));
+};
+
+export const obterDadosContexto = (): ContextoData | null => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const data = localStorage.getItem(CONTEXTO_STORAGE_KEY);
+  if (!data) {
+    return null;
+  }
+
+  return JSON.parse(data);
+};
+
+export const limparRespostas = () => {
+  localStorage.removeItem(RESPOSTAS_STORAGE_KEY);
+};
+
+export const limparDadosContexto = () => {
+  localStorage.removeItem(CONTEXTO_STORAGE_KEY);
+};
+
+export const limparTodosDados = () => {
+  limparRespostas();
+  limparDadosContexto();
+};
+
+export const salvarAnalise = (analise: {
+  titulo: string;
+  subtitulo: string;
+  paragrafos: string[];
+}) => {
+  localStorage.setItem(ANALISE_STORAGE_KEY, JSON.stringify(analise));
+};
+
+export const obterAnalise = () => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  const data = localStorage.getItem(ANALISE_STORAGE_KEY);
+  return data ? JSON.parse(data) : null;
+};
+
+export const limparAnalise = () => {
+  localStorage.removeItem(ANALISE_STORAGE_KEY);
+};
+
+export const salvarResultadosQuestionario = (resultado: ResultadoCalculado) => {  
+  
+  if (typeof window === 'undefined') {    
+    return;
+  }
+
+  try {
+    localStorage.setItem(RESULTADOS_STORAGE_KEY, JSON.stringify(resultado));    
+  } catch (error) {
+    console.error('Erro ao salvar resultados:', error);
+  }
+};
+
+export const obterResultadosQuestionario = (): ResultadoCalculado | null => {
+  if (typeof window === 'undefined') {
+    console.error('Ambiente de navegador não detectado');
+    return null;
+  }
+
+  const data = localStorage.getItem(RESULTADOS_STORAGE_KEY);
+  console.log('Dados brutos do localStorage:', data);
+
+  if (!data) {
+    console.error('Nenhum resultado encontrado no localStorage');
+    return null;
+  }
+
+  try {
+    const resultado = JSON.parse(data);
+    console.log('Resultado parseado:', resultado);
+    return resultado;
+  } catch (error) {
+    console.error('Erro ao parsear resultados:', error);
+    return null;
+  }
+};
+
+export const limparResultadosQuestionario = () => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  localStorage.removeItem(RESULTADOS_STORAGE_KEY);
+};
+
+export const salvarTiposQuestionario = (tipos: TiposQuestionario) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  try {
+    localStorage.setItem(TIPOS_STORAGE_KEY, JSON.stringify(tipos));
+  } catch (error) {
+    console.error('Erro ao salvar tipos:', error);
+  }
+};
+
+export const obterTiposQuestionario = (): TiposQuestionario | null => {
+  if (typeof window === 'undefined') {
+    console.warn('Tentativa de obter tipos em ambiente sem localStorage');
+    return null;
+  }
+
+  const tiposString = localStorage.getItem(TIPOS_STORAGE_KEY);
+   
+  if (!tiposString) {
+    console.warn('Nenhum tipo encontrado no localStorage');
+    return null;
+  }
+
+  try {
+    const tipos = JSON.parse(tiposString);
+    return tipos;
+  } catch (error) {
+    console.error('Erro ao parsear tipos:', error);
+    return null;
+  }
+};
+
+export const limparTiposQuestionario = () => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  localStorage.removeItem(TIPOS_STORAGE_KEY);
 };

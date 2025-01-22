@@ -1,14 +1,15 @@
+'use client';
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { formatarTextoComNome } from "@/utils/format";
 
 interface QuestaoProps {
   pergunta: string;
   complemento?: string;
-  tipo: 'input' | 'temperamento' | 'linguagem' | 'temperamento_autor' | 'linguagem_autor';
+  tipo: 'input' | 'textarea' | 'TEMPERAMENTO' | 'LINGUAGEM' | 'TEMPERAMENTO_AUTOR' | 'LINGUAGEM_AUTOR';
   opcoes?: Array<{ 
     valor: number; 
     texto: string;
@@ -20,7 +21,9 @@ interface QuestaoProps {
   progresso: number;
   isUltima?: boolean;
   isPrimeira?: boolean;
+  nomeAutor?: string;
   nomePretendente?: string;
+  isLoading?: boolean;
 }
 
 export function Questao({
@@ -35,7 +38,9 @@ export function Questao({
   progresso,
   isUltima = false,
   isPrimeira = false,
+  nomeAutor,
   nomePretendente,
+  isLoading = false,
 }: QuestaoProps) {
   const [localValor, setLocalValor] = useState(valor);
 
@@ -44,8 +49,15 @@ export function Questao({
     setLocalValor(valor);
   }, [pergunta, valor]);
 
+  const handleChange = (novoValor: string) => {
+    setLocalValor(novoValor);
+    onChange(novoValor);
+  };
+
   const handleNext = () => {
-    onNext();
+    if (localValor.trim() && onNext) {
+      onNext();
+    }
   };
 
   const handleOpcaoClick = (novoValor: number) => {
@@ -53,6 +65,18 @@ export function Questao({
     setLocalValor(valorString);
     onChange(valorString);
   };
+
+  // Formata o texto substituindo as variáveis
+  const formatarTexto = (texto: string | undefined) => {
+    if (!texto) return '';
+    
+    return texto
+      .replace('{nome}', nomePretendente || '')
+      .replace('{nome_autor}', nomeAutor || '');
+  };
+
+  // Garante que opcoes é sempre um array
+  const opcoesArray = Array.isArray(opcoes) ? opcoes : [];
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-50 via-white to-pink-50 px-4">
@@ -77,135 +101,113 @@ export function Questao({
           {/* Pergunta e Complemento */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={pergunta} // Força nova animação quando a pergunta muda
+              key={pergunta}
               className="space-y-3 text-left px-4"
             >
               <motion.h2 
                 className="text-2xl font-medium text-gray-900 leading-tight"
-                dangerouslySetInnerHTML={{ __html: formatarTextoComNome(pergunta, nomePretendente) }}
+                dangerouslySetInnerHTML={{ __html: formatarTexto(pergunta) }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ 
-                  duration: 0.2,
-                  ease: "easeOut"
-                }}
+                transition={{ duration: 0.2 }}
               />
               {complemento && (
                 <motion.p 
                   className="text-base font-normal text-gray-500 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: formatarTextoComNome(complemento, nomePretendente) }}
+                  dangerouslySetInnerHTML={{ __html: formatarTexto(complemento) }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ 
-                    duration: 0.2,
-                    delay: 0.05,
-                    ease: "easeOut"
-                  }}
+                  transition={{ duration: 0.2 }}
                 />
               )}
             </motion.div>
           </AnimatePresence>
 
-          {/* Área de Resposta */}
-          <div className="space-y-6 w-full">
-            {tipo === 'input' ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
-                className="space-y-8"
-              >
-                <Input
+          {/* Campo de Input ou Opções */}
+          <motion.div
+            className="space-y-4 w-full px-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {tipo === 'input' || tipo === 'textarea' ? (
+              tipo === 'textarea' ? (
+                <textarea
+                  className="w-full text-lg p-6 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-purple-400 transition-colors min-h-[150px] resize-none bg-white shadow-sm"
                   value={localValor}
-                  onChange={(e) => {
-                    const novoValor = e.target.value;
-                    setLocalValor(novoValor);
-                    onChange(novoValor);
-                  }}
-                  placeholder="Digite sua resposta"
+                  onChange={(e) => handleChange(e.target.value)}
+                  placeholder="Digite sua resposta aqui..."
+                />
+              ) : (
+                <Input
+                  type="text"
+                  value={localValor}
+                  onChange={(e) => handleChange(e.target.value)}
                   className="w-full text-lg p-6 h-14 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-purple-400 transition-colors text-center bg-white shadow-sm"
+                  placeholder="Digite sua resposta aqui..."
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && localValor.trim()) {
                       handleNext();
                     }
                   }}
                 />
-                <Button
-                  onClick={handleNext}
-                  disabled={!localValor.trim()}
-                  className="w-full bg-purple-600 hover:bg-purple-700 h-14 text-base font-medium rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isUltima ? 'Ver Resultado' : 'Continuar'}
-                </Button>
-              </motion.div>
+              )
             ) : (
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={pergunta} // Isso força uma nova animação quando a pergunta muda
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="grid gap-3"
-                >
-                  {opcoes.map((opcao) => (
-                    <motion.div
-                      key={opcao.valor}
-                      initial={{ opacity: 0 }}
-                      animate={{ 
-                        opacity: 1,
-                        transition: {
-                          duration: 0.2,
-                          delay: opcao.valor * 0.05
-                        }
-                      }}
-                      exit={{ 
-                        opacity: 0,
-                        transition: {
-                          duration: 0.1,
-                          delay: (opcoes.length - opcao.valor - 1) * 0.02
-                        }
-                      }}
-                    >
-                      <Button
-                        onClick={() => handleOpcaoClick(opcao.valor)}
-                        variant={localValor === String(opcao.valor) ? "default" : "outline"}
-                        className={`w-full min-h-[60px] text-left justify-start p-4 text-base font-normal transition-all transform hover:scale-[1.02] active:scale-[0.98] whitespace-normal shadow-sm ${
-                          localValor === String(opcao.valor)
-                            ? 'bg-purple-600 text-white hover:bg-purple-700 border-none' 
-                            : 'hover:bg-white hover:border-purple-200 bg-white'
-                        }`}
-                      >
-                        {opcao.texto}
-                      </Button>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </AnimatePresence>
+              <div className="grid gap-3">
+                {opcoesArray.map((opcao) => (
+                  <Button
+                    key={opcao.valor}
+                    onClick={() => handleOpcaoClick(opcao.valor)}
+                    className={`w-full p-6 h-auto text-left flex items-start justify-start whitespace-normal font-normal ${
+                      String(opcao.valor) === localValor
+                        ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                        : 'bg-white hover:bg-purple-50 text-gray-700 border-2 border-gray-200'
+                    }`}
+                  >
+                    <span dangerouslySetInnerHTML={{ __html: formatarTexto(opcao.texto) }} />
+                  </Button>
+                ))}
+              </div>
             )}
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Botão Voltar */}
-        {!isPrimeira && onBack && (
+          {/* Botões de Navegação */}
           <motion.div
+            className="flex flex-col w-full px-4 pt-4 space-y-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
-            className="mt-8 flex justify-center"
           >
-            <Button
-              variant="ghost"
-              onClick={onBack}
-              className="text-gray-400 hover:text-purple-600 hover:bg-purple-50 gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Voltar
-            </Button>
+            {tipo === 'input' || tipo === 'textarea' ? (
+              <Button
+                onClick={handleNext}
+                disabled={!localValor.trim() || isLoading}
+                className="w-full bg-purple-600 hover:bg-purple-700 h-14 text-base font-medium rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? (
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : isUltima ? (
+                  'Finalizar'
+                ) : (
+                  'Continuar'
+                )}
+              </Button>
+            ) : null}
+
+            {!isPrimeira && onBack && (
+              <Button
+                onClick={onBack}
+                variant="ghost"
+                className="w-full text-gray-400 hover:text-purple-600 hover:bg-purple-50 gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Voltar
+              </Button>
+            )}
           </motion.div>
-        )}
+        </motion.div>
       </div>
     </div>
   );

@@ -1,14 +1,16 @@
 'use client';
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CheckCircle2, Heart, Lightbulb, MessageCircle, Target, Users2 } from "lucide-react";
 import { DepoimentoCard } from "@/components/layout/depoimento-card";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
       <Header />
@@ -25,11 +27,12 @@ export default function Home() {
                 Entenda profundamente o temperamento e a linguagem do amor do seu pretendente 
                 para criar uma conexão verdadeira e duradoura.
               </p>
-              <Link href="/questionario">
-                <Button className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-6 text-lg rounded-full">
-                  Descobrir Agora
-                </Button>
-              </Link>
+              <Button
+                onClick={() => router.push('/formulario-contexto')}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+              >
+                Iniciar Questionário
+              </Button>
             </div>
           </div>
         </section>
@@ -41,7 +44,7 @@ export default function Home() {
               Transforme Seu Relacionamento
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
-              <Card className="p-6 hover:shadow-lg transition-shadow">
+              <div className="p-6 hover:shadow-lg transition-shadow">
                 <div className="flex flex-col items-center text-center">
                   <Heart className="w-12 h-12 text-purple-600 mb-4" />
                   <h3 className="text-xl font-semibold mb-2">Conexão Mais Profunda</h3>
@@ -49,9 +52,9 @@ export default function Home() {
                     Entenda as necessidades emocionais dele e crie uma conexão genuína e duradoura.
                   </p>
                 </div>
-              </Card>
+              </div>
 
-              <Card className="p-6 hover:shadow-lg transition-shadow">
+              <div className="p-6 hover:shadow-lg transition-shadow">
                 <div className="flex flex-col items-center text-center">
                   <MessageCircle className="w-12 h-12 text-purple-600 mb-4" />
                   <h3 className="text-xl font-semibold mb-2">Comunicação Efetiva</h3>
@@ -59,9 +62,9 @@ export default function Home() {
                     Aprenda a se comunicar de forma que ele realmente entenda e se sinta valorizado.
                   </p>
                 </div>
-              </Card>
+              </div>
 
-              <Card className="p-6 hover:shadow-lg transition-shadow">
+              <div className="p-6 hover:shadow-lg transition-shadow">
                 <div className="flex flex-col items-center text-center">
                   <Lightbulb className="w-12 h-12 text-purple-600 mb-4" />
                   <h3 className="text-xl font-semibold mb-2">Insights Valiosos</h3>
@@ -69,7 +72,7 @@ export default function Home() {
                     Descubra padrões de comportamento e como lidar com diferentes situações.
                   </p>
                 </div>
-              </Card>
+              </div>
             </div>
           </div>
         </section>
@@ -133,11 +136,12 @@ export default function Home() {
             <p className="text-xl mb-8 text-purple-100">
               Comece agora mesmo a jornada para uma conexão mais profunda e significativa.
             </p>
-            <Link href="/questionario">
-              <Button className="bg-white text-purple-600 hover:bg-purple-50 px-8 py-6 text-lg rounded-full">
-                Começar Análise Gratuita
-              </Button>
-            </Link>
+            <Button
+              onClick={() => router.push('/formulario-contexto')}
+              className="bg-white text-purple-600 hover:bg-purple-50 px-8 py-6 text-lg rounded-full"
+            >
+              Começar Análise Gratuita
+            </Button>
           </div>
         </section>
 

@@ -2,16 +2,34 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Clock, Heart, MessageCircle, ShieldCheck, Target } from 'lucide-react';
 import { ResultadoCalculado } from '@/types/questionario';
-import { calcularResultado } from '@/data';
-import { obterDados } from '@/utils/storage';
-import { TEMPERAMENTOS, LINGUAGENS } from '@/data/constantes';
-import { Countdown } from '@/components/countdown';
+import { calcularResultado } from '@/lib/actions/resultado-actions';
+import { obterRespostas, obterDadosContexto, obterAnalise, salvarAnalise, obterResultadosQuestionario } from '@/utils/storage';
 import { Loading } from '@/components/ui/loading';
+import Image from 'next/image';
+import { Countdown } from '@/components/countdown';
 
-function Headline({ nomeAutor, nomePretendente }: { nomeAutor: string; nomePretendente: string }) {
+const TEMPERAMENTOS: Record<string, string> = {
+  FLEUMATICO: 'Fleumático',
+  MELANCOLICO: 'Melancólico',
+  COLERICO: 'Colérico',
+  SANGUINIO: 'Sanguíneo'
+};
+
+const LINGUAGENS: Record<string, string> = {
+  PRESENTES: 'Presentes',
+  ATOS_DE_SERVICO: 'Atos de Serviço',
+  TEMPO_DE_QUALIDADE: 'Tempo de Qualidade',
+  PALAVRAS_DE_AFIRMACAO: 'Palavras de Afirmação',
+  TOQUE_FISICO: 'Toque Físico'
+};
+
+function Headline({ nome_autor, nome_pretendente }: { nome_autor: string; nome_pretendente: string }) {
+  if (!nome_pretendente) {
+    throw new Error('Nome do pretendente não encontrado');
+  }
+
   return (
     <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 text-white py-12 md:py-20 px-4 relative overflow-hidden">
       {/* Elementos decorativos de fundo */}
@@ -27,34 +45,38 @@ function Headline({ nomeAutor, nomePretendente }: { nomeAutor: string; nomePrete
         </div>
 
         <h1 className="text-3xl md:text-5xl font-bold mb-6 md:mb-8 drop-shadow-lg leading-tight">
-          <span className="block mb-2">Parabéns, {nomeAutor}!</span>
+          <span className="block mb-2">Parabéns, {nome_autor}!</span>
           <span className="block text-pink-200">
-            Descobrimos o Caminho Direto para o Coração de {nomePretendente}
+            Descobrimos o Caminho Direto para o Coração de {nome_pretendente}
           </span>
         </h1>
 
         <p className="text-lg md:text-2xl font-medium leading-relaxed max-w-3xl mx-auto text-pink-50">
           Em poucos minutos, você terá acesso ao guia mais poderoso e personalizado 
-          para criar uma conexão irresistível com {nomePretendente}.
+          para criar uma conexão irresistível com {nome_pretendente}.
         </p>
       </div>
     </div>
   );
 }
 
-function Introducao({ nomePretendente }: { nomePretendente: string }) {
+function Introducao({ nome_pretendente }: { nome_pretendente: string }) {
+  if (!nome_pretendente) {
+    throw new Error('Nome do pretendente não encontrado');
+  }
+
   return (
     <div className="bg-white py-12 md:py-16 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center space-y-6">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 max-w-3xl mx-auto leading-tight">
-            E se você pudesse entender exatamente o que {nomePretendente} precisa 
+            E se você pudesse entender exatamente o que {nome_pretendente} precisa 
             para se sentir verdadeiramente amado?
           </h2>
           
           <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Através de nossa análise avançada, identificamos padrões únicos na personalidade 
-            de {nomePretendente} que a maioria das pessoas nunca perceberá. 
+            de {nome_pretendente} que a maioria das pessoas nunca perceberá. 
             <span className="font-semibold text-purple-700"> E isso muda tudo.</span>
           </p>
 
@@ -79,14 +101,14 @@ function Introducao({ nomePretendente }: { nomePretendente: string }) {
 }
 
 function ResultadosIniciais({ 
-  nomePretendente, 
+  nome_pretendente, 
   temperamentoPrincipal, 
   temperamentoSecundario,
   linguagemPrincipal,
   linguagemSecundaria,
   analise
 }: { 
-  nomePretendente: string;
+  nome_pretendente: string;
   temperamentoPrincipal: string;
   temperamentoSecundario: string;
   linguagemPrincipal: string;
@@ -97,122 +119,82 @@ function ResultadosIniciais({
     paragrafos: string[];
   }
 }) {
+  if (!nome_pretendente) {
+    throw new Error('Nome do pretendente não encontrado');
+  }
+
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-purple-50 py-16 md:py-20 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="inline-block bg-purple-100 px-6 py-2 rounded-full text-purple-700 font-medium mb-4">
-            Análise Personalizada
-          </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Revelando os Segredos do Coração de {nomePretendente}
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Nossa análise avançada revelou aspectos únicos da personalidade dele que 
-            podem ser a chave para uma conexão profunda e duradoura.
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Card do Temperamento */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 transform hover:scale-105 transition-transform duration-300">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                <Target className="w-6 h-6 text-purple-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800">Perfil de Temperamento</h3>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="bg-purple-50 rounded-lg p-4">
-                <div className="text-sm text-purple-600 font-medium mb-1">Temperamento Principal</div>
-                <div className="text-2xl font-bold text-purple-700">{temperamentoPrincipal}</div>
-              </div>
-              
-              <div className="bg-purple-50/50 rounded-lg p-4">
-                <div className="text-sm text-purple-600 font-medium mb-1">Influência Secundária</div>
-                <div className="text-xl font-semibold text-purple-600">{temperamentoSecundario}</div>
-              </div>
-            </div>
-          </div>
+    <section className="bg-gradient-to-br from-purple-50 to-indigo-100 py-16 px-4 md:px-8 lg:px-16">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+          Análise Personalizada
+        </h2>
+        <h3 className="text-2xl md:text-3xl font-semibold text-indigo-700 mb-8">
+          Revelando os Segredos do Coração de {nome_pretendente}
+        </h3>
+        <p className="text-lg text-gray-600 mb-12 leading-relaxed">
+          Nossa análise avançada revelou aspectos únicos da personalidade dele que podem ser a chave para uma conexão profunda e duradoura.
+        </p>
 
-          {/* Card da Linguagem do Amor */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 transform hover:scale-105 transition-transform duration-300">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center">
-                <Heart className="w-6 h-6 text-pink-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800">Linguagem do Amor</h3>
-            </div>
-            
-            <div className="space-y-4">
-              <div className="bg-pink-50 rounded-lg p-4">
-                <div className="text-sm text-pink-600 font-medium mb-1">Linguagem Principal</div>
-                <div className="text-2xl font-bold text-pink-700">{linguagemPrincipal}</div>
-              </div>
-              
-              <div className="bg-pink-50/50 rounded-lg p-4">
-                <div className="text-sm text-pink-600 font-medium mb-1">Linguagem Secundária</div>
-                <div className="text-xl font-semibold text-pink-600">{linguagemSecundaria}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Seção de Análise do Casal */}
-        <div className="mt-12">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg relative overflow-hidden">
-            {/* Elementos decorativos */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-purple-100 rounded-full blur-3xl opacity-30 -translate-x-16 -translate-y-16" />
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-pink-100 rounded-full blur-3xl opacity-30 translate-x-16 translate-y-16" />
-            
-            <div className="relative">
-              <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                </div>
-              </div>
-
-              <h3 className="text-2xl font-bold text-gray-900 text-center mb-2">
-                {analise.titulo}
-              </h3>
-              <p className="text-lg text-purple-600 text-center mb-6 font-medium">
-                {analise.subtitulo}
+        {/* Perfil de Temperamento */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 text-left">
+          <h4 className="text-2xl font-bold text-indigo-800 mb-6">
+            Perfil de Temperamento
+          </h4>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h5 className="text-xl font-semibold text-gray-700 mb-4">
+                Temperamento Principal
+              </h5>
+              <p className="text-lg text-gray-600">
+                {temperamentoPrincipal}
               </p>
-
-              <div className="relative max-w-4xl mx-auto">
-                <div className="absolute -left-2 -top-4 text-6xl text-purple-400 opacity-50">&quot;</div>
-                <div className="absolute -right-2 -bottom-4 text-6xl text-purple-400 opacity-50 transform rotate-180">&quot;</div>
-                <div className="space-y-6 px-8 py-4">
-                  {analise.paragrafos?.map((paragrafo, index) => (
-                    <p 
-                      key={index} 
-                      className="text-lg text-gray-700 leading-relaxed text-left"
-                    >
-                      {paragrafo}
-                    </p>
-                  ))}
-                </div>
-              </div>
+            </div>
+            <div>
+              <h5 className="text-xl font-semibold text-gray-700 mb-4">
+                Influência Secundária
+              </h5>
+              <p className="text-lg text-gray-600">
+                {temperamentoSecundario}
+              </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-            <span className="font-semibold text-purple-700">Momento decisivo:</span> Você tem em mãos informações 
-            que menos de 1% das pessoas têm sobre {nomePretendente}. A questão é: você está pronta para usar esse 
-            conhecimento da maneira certa?
-          </p>
+        {/* Linguagem do Amor */}
+        <div className="bg-white rounded-xl shadow-lg p-8 text-left">
+          <h4 className="text-2xl font-bold text-indigo-800 mb-6">
+            Linguagem do Amor
+          </h4>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div>
+              <h5 className="text-xl font-semibold text-gray-700 mb-4">
+                Linguagem Principal
+              </h5>
+              <p className="text-lg text-gray-600">
+                {linguagemPrincipal}
+              </p>
+            </div>
+            <div>
+              <h5 className="text-xl font-semibold text-gray-700 mb-4">
+                Linguagem Secundária
+              </h5>
+              <p className="text-lg text-gray-600">
+                {linguagemSecundaria}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-function ApresentacaoGuia({ nomePretendente }: { nomePretendente: string }) {
+function ApresentacaoGuia({ nome_pretendente }: { nome_pretendente: string }) {
+  if (!nome_pretendente) {
+    throw new Error('Nome do pretendente não encontrado');
+  }
+
   return (
     <div className="bg-gradient-to-br from-purple-900 to-pink-900 py-16 md:py-20 px-4 relative overflow-hidden">
       {/* Elementos decorativos */}
@@ -229,11 +211,11 @@ function ApresentacaoGuia({ nomePretendente }: { nomePretendente: string }) {
             </div>
             
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
-              Match Perfeito: Seu Guia Personalizado para Conquistar {nomePretendente}
+              Match Perfeito: Seu Guia Personalizado para Conquistar {nome_pretendente}
             </h2>
             
             <p className="text-lg text-pink-100 mb-8 leading-relaxed">
-              Um guia estratégico e personalizado que transforma sua compreensão sobre {nomePretendente} 
+              Um guia estratégico e personalizado que transforma sua compreensão sobre {nome_pretendente} 
               em ações práticas e efetivas para criar uma conexão profunda e duradoura.
             </p>
 
@@ -361,13 +343,17 @@ function Beneficios({
   );
 }
 
-function Oferta({ nomePretendente }: { nomePretendente: string }) {
+function Oferta({ nome_pretendente }: { nome_pretendente: string }) {
+  if (!nome_pretendente) {
+    throw new Error('Nome do pretendente não encontrado');
+  }
+
   return (
     <div className="bg-gradient-to-br from-purple-50 via-white to-pink-50 py-16 md:py-20 px-4">
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Invista no Seu Futuro com {nomePretendente}
+            Invista no Seu Futuro com {nome_pretendente}
           </h2>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
@@ -432,7 +418,7 @@ function Oferta({ nomePretendente }: { nomePretendente: string }) {
               </ul>
 
               <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-lg font-bold py-4 px-8 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl">
-                QUERO CONQUISTAR {nomePretendente.toUpperCase()}
+                QUERO CONQUISTAR {(nome_pretendente || '').toUpperCase()}
               </button>
             </div>
           </div>
@@ -462,7 +448,11 @@ function Oferta({ nomePretendente }: { nomePretendente: string }) {
   );
 }
 
-function Urgencia({ nomePretendente }: { nomePretendente: string }) {
+function Urgencia({ nome_pretendente }: { nome_pretendente: string }) {
+  if (!nome_pretendente) {
+    throw new Error('Nome do pretendente não encontrado');
+  }
+
   return (
     <div className="bg-white py-12 md:py-16 px-4">
       <div className="max-w-4xl mx-auto">
@@ -500,7 +490,7 @@ function Urgencia({ nomePretendente }: { nomePretendente: string }) {
               resultado: "Noivos há 2 meses"
             }
           ].map((depoimento, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg p-6">
+            <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg relative overflow-hidden">
               <div className="flex gap-4 items-start">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex-shrink-0" />
                 <div>
@@ -527,7 +517,7 @@ function Urgencia({ nomePretendente }: { nomePretendente: string }) {
               </h3>
               <p className="text-gray-700 mb-4">
                 Se em até 7 dias você não perceber uma melhora significativa na sua conexão 
-                com {nomePretendente} ou não estiver 100% satisfeita com o conteúdo, 
+                com {nome_pretendente} ou não estiver 100% satisfeita com o conteúdo, 
                 devolvemos todo seu investimento. Sem perguntas, sem complicação.
               </p>
               <div className="flex items-center gap-4 text-sm text-gray-600">
@@ -560,142 +550,85 @@ function Urgencia({ nomePretendente }: { nomePretendente: string }) {
 
 export default function Resultado() {
   const router = useRouter();
-  const [resultado, setResultado] = useState<ResultadoCalculado | null>(null);
-  const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState<string | null>(null);
-  const calculandoRef = useRef(false);
+  const [resultado, setResultado] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let mounted = true;
-
-    async function carregarResultado() {
-      if (calculandoRef.current || resultado) return;
-
+    const fetchResultado = () => {
       try {
-        // Verifica se há dados salvos
-        const dados = obterDados();
-        if (!dados.questoes.length) {
-          router.replace('/');
+        // Check if running in browser environment
+        if (typeof window === 'undefined') {
+          console.error('Ambiente de navegador não detectado');
+          router.push('/');
           return;
         }
 
-        // Verifica se todas as questões foram respondidas
-        const questoesRespondidas = dados.questoes.every(q => 
-          q.tipo === 'input' ? 
-            dados.respostas[`input_${q.id}`] : 
-            dados.respostas[`${q.tipo}_${q.id}`]
+        // Recuperar diretamente do localStorage
+        const resultadoSalvo = JSON.parse(
+          localStorage.getItem('resultados_questionario') || 'null'
         );
 
-        if (!questoesRespondidas) {
-          setErro('Algumas questões não foram respondidas');
-          setCarregando(false);
+        console.group('Diagnóstico de Resultado');
+        console.log('Resultado Salvo:', resultadoSalvo);
+        console.groupEnd();
+
+        if (!resultadoSalvo) {
+          console.error('Sem resultado salvo');
+          router.push('/');
           return;
         }
 
-        calculandoRef.current = true;
-        console.log('Iniciando cálculo do resultado...');
-        
-        // Calcula o resultado
-        const resultadoCalculado = await calcularResultado(dados.questoes, dados.respostas);
-        
-        if (!resultadoCalculado) {
-          setErro('Não foi possível calcular o resultado');
-          setCarregando(false);
-          return;
-        }
-
-        if (mounted) {
-          console.log('Resultado calculado, atualizando estado...');
-          setResultado(resultadoCalculado);
-          setCarregando(false);
-        }
+        setResultado(resultadoSalvo);
+        setLoading(false);
       } catch (error) {
-        console.error('Erro ao calcular resultado:', error);
-        if (mounted) {
-          setErro('Ocorreu um erro ao calcular o resultado');
-          setCarregando(false);
-        }
-      } finally {
-        if (mounted) {
-          calculandoRef.current = false;
-        }
+        console.error('Erro ao carregar resultado:', error);
+        setError(error instanceof Error ? error.message : 'Erro desconhecido');
+        router.push('/');
+        setLoading(false);
       }
-    }
-
-    carregarResultado();
-
-    return () => {
-      mounted = false;
     };
-  }, [router, resultado]);
 
-  // Mostra mensagem de erro
-  if (erro) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-xl text-red-600 mb-4">{erro}</p>
-          <button 
-            onClick={() => router.push('/')}
-            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
-          >
-            Voltar ao início
-          </button>
-        </div>
-      </div>
-    );
+    fetchResultado();
+  }, [router]);
+
+  if (loading) {
+    return <div>Carregando...</div>;
   }
 
-  // Mostra loading
-  if (carregando) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <Loading message="Analisando suas respostas e gerando sua análise personalizada..." />
-        </div>
-      </div>
-    );
+  if (error) {
+    return <div>Erro: {error}</div>;
   }
 
-  if (!resultado || !resultado.informacoes) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-xl text-gray-600">Não foi possível carregar os resultados</p>
-          <button 
-            onClick={() => router.push('/')}
-            className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
-          >
-            Voltar ao início
-          </button>
-        </div>
-      </div>
-    );
+  if (!resultado) {
+    return null;
   }
 
-  const { nomeAutor, nomePretendente } = resultado.informacoes;
-  const { temperamentoPretendente, linguagemAmorPretendente } = resultado;
-  const analise = resultado.analise;
+  const {
+    temperamento = { principal: 'Não definido', secundario: 'Não definido' },
+    linguagem = { principal: 'Não definido', secundario: 'Não definido' },
+    informacoes = { nome_pretendente: 'Parceiro(a)' }
+  } = resultado;
 
   return (
-    <div className="min-h-screen bg-white">
-      <Headline nomeAutor={nomeAutor} nomePretendente={nomePretendente} />
-      <Introducao nomePretendente={nomePretendente} />
-      <ResultadosIniciais 
-        nomePretendente={nomePretendente}
-        temperamentoPrincipal={temperamentoPretendente.predominante.nome}
-        temperamentoSecundario={temperamentoPretendente.secundario.nome}
-        linguagemPrincipal={linguagemAmorPretendente.predominante.nome}
-        linguagemSecundaria={linguagemAmorPretendente.secundario.nome}
-        analise={analise}
+    <main>
+      <Headline nome_autor={informacoes.nome_autor} nome_pretendente={informacoes.nome_pretendente} />
+      <Introducao nome_pretendente={informacoes.nome_pretendente} />
+      <ResultadosIniciais
+        nome_pretendente={informacoes.nome_pretendente}
+        temperamentoPrincipal={temperamento.principal}
+        temperamentoSecundario={temperamento.secundario}
+        linguagemPrincipal={linguagem.principal}
+        linguagemSecundaria={linguagem.secundario}
+        analise={resultado.analise}
       />
-      <ApresentacaoGuia nomePretendente={nomePretendente} />
+      <ApresentacaoGuia nome_pretendente={informacoes.nome_pretendente} />
       <Beneficios 
-        temperamentoPrincipal={temperamentoPretendente.predominante.nome}
-        linguagemPrincipal={linguagemAmorPretendente.predominante.nome}
+        temperamentoPrincipal={temperamento.principal}
+        linguagemPrincipal={linguagem.principal}
       />
-      <Oferta nomePretendente={nomePretendente} />
-      <Urgencia nomePretendente={nomePretendente} />
-    </div>
+      <Oferta nome_pretendente={informacoes.nome_pretendente} />
+      <Urgencia nome_pretendente={informacoes.nome_pretendente} />
+    </main>
   );
 }

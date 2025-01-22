@@ -2,20 +2,31 @@
 
 import prisma from '@/lib/prisma'
 import { QuestaoType } from '@/types/questionario'
-import { randomBytes } from 'crypto'
 
-type TipoQuestao = 'temperamento' | 'linguagem' | 'temperamento_autor' | 'linguagem_autor'
+type TipoQuestao = 'TEMPERAMENTO' | 'LINGUAGEM' | 'TEMPERAMENTO_AUTOR' | 'LINGUAGEM_AUTOR'
 
 export async function buscarQuestoesPorTipo(
   tipos: TipoQuestao[], 
   quantidadePorTipo: number
 ): Promise<QuestaoType[]> {
+  //console.log('Buscando questões. Quantidade por tipo:', quantidadePorTipo);
+
   const questoesPromises = tipos.map(async (tipo) => {
+    // Busca o tipo de questão primeiro
+    const tipoQuestao = await prisma.tipoQuestao.findUnique({
+      where: { 
+        nome: tipo 
+      }
+    });
+
+    if (!tipoQuestao) {
+      console.error(`Tipo de questão não encontrado: ${tipo}`);
+      return [];
+    }
+
     const questoes = await prisma.questao.findMany({
       where: { 
-        tipoQuestao: { 
-          nome: tipo.toUpperCase() 
-        } 
+        tipoQuestaoId: tipoQuestao.id
       },
       include: { 
         tipoQuestao: true,
@@ -23,42 +34,63 @@ export async function buscarQuestoesPorTipo(
           include: { tipoAlternativa: true }
         }
       }
-    })
+    });
     
+    // console.log(`Questões encontradas para ${tipo}:`, {
+    //   total: questoes.length,
+    //   selecionadas: Math.min(questoes.length, quantidadePorTipo),
+    //   questoes: questoes.map(q => ({ id: q.id, pergunta: q.pergunta }))
+    // });
+
     // Embaralhar e pegar a quantidade desejada
     const questoesSelecionadas = questoes
       .sort(() => 0.5 - Math.random())
-      .slice(0, quantidadePorTipo)
+      .slice(0, quantidadePorTipo);
     
     // Transformar para o formato QuestaoType
     return questoesSelecionadas.map(questao => ({
       id: questao.id,
-      tipo: questao.tipoQuestao.nome.toLowerCase(),
-      pergunta: questao.pergunta.replace('{nome}', ''),
+      tipoQuestaoId: questao.tipoQuestaoId,
+      tipo: questao.tipoQuestao.nome,
+      pergunta: questao.pergunta,
       complemento: questao.complemento,
-      respostas: Object.fromEntries(
-        questao.alternativas.map((alt, index) => [
-          index + 1, 
-          { 
-            texto: alt.texto, 
-            categoria: alt.tipoAlternativa.nome.toLowerCase() 
-          }
-        ])
-      )
-    }))
-  })
+      alternativas: questao.alternativas.map(alt => ({
+        id: alt.id,
+        texto: alt.texto,
+        tipoAlternativaId: alt.tipoAlternativaId
+      }))
+    }));
+  });
 
-  // Achatar o array de questões
-  const todasQuestoes = (await Promise.all(questoesPromises)).flat()
-  
-  // Adicionar questão de input para nome
-  const questaoNome: QuestaoType = {
-    id: randomBytes(16).toString('hex'),
-    tipo: 'input',
-    pergunta: 'Qual o nome do pretendente?',
-    complemento: 'Por favor, insira o nome completo'
+  // Aguardar todas as promises e achatar o resultado
+  const resultado = (await Promise.all(questoesPromises))
+    .flat();
+
+  // Embaralhar o resultado final
+  const resultadoFinal = resultado.sort(() => 0.5 - Math.random());
+
+  // console.log('Resultado final:', {
+  //   total: resultadoFinal.length,
+  //   porTipo: resultadoFinal.reduce((acc, q) => {
+  //     acc[q.tipo] = (acc[q.tipo] || 0) + 1;
+  //     return acc;
+  //   }, {} as Record<string, number>)
+  // });
+
+  if (resultadoFinal.length === 0) {
+    throw new Error('Nenhuma questão encontrada para os tipos solicitados');
   }
 
-  // Retornar questões misturadas
-  return [questaoNome, ...todasQuestoes].sort(() => 0.5 - Math.random())
+  return resultadoFinal;
+}
+
+export async function consultarTiposAlternativa() {
+  const tipos = await prisma.tipoAlternativa.findMany({
+    include: {
+      tipoQuestao: true
+    }
+  });
+
+  console.log('Tipos de Alternativa:', JSON.stringify(tipos, null, 2));
+  return tipos;
 }

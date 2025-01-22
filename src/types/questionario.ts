@@ -5,52 +5,63 @@ export type CategoriaTemperamento = keyof Temperamentos;
 export type CategoriaLinguagem = keyof Linguagens;
 
 // Tipos para questões
-export interface QuestaoBase {
-  id: string | number;
+export interface QuestaoType {
+  id: string;
+  tipoQuestaoId: string;
   tipo: string;
   pergunta: string;
   complemento?: string;
-}
-
-export interface QuestaoInput extends QuestaoBase {
-  tipo: 'input';
-}
-
-export interface QuestaoMultiplaEscolha extends QuestaoBase {
-  tipo: 'temperamento' | 'linguagem' | 'temperamento_autor' | 'linguagem_autor';
-  respostas: Record<number, {
+  alternativas?: Array<{
+    id: string;
     texto: string;
-    categoria: CategoriaTemperamento | CategoriaLinguagem;
+    tipoAlternativaId: string;
   }>;
 }
 
-export type QuestaoType = QuestaoInput | QuestaoMultiplaEscolha;
-
 // Tipos para resultados
-export interface ResultadoItem {
-  tipo: string;
-  nome: string;
-  pontuacao: number;
-}
-
-export interface ResultadoCategoria {
-  predominante: ResultadoItem;
-  secundario: ResultadoItem;
-  totalRespostas: number;
+export interface ResultadoValores {
+  temperamentoPrincipal: string;
+  temperamentoSecundario: string;
+  totalPontosTemperamento: number;
+  percentualTemperamentoPrincipal: number;
+  percentualTemperamentoSecundario: number;
 }
 
 export interface ResultadoCalculado {
-  informacoes: {
-    nomeAutor: string;
-    nomePretendente: string;
+  temperamento: {
+    principal: string;
+    secundario: string;
+    totalPontos: number;
+    quantidadePrincipal: number;
+    quantidadeSecundario: number;
+    percentualPrincipal: number;
+    percentualSecundario: number;
   };
-  temperamentoPretendente: ResultadoCategoria;
-  linguagemAmorPretendente: ResultadoCategoria;
-  temperamentoAutor: ResultadoCategoria;
-  linguagemAmorAutor: ResultadoCategoria;
-  analise: {
-    titulo: string;
-    subtitulo: string;
-    paragrafos: string[];
+  linguagem: {
+    principal: string;
+    secundario: string;
+    totalPontos: number;
+    quantidadePrincipal: number;
+    quantidadeSecundario: number;
+    percentualPrincipal: number;
+    percentualSecundario: number;
+  };
+  temperamentoAutor: {
+    principal: string;
+    secundario: string;
+    totalPontos: number;
+    quantidadePrincipal: number;
+    quantidadeSecundario: number;
+    percentualPrincipal: number;
+    percentualSecundario: number;
+  };
+  linguagemAutor: {
+    principal: string;
+    secundario: string;
+    totalPontos: number;
+    quantidadePrincipal: number;
+    quantidadeSecundario: number;
+    percentualPrincipal: number;
+    percentualSecundario: number;
   };
 }
