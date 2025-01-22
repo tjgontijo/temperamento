@@ -6,10 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "reset": "sh reset-db.sh",
+    "seed": "ts-node --project prisma/tsconfig.json -r tsconfig-paths/register prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
+    "@prisma/client": "^6.2.1",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.1.4",
     "@radix-ui/react-aspect-ratio": "^1.1.1",
@@ -49,6 +52,7 @@
     "next": "15.1.5",
     "next-themes": "^0.4.4",
     "openai": "^4.79.3",
+    "prisma": "^6.2.1",
     "react": "18.2.0",
     "react-day-picker": "^8.10.1",
     "react-dom": "18.2.0",
@@ -72,6 +76,10 @@
     "eslint-config-next": "15.1.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  },
+  "prisma": {
+    "seed": "ts-node --project prisma/tsconfig.json -r tsconfig-paths/register prisma/seed.ts"
   }
 }
