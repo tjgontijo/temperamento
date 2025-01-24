@@ -93,7 +93,7 @@ export default function QuestionarioPage() {
           'LINGUAGEM',
           'TEMPERAMENTO_AUTOR',
           'LINGUAGEM_AUTOR',
-        ], 8);
+        ], Number(process.env.NEXT_PUBLIC_QUESTOES_QUANTIDADE) || 8);
 
         setQuestoes(questoesCarregadas);
       } catch (error) {
