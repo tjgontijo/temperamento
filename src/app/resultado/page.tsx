@@ -1,29 +1,42 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+// Types específicos
+type ResultadoCategoriaType = {
+  principal: string;
+  secundario: string;
+  totalPontos: number;
+  quantidadePrincipal: number;
+  quantidadeSecundario: number;
+  percentualPrincipal: number;
+  percentualSecundario: number;
+};
+
+type InformacoesContextoType = {
+  nome_autor: string;
+  nome_pretendente: string;
+  historia_relacionamento: string;
+};
+
+type AnaliseCasalType = {
+  titulo: string;
+  subtitulo: string;
+  paragrafos: string[];
+};
+
+type ResultadoCalculadoType = {
+  temperamento: ResultadoCategoriaType;
+  linguagem: ResultadoCategoriaType;
+  temperamentoAutor: ResultadoCategoriaType;
+  linguagemAutor: ResultadoCategoriaType;
+  informacoes?: InformacoesContextoType;
+  analise?: AnaliseCasalType;
+};
+
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Clock, Heart, MessageCircle, ShieldCheck, Target } from 'lucide-react';
-import { ResultadoCalculado } from '@/types/questionario';
-import { calcularResultado } from '@/lib/actions/resultado-actions';
-import { obterRespostas, obterDadosContexto, obterAnalise, salvarAnalise, obterResultadosQuestionario } from '@/utils/storage';
-import { Loading } from '@/components/ui/loading';
+import { Clock, MessageCircle, ShieldCheck } from 'lucide-react';
 import Image from 'next/image';
 import { Countdown } from '@/components/countdown';
-
-const TEMPERAMENTOS: Record<string, string> = {
-  FLEUMATICO: 'Fleumático',
-  MELANCOLICO: 'Melancólico',
-  COLERICO: 'Colérico',
-  SANGUINIO: 'Sanguíneo'
-};
-
-const LINGUAGENS: Record<string, string> = {
-  PRESENTES: 'Presentes',
-  ATOS_DE_SERVICO: 'Atos de Serviço',
-  TEMPO_DE_QUALIDADE: 'Tempo de Qualidade',
-  PALAVRAS_DE_AFIRMACAO: 'Palavras de Afirmação',
-  TOQUE_FISICO: 'Toque Físico'
-};
 
 function Headline({ nome_autor, nome_pretendente }: { nome_autor: string; nome_pretendente: string }) {
   if (!nome_pretendente) {
@@ -162,7 +175,7 @@ function ResultadosIniciais({
         </div>
 
         {/* Linguagem do Amor */}
-        <div className="bg-white rounded-xl shadow-lg p-8 text-left">
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 text-left">
           <h4 className="text-2xl font-bold text-indigo-800 mb-6">
             Linguagem do Amor
           </h4>
@@ -183,6 +196,23 @@ function ResultadosIniciais({
                 {linguagemSecundaria}
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* Análise Detalhada */}
+        <div className="bg-white rounded-xl shadow-lg p-8 text-left">
+          <h4 className="text-2xl font-bold text-indigo-800 mb-6">
+            {analise.titulo}
+          </h4>
+          <h5 className="text-xl font-semibold text-gray-700 mb-6">
+            {analise.subtitulo}
+          </h5>
+          <div className="space-y-4">
+            {analise.paragrafos.map((paragrafo, index) => (
+              <p key={index} className="text-lg text-gray-600 leading-relaxed">
+                {paragrafo}
+              </p>
+            ))}
           </div>
         </div>
       </div>
@@ -550,85 +580,110 @@ function Urgencia({ nome_pretendente }: { nome_pretendente: string }) {
 
 export default function Resultado() {
   const router = useRouter();
-  const [resultado, setResultado] = useState<any>(null);
+  const [resultado, setResultado] = useState<ResultadoCalculadoType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchResultado = () => {
+    const carregarResultados = () => {
       try {
-        // Check if running in browser environment
+        // Verificar se estamos no cliente
         if (typeof window === 'undefined') {
-          console.error('Ambiente de navegador não detectado');
-          router.push('/');
           return;
         }
 
-        // Recuperar diretamente do localStorage
-        const resultadoSalvo = JSON.parse(
-          localStorage.getItem('resultados_questionario') || 'null'
-        );
-
-        console.group('Diagnóstico de Resultado');
-        console.log('Resultado Salvo:', resultadoSalvo);
-        console.groupEnd();
-
-        if (!resultadoSalvo) {
-          console.error('Sem resultado salvo');
-          router.push('/');
-          return;
+        const resultadosString = localStorage.getItem('resultados_questionario');
+        if (!resultadosString) {
+          throw new Error('Nenhum resultado encontrado');
         }
 
-        setResultado(resultadoSalvo);
+        const resultadosCarregados = JSON.parse(resultadosString) as ResultadoCalculadoType;
+        if (!resultadosCarregados.informacoes?.nome_pretendente) {
+          throw new Error('Dados incompletos');
+        }
+
+        setResultado(resultadosCarregados);
         setLoading(false);
-      } catch (error) {
-        console.error('Erro ao carregar resultado:', error);
-        setError(error instanceof Error ? error.message : 'Erro desconhecido');
-        router.push('/');
+      } catch (err) {
+        console.error('Erro ao carregar resultados:', err);
+        setError(err instanceof Error ? err.message : 'Erro desconhecido');
         setLoading(false);
+        router.push('/questionario');
       }
     };
 
-    fetchResultado();
+    carregarResultados();
   }, [router]);
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+        <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
   }
 
-  if (error) {
-    return <div>Erro: {error}</div>;
+  if (error || !resultado || !resultado.informacoes) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+            Ops! Algo deu errado.
+          </h1>
+          <p className="text-gray-600 mb-8">
+            {error || 'Não foi possível carregar os resultados.'}
+          </p>
+          <button
+            onClick={() => router.push('/questionario')}
+            className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            Voltar ao Questionário
+          </button>
+        </div>
+      </div>
+    );
   }
-
-  if (!resultado) {
-    return null;
-  }
-
-  const {
-    temperamento = { principal: 'Não definido', secundario: 'Não definido' },
-    linguagem = { principal: 'Não definido', secundario: 'Não definido' },
-    informacoes = { nome_pretendente: 'Parceiro(a)' }
-  } = resultado;
 
   return (
-    <main>
-      <Headline nome_autor={informacoes.nome_autor} nome_pretendente={informacoes.nome_pretendente} />
-      <Introducao nome_pretendente={informacoes.nome_pretendente} />
-      <ResultadosIniciais
-        nome_pretendente={informacoes.nome_pretendente}
-        temperamentoPrincipal={temperamento.principal}
-        temperamentoSecundario={temperamento.secundario}
-        linguagemPrincipal={linguagem.principal}
-        linguagemSecundaria={linguagem.secundario}
-        analise={resultado.analise}
+    <div className="min-h-screen bg-white">
+      <Headline 
+        nome_autor={resultado.informacoes.nome_autor}
+        nome_pretendente={resultado.informacoes.nome_pretendente}
       />
-      <ApresentacaoGuia nome_pretendente={informacoes.nome_pretendente} />
+      
+      <Introducao 
+        nome_pretendente={resultado.informacoes.nome_pretendente}
+      />
+      
+      <ResultadosIniciais 
+        nome_pretendente={resultado.informacoes.nome_pretendente}
+        temperamentoPrincipal={resultado.temperamento.principal}
+        temperamentoSecundario={resultado.temperamento.secundario}
+        linguagemPrincipal={resultado.linguagem.principal}
+        linguagemSecundaria={resultado.linguagem.secundario}
+        analise={resultado.analise || {
+          titulo: '',
+          subtitulo: '',
+          paragrafos: []
+        }}
+      />
+      
+      <ApresentacaoGuia 
+        nome_pretendente={resultado.informacoes.nome_pretendente}
+      />
+      
       <Beneficios 
-        temperamentoPrincipal={temperamento.principal}
-        linguagemPrincipal={linguagem.principal}
+        temperamentoPrincipal={resultado.temperamento.principal}
+        linguagemPrincipal={resultado.linguagem.principal}
       />
-      <Oferta nome_pretendente={informacoes.nome_pretendente} />
-      <Urgencia nome_pretendente={informacoes.nome_pretendente} />
-    </main>
+      
+      <Oferta 
+        nome_pretendente={resultado.informacoes.nome_pretendente}
+      />
+      
+      <Urgencia 
+        nome_pretendente={resultado.informacoes.nome_pretendente}
+      />
+    </div>
   );
 }

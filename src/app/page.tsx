@@ -3,7 +3,6 @@
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { CheckCircle2, Heart, Lightbulb, MessageCircle, Target, Users2 } from "lucide-react";
 import { DepoimentoCard } from "@/components/layout/depoimento-card";
 import { useRouter } from 'next/navigation';

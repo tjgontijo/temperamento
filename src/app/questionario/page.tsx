@@ -1,66 +1,118 @@
+// Types específicos
 'use client';
 
+type TipoQuestaoType = {
+  id: string;
+  nome: string;
+};
+
+type AlternativaType = {
+  id: string;
+  texto: string;
+  tipoAlternativaId: string;
+};
+
+type QuestaoType = {
+  id: string;
+  texto: string;
+  tipo: string;
+  tipoQuestao: TipoQuestaoType;
+  alternativas: AlternativaType[];
+};
+
+type RespostaArmazenadaType = {
+  questaoId: string;
+  tipoQuestaoId: string;
+  alternativaId: string;
+  tipoAlternativaId: string;
+};
+
+type ResultadoCategoriaType = {
+  principal: string;
+  secundario: string;
+  totalPontos: number;
+  quantidadePrincipal: number;
+  quantidadeSecundario: number;
+  percentualPrincipal: number;
+  percentualSecundario: number;
+};
+
+type InformacoesContextoType = {
+  nome_autor: string;
+  nome_pretendente: string;
+  historia_relacionamento: string;
+};
+
+type AnaliseCasalType = {
+  titulo: string;
+  subtitulo: string;
+  paragrafos: string[];
+};
+
+type ResultadoCalculadoType = {
+  temperamento: ResultadoCategoriaType;
+  linguagem: ResultadoCategoriaType;
+  temperamentoAutor: ResultadoCategoriaType;
+  linguagemAutor: ResultadoCategoriaType;
+  informacoes?: InformacoesContextoType;
+  analise?: AnaliseCasalType;
+};
+
+// Imports
 import { useEffect, useState } from 'react';
-import { QuestaoType } from '@/types/questionario';
+import { useRouter } from 'next/navigation';
+import {
+  salvarResposta,
+  obterDadosContexto,
+  obterRespostas,
+  salvarResultadosQuestionario,
+  obterResultadosQuestionario,
+} from '@/utils/storage';
 import { buscarQuestoesPorTipo } from '@/lib/actions/questionario-actions';
+import { calcularResultado } from '@/lib/actions/resultado-actions';
+import { analisarCasal } from '@/services/openai';
 import { Questao } from '@/components/questionario/questao';
 import { FormularioContexto } from '@/components/formulario-contexto/page';
 import { motion } from 'framer-motion';
-import { 
-  salvarResposta, 
-  obterDadosContexto,
-  obterRespostas,
-  salvarAnalise,
-  salvarResultadosQuestionario,
-  obterResultadosQuestionario
-} from '@/utils/storage';
-import { useRouter } from 'next/navigation';
-import { calcularResultado } from '@/lib/actions/resultado-actions';
-import { analisarCasal } from '@/services/openai';
 
 export default function QuestionarioPage() {
   const [isClient, setIsClient] = useState(false);
-  const router = useRouter();
-  const [questaoAtual, setQuestaoAtual] = useState(0);
   const [questoes, setQuestoes] = useState<QuestaoType[]>([]);
+  const [indiceQuestaoAtual, setIndiceQuestaoAtual] = useState(0);
+  const [etapaQuestionario, setEtapaQuestionario] = useState<'contexto' | 'perguntas'>('contexto');
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsClient(true);
+    const carregarQuestoes = async () => {
+      try {
+        const questoesCarregadas: QuestaoType[] = await buscarQuestoesPorTipo([
+          'TEMPERAMENTO',
+          'LINGUAGEM',
+          'TEMPERAMENTO_AUTOR',
+          'LINGUAGEM_AUTOR',
+        ], 2);
+
+        setQuestoes(questoesCarregadas);
+      } catch (error) {
+        console.error('Erro ao carregar questões:', error);
+      }
+    };
+
+    carregarQuestoes();
   }, []);
 
-  useEffect(() => {
-    async function carregarQuestoes() {
-      if (!isClient || !localStorage.getItem('contexto_data')) {
-        return;
-      }
+  const handleSalvarResposta = (questao: QuestaoType, alternativaSelecionada: AlternativaType) => {
+    const resposta: RespostaArmazenadaType = {
+      questaoId: questao.id,
+      tipoQuestaoId: questao.tipoQuestao.id,
+      alternativaId: alternativaSelecionada.id,
+      tipoAlternativaId: alternativaSelecionada.tipoAlternativaId,
+    };
 
-      const novasQuestoes = await buscarQuestoesPorTipo([
-        'TEMPERAMENTO', 
-        'LINGUAGEM', 
-        'TEMPERAMENTO_AUTOR', 
-        'LINGUAGEM_AUTOR'
-      ], 2);
-
-      setQuestoes(novasQuestoes);
-    }
-
-    carregarQuestoes();
-  }, [isClient]);
-
-  const handleContextoConcluido = () => {
-    async function carregarQuestoes() {
-      const novasQuestoes = await buscarQuestoesPorTipo([
-        'TEMPERAMENTO', 
-        'LINGUAGEM', 
-        'TEMPERAMENTO_AUTOR', 
-        'LINGUAGEM_AUTOR'
-      ], 2);
-
-      setQuestoes(novasQuestoes);
-    }
-
-    carregarQuestoes();
+    console.log('Salvando resposta:', resposta);
+    salvarResposta(resposta.questaoId, resposta.tipoQuestaoId, resposta.tipoAlternativaId);
   };
 
   const handleResposta = async (alternativaId: string) => {
@@ -68,72 +120,38 @@ export default function QuestionarioPage() {
       console.error('Não há questões carregadas');
       return;
     }
-    
-    const questao = questoes[questaoAtual];
+
+    const questao = questoes[indiceQuestaoAtual];
     if (!questao) {
-      console.error('Questão atual não encontrada:', questaoAtual);
+      console.error('Questão atual não encontrada:', indiceQuestaoAtual);
       return;
     }
 
-    // Encontra o tipoAlternativaId correto
-    const alternativaSelecionada = questao.alternativas?.find(alt => alt.id === alternativaId);
+    const alternativaSelecionada = questao.alternativas.find((alt) => alt.id === alternativaId);
     if (!alternativaSelecionada) {
       console.error('Alternativa não encontrada:', alternativaId);
       return;
     }
 
-    console.log('Salvando resposta:', {
-      questaoId: questao.id,
-      tipoQuestaoId: questao.tipoQuestaoId,
-      alternativaId,
-      tipoAlternativaId: alternativaSelecionada.tipoAlternativaId
-    });
+    handleSalvarResposta(questao, alternativaSelecionada);
 
-    salvarResposta(
-      questao.id,
-      questao.tipoQuestaoId,
-      alternativaSelecionada.tipoAlternativaId
-    );
-    
-    if (questaoAtual === questoes.length - 1) {
+    if (indiceQuestaoAtual === questoes.length - 1) {
       setIsLoading(true);
       try {
         const respostas = obterRespostas();
-        
-        console.log('Estado final do questionário:', {
-          questoes: questoes.map(q => ({ id: q.id, tipo: q.tipo })),
-          respostas: Object.entries(respostas).map(([id, r]) => ({ 
-            questaoId: id, 
-            tipoQuestaoId: r.tipoQuestaoId,
-            tipoAlternativaId: r.tipoAlternativaId 
-          }))
-        });
-        
-        if (Object.keys(respostas).length !== questoes.length) {
-          console.error('Respostas incompletas. Esperado:', questoes.length, 'Obtido:', Object.keys(respostas).length);
-          return;
-        }
-        
         const resultados = await calcularResultado(respostas);
-        
-        // Obter contexto
+
         const contexto = obterDadosContexto();
         if (!contexto) {
           throw new Error('Dados de contexto não encontrados');
         }
-        
-        // Log detalhado antes de salvar
-        console.group('Salvando Resultados');
-        console.log('Resultados calculados:', JSON.stringify(resultados, null, 2));
-        console.log('Contexto:', contexto);
-        
-        // Adicionar informações de contexto aos resultados
-        const resultadosCompletos = {
+
+        const resultadosCompletos: ResultadoCalculadoType = {
           ...resultados,
           informacoes: {
             nome_autor: contexto.nome_autor,
             nome_pretendente: contexto.nome_pretendente,
-            historia_relacionamento: contexto.historia_relacionamento
+            historia_relacionamento: contexto.historia_relacionamento,
           },
           analise: await analisarCasal(
             contexto.nome_autor || '',
@@ -146,12 +164,10 @@ export default function QuestionarioPage() {
             resultados.temperamentoAutor.secundario,
             resultados.linguagemAutor.principal,
             resultados.linguagemAutor.secundario
-          )
+          ),
         };
-        
-        console.log('Resultados completos:', JSON.stringify(resultadosCompletos, null, 2));
-        console.groupEnd();
 
+        console.log('Resultados completos:', JSON.stringify(resultadosCompletos, null, 2));
         salvarResultadosQuestionario(resultadosCompletos);
 
         const resultadosObtidos = obterResultadosQuestionario();
@@ -164,81 +180,56 @@ export default function QuestionarioPage() {
       }
       return;
     }
-    
-    setQuestaoAtual(prev => Math.min(prev + 1, questoes.length - 1));
+
+    setIndiceQuestaoAtual((prev) => Math.min(prev + 1, questoes.length - 1));
   };
 
   const handleBack = () => {
-    if (questaoAtual > 0) {
-      setQuestaoAtual(prev => prev - 1);
+    if (indiceQuestaoAtual > 0) {
+      setIndiceQuestaoAtual((prev) => prev - 1);
     }
   };
 
   if (!isClient) {
+    return null;
+  }
+
+  if (etapaQuestionario === 'contexto') {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center"
-      >
-        <div className="w-full py-12 px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
-        </div>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <FormularioContexto
+          onConcluido={() => {
+            setEtapaQuestionario('perguntas');
+          }}
+        />
       </motion.div>
     );
   }
 
-  if (typeof window !== 'undefined' && !localStorage.getItem('contexto_data')) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <FormularioContexto onConcluido={handleContextoConcluido} />
-      </motion.div>
-    );
+  if (!questoes.length) {
+    return <div>Carregando questões...</div>;
   }
 
-  if (questoes.length === 0) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center"
-      >
-        <div className="w-full py-12 px-4 sm:px-6 lg:px-8 flex justify-center">
-          <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
-        </div>
-      </motion.div>
-    );
-  }
+  const questao = questoes[indiceQuestaoAtual];
+  const progresso = ((indiceQuestaoAtual + 1) / questoes.length) * 100;
+  const isPrimeira = indiceQuestaoAtual === 0;
+  const isUltima = indiceQuestaoAtual === questoes.length - 1;
 
-  const questao = questoes[questaoAtual];
-  const progresso = ((questaoAtual + 1) / questoes.length) * 100;
-  const isPrimeira = questaoAtual === 0;
-  const isUltima = questaoAtual === questoes.length - 1;
-
-  // Só buscar resposta atual se houver questão
-  const respostaAtual = questao ? (obterRespostas()[questao.id]?.tipoAlternativaId || '') : '';
+  const respostaAtual = questao ? obterRespostas()[questao.id]?.tipoAlternativaId || '' : '';
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Questao
-        pergunta={questao.pergunta}
-        complemento={questao.complemento}
+        pergunta={questao.texto}
+        complemento={''}
         tipo={questao.tipo}
-        opcoes={questao.alternativas ? questao.alternativas.map(alt => ({
-          valor: alt.id,
-          texto: alt.texto
-        })) : []}
-        valor={respostaAtual}
-        onChange={handleResposta}
-        onNext={() => {}}
+        opcoes={
+          questao.alternativas
+            ? questao.alternativas.map((alt) => ({ valor: alt.id, texto: alt.texto }))
+            : []
+        }
+        respostaSelecionada={respostaAtual}
+        onResposta={handleResposta}
         onBack={handleBack}
         progresso={progresso}
         isUltima={isUltima}

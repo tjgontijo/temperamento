@@ -1,7 +1,14 @@
 'use server'
 
+type QuestaoType = {
+  id: string;
+  texto: string;
+  tipo: string;
+  tipoQuestao: TipoQuestaoType;
+  alternativas: AlternativaType[];
+};
+
 import prisma from '@/lib/prisma'
-import { QuestaoType } from '@/types/questionario'
 
 type TipoQuestao = 'TEMPERAMENTO' | 'LINGUAGEM' | 'TEMPERAMENTO_AUTOR' | 'LINGUAGEM_AUTOR'
 
@@ -36,11 +43,6 @@ export async function buscarQuestoesPorTipo(
       }
     });
     
-    // console.log(`Questões encontradas para ${tipo}:`, {
-    //   total: questoes.length,
-    //   selecionadas: Math.min(questoes.length, quantidadePorTipo),
-    //   questoes: questoes.map(q => ({ id: q.id, pergunta: q.pergunta }))
-    // });
 
     // Embaralhar e pegar a quantidade desejada
     const questoesSelecionadas = questoes

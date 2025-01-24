@@ -1,13 +1,12 @@
 import { ResultadoCategoria } from '@/types/questionario';
 
 interface ResultadoSectionProps {
-  titulo: string;
-  nome: string;
+  titulo: string;  
   temperamento: ResultadoCategoria;
   linguagem: ResultadoCategoria;
 }
 
-export function ResultadoSection({ titulo, nome, temperamento, linguagem }: ResultadoSectionProps) {
+export function ResultadoSection({ titulo, temperamento, linguagem }: ResultadoSectionProps) {
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
       <h2 className="text-2xl font-semibold mb-4 text-purple-800">{titulo}</h2>

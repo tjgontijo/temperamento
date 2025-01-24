@@ -9,14 +9,13 @@ import { useEffect, useState } from "react";
 interface QuestaoProps {
   pergunta: string;
   complemento?: string;
-  tipo: 'input' | 'textarea' | 'TEMPERAMENTO' | 'LINGUAGEM' | 'TEMPERAMENTO_AUTOR' | 'LINGUAGEM_AUTOR';
+  tipo: string;
   opcoes?: Array<{ 
-    valor: number; 
+    valor: string; 
     texto: string;
   }>;
-  valor: string;
-  onChange: (valor: string) => void;
-  onNext: () => void;
+  respostaSelecionada: string;
+  onResposta: (valor: string) => void;
   onBack?: () => void;
   progresso: number;
   isUltima?: boolean;
@@ -31,9 +30,8 @@ export function Questao({
   complemento,
   tipo,
   opcoes = [],
-  valor,
-  onChange,
-  onNext,
+  respostaSelecionada,
+  onResposta,
   onBack,
   progresso,
   isUltima = false,
@@ -42,28 +40,21 @@ export function Questao({
   nomePretendente,
   isLoading = false,
 }: QuestaoProps) {
-  const [localValor, setLocalValor] = useState(valor);
+  const [localValor, setLocalValor] = useState(respostaSelecionada);
 
   // Atualiza o valor local quando a pergunta ou valor mudam
   useEffect(() => {
-    setLocalValor(valor);
-  }, [pergunta, valor]);
+    setLocalValor(respostaSelecionada);
+  }, [pergunta, respostaSelecionada]);
 
   const handleChange = (novoValor: string) => {
     setLocalValor(novoValor);
-    onChange(novoValor);
+    onResposta(novoValor);
   };
 
-  const handleNext = () => {
-    if (localValor.trim() && onNext) {
-      onNext();
-    }
-  };
-
-  const handleOpcaoClick = (novoValor: number) => {
-    const valorString = String(novoValor);
-    setLocalValor(valorString);
-    onChange(valorString);
+  const handleOpcaoClick = (valor: string) => {
+    setLocalValor(valor);
+    onResposta(valor);
   };
 
   // Formata o texto substituindo as variáveis
@@ -149,7 +140,7 @@ export function Questao({
                   placeholder="Digite sua resposta aqui..."
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && localValor.trim()) {
-                      handleNext();
+                      // handleNext();
                     }
                   }}
                 />
@@ -161,7 +152,7 @@ export function Questao({
                     key={opcao.valor}
                     onClick={() => handleOpcaoClick(opcao.valor)}
                     className={`w-full p-6 h-auto text-left flex items-start justify-start whitespace-normal font-normal ${
-                      String(opcao.valor) === localValor
+                      opcao.valor === localValor
                         ? 'bg-purple-600 hover:bg-purple-700 text-white'
                         : 'bg-white hover:bg-purple-50 text-gray-700 border-2 border-gray-200'
                     }`}
@@ -182,7 +173,7 @@ export function Questao({
           >
             {tipo === 'input' || tipo === 'textarea' ? (
               <Button
-                onClick={handleNext}
+                // onClick={handleNext}
                 disabled={!localValor.trim() || isLoading}
                 className="w-full bg-purple-600 hover:bg-purple-700 h-14 text-base font-medium rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
