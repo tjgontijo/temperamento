@@ -93,7 +93,7 @@ export default function QuestionarioPage() {
           'LINGUAGEM',
           'TEMPERAMENTO_AUTOR',
           'LINGUAGEM_AUTOR',
-        ], 2);
+        ], 8);
 
         setQuestoes(questoesCarregadas);
       } catch (error) {
