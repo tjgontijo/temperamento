@@ -74,6 +74,7 @@ import { analisarCasal } from '@/services/openai';
 import { Questao } from '@/components/questionario/questao';
 import { FormularioContexto } from '@/components/formulario-contexto/page';
 import { motion } from 'framer-motion';
+import { Loading } from '@/components/ui/loading';
 
 export default function QuestionarioPage() {
   const [isClient, setIsClient] = useState(false);
@@ -192,6 +193,10 @@ export default function QuestionarioPage() {
 
   if (!isClient) {
     return null;
+  }
+
+  if (isLoading) {
+    return <Loading message="Analisando suas respostas..." />;
   }
 
   if (etapaQuestionario === 'contexto') {
