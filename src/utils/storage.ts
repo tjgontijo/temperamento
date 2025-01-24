@@ -1,25 +1,45 @@
 'use client';
 
-import { ResultadoCalculado } from '@/types/questionario';
-
 const RESPOSTAS_STORAGE_KEY = 'respostas_data';
 const CONTEXTO_STORAGE_KEY = 'contexto_data';
 const ANALISE_STORAGE_KEY = 'analise_data';
 const RESULTADOS_STORAGE_KEY = 'resultados_questionario';
 const TIPOS_STORAGE_KEY = 'tipos_questionario';
 
-interface RespostaData {
+// Tipos de Resposta
+type RespostaData = {
   tipoQuestaoId: string;
   tipoAlternativaId: string;
-}
+};
 
-interface ContextoData {
+// Tipos de Contexto
+type ContextoData = {
   nome_autor: string;
   nome_pretendente: string;
   historia_relacionamento: string;
-}
+};
 
-interface TiposQuestionario {
+// Tipo de Resultado de Categoria
+type ResultadoCategoria = {
+  principal: string;
+  secundario: string;
+  totalPontos: number;
+  quantidadePrincipal: number;
+  quantidadeSecundario: number;
+  percentualPrincipal: number;
+  percentualSecundario: number;
+};
+
+// Tipo de Resultado Calculado
+type ResultadoCalculado = {
+  temperamento: ResultadoCategoria;
+  linguagem: ResultadoCategoria;
+  temperamentoAutor: ResultadoCategoria;
+  linguagemAutor: ResultadoCategoria;
+};
+
+// Tipos de Questionário
+type TiposQuestionario = {
   temperamento: {
     principal: string;
     secundario: string;
@@ -36,7 +56,7 @@ interface TiposQuestionario {
     principal: string;
     secundario: string;
   };
-}
+};
 
 export const salvarResposta = (
   questaoId: string,

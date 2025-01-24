@@ -1,16 +1,37 @@
 'use server'
 
+// Tipos de Questão
+type TipoQuestao = 'TEMPERAMENTO' | 'LINGUAGEM' | 'TEMPERAMENTO_AUTOR' | 'LINGUAGEM_AUTOR'
+
+// Tipo de Alternativa
+type TipoAlternativa = {
+  id: string;
+  nome: string;
+  descricao?: string | null;
+  grupo?: string | null;
+};
+
+// Tipo de Questão com suas relações
 type QuestaoType = {
   id: string;
   texto: string;
   tipo: string;
-  tipoQuestao: TipoQuestaoType;
+  tipoQuestao: {
+    id: string;
+    nome: string;
+  };
   alternativas: AlternativaType[];
 };
 
-import prisma from '@/lib/prisma'
+// Tipo de Alternativa para questões
+type AlternativaType = {
+  id: string;
+  texto: string;
+  tipoAlternativaId: string;
+};
 
-type TipoQuestao = 'TEMPERAMENTO' | 'LINGUAGEM' | 'TEMPERAMENTO_AUTOR' | 'LINGUAGEM_AUTOR'
+
+import prisma from '@/lib/prisma'
 
 export async function buscarQuestoesPorTipo(
   tipos: TipoQuestao[], 
@@ -52,10 +73,12 @@ export async function buscarQuestoesPorTipo(
     // Transformar para o formato QuestaoType
     return questoesSelecionadas.map(questao => ({
       id: questao.id,
-      tipoQuestaoId: questao.tipoQuestaoId,
+      texto: questao.pergunta,
       tipo: questao.tipoQuestao.nome,
-      pergunta: questao.pergunta,
-      complemento: questao.complemento,
+      tipoQuestao: {
+        id: questao.tipoQuestaoId,
+        nome: questao.tipoQuestao.nome
+      },
       alternativas: questao.alternativas.map(alt => ({
         id: alt.id,
         texto: alt.texto,
@@ -86,13 +109,7 @@ export async function buscarQuestoesPorTipo(
   return resultadoFinal;
 }
 
-export async function consultarTiposAlternativa() {
-  const tipos = await prisma.tipoAlternativa.findMany({
-    include: {
-      tipoQuestao: true
-    }
-  });
-
-  console.log('Tipos de Alternativa:', JSON.stringify(tipos, null, 2));
+export async function consultarTiposAlternativa(): Promise<TipoAlternativa[]> {
+  const tipos = await prisma.tipoAlternativa.findMany();
   return tipos;
 }

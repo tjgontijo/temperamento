@@ -1,4 +1,14 @@
-import { ResultadoCategoria } from '@/types/questionario';
+type ResultadoCategoria = {
+  predominante: {
+    nome: string;
+    pontuacao: number;
+  };
+  secundario: {
+    nome: string;
+    pontuacao: number;
+  };
+  totalRespostas: number;
+}
 
 interface ResultadoSectionProps {
   titulo: string;  

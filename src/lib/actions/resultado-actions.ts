@@ -1,13 +1,45 @@
 'use server';
 
-import { ResultadoCalculado } from "@/types/questionario";
 import prisma from "@/lib/prisma";
 import { salvarResultadosQuestionario } from '@/utils/storage';
 
-interface RespostaData {
+// Tipos baseados no schema.prisma
+type TipoQuestao = {
+  id: string;
+  nome: string;
+  descricao?: string | null;
+};
+
+type TipoAlternativa = {
+  id: string;
+  nome: string;
+  descricao?: string | null;
+  grupo?: string | null;
+};
+
+type Alternativa = {
+  id: string;
+  questaoId: string;
+  texto: string;
+  tipoAlternativaId: string;
+  tipoAlternativa: TipoAlternativa;
+};
+
+type QuestaoComTipo = {
+  id: string;
+  tipoQuestaoId: string;
+  tipoQuestao: TipoQuestao;
+  pergunta: string;
+  complemento?: string | null;
+  alternativas: Alternativa[];
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type RespostaData = {
   tipoQuestaoId: string;
   tipoAlternativaId: string;
-}
+};
 
 type ResultadoCategoria = {
   principal: string;
@@ -19,7 +51,13 @@ type ResultadoCategoria = {
   percentualSecundario: number;
 };
 
-// Resultado padrão para quando não há dados
+type ResultadoCalculado = {
+  temperamento: ResultadoCategoria;
+  linguagem: ResultadoCategoria;
+  temperamentoAutor: ResultadoCategoria;
+  linguagemAutor: ResultadoCategoria;
+};
+
 const resultadoPadrao: ResultadoCategoria = {
   principal: '',
   secundario: '',
@@ -27,31 +65,29 @@ const resultadoPadrao: ResultadoCategoria = {
   quantidadePrincipal: 0,
   quantidadeSecundario: 0,
   percentualPrincipal: 0,
-  percentualSecundario: 0
+  percentualSecundario: 0,
 };
 
 export async function calcularResultado(respostas: Record<string, RespostaData>): Promise<ResultadoCalculado> {
-  // Verifica se há respostas
   if (!respostas || Object.keys(respostas).length === 0) {
     return {
       temperamento: resultadoPadrao,
       linguagem: resultadoPadrao,
       temperamentoAutor: resultadoPadrao,
-      linguagemAutor: resultadoPadrao
+      linguagemAutor: resultadoPadrao,
     };
   }
 
-  // Busca os tipos de alternativa correspondentes
   const tiposAlternativa = await prisma.tipoAlternativa.findMany({
     where: {
       id: {
-        in: Object.values(respostas).map(r => r.tipoAlternativaId), // IDs das alternativas fornecidos nas respostas
+        in: Object.values(respostas).map(r => r.tipoAlternativaId),
       },
     },
     select: {
       id: true,
-      nome: true
-    }
+      nome: true,
+    },
   });
 
   if (!tiposAlternativa || tiposAlternativa.length === 0) {
@@ -59,60 +95,47 @@ export async function calcularResultado(respostas: Record<string, RespostaData>)
       temperamento: resultadoPadrao,
       linguagem: resultadoPadrao,
       temperamentoAutor: resultadoPadrao,
-      linguagemAutor: resultadoPadrao
+      linguagemAutor: resultadoPadrao,
     };
   }
 
-  // Cria o mapeamento de nomes por ID
   const nomesPorId = tiposAlternativa.reduce((acc: Record<string, string>, tipo) => {
-    acc[tipo.id] = tipo.nome; // Mapeia o ID para o nome
+    acc[tipo.id] = tipo.nome;
     return acc;
   }, {});
 
-  // Busca todas as questões respondidas com seus tipos
   const questoes: QuestaoComTipo[] = await prisma.questao.findMany({
     where: {
       id: {
-        in: Object.keys(respostas)
-      }
+        in: Object.keys(respostas),
+      },
     },
     include: {
-      tipoQuestao: true
-    }
+      tipoQuestao: true,
+      alternativas: {
+        include: {
+          tipoAlternativa: true,
+        },
+      },
+    },
   });
 
-  // Agrupa as respostas por tipo de questão e conta os tipos de alternativa
   const contadores: Record<string, Record<string, number>> = {};
 
-  questoes.forEach((questao: QuestaoComTipo) => {
+  questoes.forEach((questao) => {
     const resposta = respostas[questao.id];
     if (!resposta) return;
 
     const tipoQuestao = questao.tipoQuestao.nome;
     const tipoAltId = resposta.tipoAlternativaId;
 
-    // Mapeia os tipos de questão para as categorias corretas
-    const categoriaMap: Record<string, string> = {
-      'TEMPERAMENTO': 'TEMPERAMENTO',
-      'TEMPERAMENTO_AUTOR': 'TEMPERAMENTO_AUTOR',
-      'LINGUAGEM': 'LINGUAGEM',
-      'LINGUAGEM_AUTOR': 'LINGUAGEM_AUTOR'
-    };
+    const categoria = tipoQuestao;
 
-    const categoria = categoriaMap[tipoQuestao] || tipoQuestao;
-
-    if (!contadores[categoria]) {
-      contadores[categoria] = {};
-    }
-
+    contadores[categoria] = contadores[categoria] || {};
     contadores[categoria][tipoAltId] = (contadores[categoria][tipoAltId] || 0) + 1;
   });
 
-  // Função para calcular o resultado por categoria
-  function calcularResultadoPorCategoria(
-    categoria: string
-  ): ResultadoCategoria {
-    
+  function calcularResultadoPorCategoria(categoria: string): ResultadoCategoria {
     const contadoresDaCategoria = contadores[categoria];
     if (!contadoresDaCategoria) {
       return resultadoPadrao;
@@ -129,17 +152,16 @@ export async function calcularResultado(respostas: Record<string, RespostaData>)
     const principalId = tiposOrdenados[0]?.[0];
     const secundarioId = tiposOrdenados[1]?.[0];
 
-    // Mapeamento de nomes para categorias específicas
     const mapeamentoNomes: Record<string, string> = {
       'COLERICO': 'Colérico',
-      'FLEUMATICO': 'Fleumático', 
+      'FLEUMATICO': 'Fleumático',
       'SANGUINIO': 'Sanguíneo',
       'MELANCOLICO': 'Melancólico',
       'PALAVRA_AFIRMACAO': 'Palavras de Afirmação',
       'TOQUE_FISICO': 'Toque Físico',
       'TEMPO_QUALIDADE': 'Tempo de Qualidade',
       'ATOS_SERVICO': 'Atos de Serviço',
-      'PRESENTES': 'Presentes'
+      'PRESENTES': 'Presentes',
     };
 
     return {
@@ -149,27 +171,24 @@ export async function calcularResultado(respostas: Record<string, RespostaData>)
       quantidadePrincipal: tiposOrdenados[0]?.[1] || 0,
       quantidadeSecundario: tiposOrdenados[1]?.[1] || 0,
       percentualPrincipal: principalId ? tiposOrdenados[0][1] / totalRespostas : 0,
-      percentualSecundario: secundarioId ? tiposOrdenados[1][1] / totalRespostas : 0
+      percentualSecundario: secundarioId ? tiposOrdenados[1][1] / totalRespostas : 0,
     };
   }
 
-  // Calcula os resultados para cada categoria
   const resultado: ResultadoCalculado = {
     temperamento: calcularResultadoPorCategoria('TEMPERAMENTO'),
     linguagem: calcularResultadoPorCategoria('LINGUAGEM'),
     temperamentoAutor: calcularResultadoPorCategoria('TEMPERAMENTO_AUTOR'),
-    linguagemAutor: calcularResultadoPorCategoria('LINGUAGEM_AUTOR')
+    linguagemAutor: calcularResultadoPorCategoria('LINGUAGEM_AUTOR'),
   };
 
-  // Salva os resultados no localStorage
   if (typeof window !== 'undefined') {
-    const resultadosCompletos = {
+    salvarResultadosQuestionario({
       temperamento: resultado.temperamento,
       linguagem: resultado.linguagem,
       temperamentoAutor: resultado.temperamentoAutor,
       linguagemAutor: resultado.linguagemAutor,
-    };
-    salvarResultadosQuestionario(resultadosCompletos);
+    });
   }
 
   return resultado;
