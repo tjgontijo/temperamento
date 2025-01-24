@@ -1,8 +1,42 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import { Clock } from 'lucide-react';
 
 export function Urgencia({ nome_pretendente }: { nome_pretendente: string }) {
+  const [timeLeft, setTimeLeft] = useState({
+    horas: 0,
+    minutos: 20,
+    segundos: 0
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        let {  horas, minutos, segundos } = prev;
+        
+        segundos--;
+        
+        if (segundos < 0) {
+          minutos--;
+          segundos = 59;
+        }
+        
+        if (minutos < 0) {
+          horas--;
+          minutos = 59;
+        }        
+
+        
+        return {  horas, minutos, segundos };
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatNumber = (num: number) => num.toString().padStart(2, '0');
+
   if (!nome_pretendente) {
     throw new Error('Nome do pretendente não encontrado');
   }
@@ -33,10 +67,9 @@ export function Urgencia({ nome_pretendente }: { nome_pretendente: string }) {
         {/* Countdown */}
         <div className="flex justify-center items-center gap-4 md:gap-8 mb-8">
           {[
-            { label: 'Dias', value: '02' },
-            { label: 'Horas', value: '23' },
-            { label: 'Minutos', value: '59' },
-            { label: 'Segundos', value: '59' }
+            { label: 'Horas', value: formatNumber(timeLeft.horas) },
+            { label: 'Minutos', value: formatNumber(timeLeft.minutos) },
+            { label: 'Segundos', value: formatNumber(timeLeft.segundos) }
           ].map((item, index) => (
             <div 
               key={index} 
