@@ -15,7 +15,8 @@ export async function analisarCasal(
   temperamentoPrincipalAutor: string,
   temperamentoSecundarioAutor: string,
   linguagemPrincipalAutor: string,
-  linguagemSecundariaAutor: string
+  linguagemSecundariaAutor: string,
+  historiaRelacionamento: string
 ) {
   const prompt = `
     Você é um especialista em relacionamentos com profunda experiência em análise de compatibilidade e desenvolvimento de relacionamentos duradouros.
@@ -36,45 +37,49 @@ export async function analisarCasal(
     - Linguagem do amor principal: ${linguagemPrincipalPretendente} (Como melhor recebe amor)
     - Linguagem do amor secundária: ${linguagemSecundariaPretendente} (Forma secundária de recepção)
 
+    História do Relacionamento:
+    ${historiaRelacionamento}
+
     Diretrizes para a análise:
-    1. Comece destacando o potencial único e especial desta combinação de temperamentos
-    2. Revele insights sobre como as linguagens do amor podem criar momentos mágicos
-    3. Sutilmente indique que existem técnicas específicas que ${nomeAutor} precisará dominar
-    4. Sugira que há níveis mais profundos de conexão possíveis com o conhecimento adequado
+    1. Foque nos temperamentos e linguagens do amor
+    2. Comece destacando o potencial único e especial desta combinação de temperamentos, incorporando insights da história do relacionamento, se disponível
+    3. Revele insights sobre como as linguagens do amor podem criar momentos mágicos, com base em eventos específicos da história, se disponível
+    4. Sutilmente indique que existem técnicas específicas que ${nomeAutor} precisará dominar, considerando os desafios mencionados na história, se disponível
+    5. Sugira que há níveis mais profundos de conexão possíveis com o conhecimento adequado, utilizando exemplos da história, se disponível
 
     Pontos cruciais a abordar:
-    - Mostre o potencial extraordinário do relacionamento usando os temperamentos específicos
-    - Destaque como as linguagens do amor de cada um podem se complementar
-    - Indique sutilmente que há desafios que precisarão ser navegados com sabedoria
-    - Sugira que há técnicas e conhecimentos específicos que podem transformar a dinâmica do relacionamento
-    - Desperte curiosidade sobre como alcançar esse potencial
+    - Mostre o potencial extraordinário do relacionamento usando os temperamentos específicos e como eles se manifestaram na história, se disponível
+    - Destaque como as linguagens do amor de cada um podem se complementar, com base em interações descritas na história, se disponível
+    - Indique sutilmente que há desafios que precisarão ser navegados com sabedoria, referenciando eventos específicos da história, se disponível
+    - Sugira que há técnicas e conhecimentos específicos que podem transformar a dinâmica do relacionamento, com base nos padrões observados na história, se disponível
+    - Desperte curiosidade sobre como alcançar esse potencial, utilizando exemplos concretos da história, se disponível
     - Só utilize os nomes dos personagens se você validar que o nome realmente existe. Alguns colocam texto como: "asdsa" para apenas preencher o input.
 
     Estruture a resposta em exatamente 4 parágrafos, cada um com um propósito específico:
 
     Parágrafo 1 - O Potencial Único:
     - Destaque a combinação específica dos temperamentos (${temperamentoPrincipalPretendente} com ${temperamentoPrincipalAutor})
-    - Mostre como essa combinação é rara e valiosa
-    - Crie uma visão inspiradora do que é possível
-    - Foque nas características complementares
+    - Mostre como essa combinação é rara e valiosa, com base em eventos da história, se disponível
+    - Crie uma visão inspiradora do que é possível, utilizando exemplos da história, se disponível
+    - Foque nas características complementares que foram evidenciadas na história, se disponível
 
     Parágrafo 2 - A Magia das Linguagens do Amor:
-    - Explore como as linguagens específicas (${linguagemPrincipalPretendente} e ${linguagemPrincipalAutor}) se entrelaçam
-    - Mostre momentos mágicos que podem surgir dessa combinação
-    - Sugira possibilidades inexploradas
-    - Deixe claro que há técnicas específicas para maximizar essa conexão
+    - Explore como as linguagens específicas (${linguagemPrincipalPretendente} e ${linguagemPrincipalAutor}) se entrelaçam, com base em interações descritas na história, se disponível
+    - Mostre momentos mágicos que podem surgir dessa combinação, utilizando exemplos da história, se disponível
+    - Sugira possibilidades inexploradas, com base em padrões observados na história, se disponível
+    - Deixe claro que há técnicas específicas para maximizar essa conexão, com base nos desafios mencionados na história, se disponível
 
     Parágrafo 3 - Os Desafios e Mistérios:
-    - Mencione sutilmente os desafios naturais dessa combinação específica
-    - Sugira que há conhecimentos específicos necessários
-    - Indique que ${nomeAutor} precisará de certas habilidades
-    - Desperte curiosidade sobre como desenvolver essas habilidades
+    - Mencione sutilmente os desafios naturais dessa combinação específica, referenciando eventos da história, se disponível
+    - Sugira que há conhecimentos específicos necessários, com base nos desafios mencionados na história, se disponível
+    - Indique que ${nomeAutor} precisará de certas habilidades, com base em padrões observados na história, se disponível
+    - Desperte curiosidade sobre como desenvolver essas habilidades, utilizando exemplos da história, se disponível
 
     Parágrafo 4 - O Chamado à Ação Sutil:
-    - Reforce o potencial extraordinário desta combinação específica
-    - Sugira que há níveis mais profundos a serem descobertos
-    - Deixe questões estratégicas em aberto
-    - Crie um senso de urgência sutil para buscar mais conhecimento
+    - Reforce o potencial extraordinário desta combinação específica, com base em eventos da história, se disponível
+    - Sugira que há níveis mais profundos a serem descobertos, utilizando exemplos da história, se disponível
+    - Deixe questões estratégicas em aberto, com base nos padrões observados na história, se disponível
+    - Crie um senso de urgência sutil para buscar mais conhecimento, utilizando exemplos da história, se disponível
 
     Tom da mensagem:
     - Extremamente otimista sobre o potencial
@@ -99,7 +104,7 @@ export async function analisarCasal(
         content: prompt 
       }],
       model: "gpt-4o-mini-2024-07-18",
-      temperature: 0.3,
+      temperature: 0.4,
       max_tokens: 1000,
     });
 

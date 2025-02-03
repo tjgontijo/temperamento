@@ -9,24 +9,29 @@ interface FormularioContextoProps {
   onConcluido?: () => void;
 }
 
-const questoesContexto = [
+const questoesContexto: Array<{
+  id: string;
+  tipo: 'input' | 'textarea';
+  pergunta: string;
+  descricao?: string;
+}> = [
   {
-    id: 'nome_autor',
-    tipo: 'input' as const,
-    pergunta: 'Qual é o seu nome?',
-    descricao: 'Por favor, insira seu nome completo'
+    "id": "nome_autor",
+    "tipo": "input",
+    "pergunta": "Qual é o seu Primeiro Nome?",    
+    "descricao": "Precisamos do seu nome exato para garantir que a análise seja precisa."
   },
   {
-    id: 'nome_pretendente',
-    tipo: 'input' as const,
-    pergunta: 'Qual o nome do pretendente?',
-    descricao: 'Por favor, insira o nome completo do pretendente'
+    "id": "nome_pretendente",
+    "tipo": "input",
+    "pergunta": "Qual o Primeiro Nome do seu pretendente?",    
+    "descricao": "O nome do pretendente é essencial para calcular a compatibilidade entre vocês."
   },
   {
-    id: 'historia_relacionamento',
-    tipo: 'textarea' as const,
-    pergunta: 'Conte um pouco sobre a história do relacionamento',
-    descricao: 'Como se conheceram? Há quanto tempo estão juntos? Compartilhe um pouco dessa história.'
+    "id": "historia_relacionamento",
+    "tipo": "textarea",
+    "pergunta": "Conte um pouco sobre a história do relacionamento",    
+    "descricao": "Quanto mais detalhes você compartilhar, mais precisa será a análise."
   }
 ];
 

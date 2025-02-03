@@ -164,7 +164,8 @@ export default function QuestionarioPage() {
             resultados.temperamentoAutor.principal,
             resultados.temperamentoAutor.secundario,
             resultados.linguagemAutor.principal,
-            resultados.linguagemAutor.secundario
+            resultados.linguagemAutor.secundario,
+            contexto.historia_relacionamento || ''
           ),
         };
 

@@ -41,7 +41,7 @@ import {ApresentacaoGuia} from '@/components/landing-page/apresentacao-guia';
 import { Beneficios } from '@/components/landing-page/beneficios';
 import { Oferta } from '@/components/landing-page/oferta';
 import { Urgencia } from '@/components/landing-page/urgencia';
-
+import { analisarCasal } from '@/services/openai';
 
 export default function Resultado() {
   const router = useRouter();
@@ -79,6 +79,34 @@ export default function Resultado() {
 
     carregarResultados();
   }, [router]);
+
+  useEffect(() => {
+    const carregarAnalise = async () => {
+      if (resultado && resultado.informacoes) {
+        try {
+          const analise = await analisarCasal(
+            resultado.informacoes.nome_autor,
+            resultado.informacoes.nome_pretendente,
+            resultado.temperamento.principal,
+            resultado.temperamento.secundario,
+            resultado.linguagem.principal,
+            resultado.linguagem.secundario,
+            resultado.temperamentoAutor.principal,
+            resultado.temperamentoAutor.secundario,
+            resultado.linguagemAutor.principal,
+            resultado.linguagemAutor.secundario,
+            resultado.informacoes.historia_relacionamento
+          );
+
+          setResultado(prev => prev ? { ...prev, analise } : null);
+        } catch (error) {
+          console.error('Erro ao gerar análise:', error);
+        }
+      }
+    };
+
+    carregarAnalise();
+  }, [resultado]);
 
   if (loading) {
     return (
