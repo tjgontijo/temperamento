@@ -19,77 +19,57 @@ export async function analisarCasal(
   historiaRelacionamento: string
 ) {
   const prompt = `
-    Você é um especialista em relacionamentos com profunda experiência em análise de compatibilidade e desenvolvimento de relacionamentos duradouros.
-    Sua missão é revelar o potencial extraordinário deste relacionamento, mas também sutilmente indicar que conhecimentos específicos serão necessários
-    para transformar esse potencial em realidade.
+    Você é um especialista em relacionamentos com experiência em análise de compatibilidade e desenvolvimento de conexões duradouras. 
+    Seu objetivo é revelar o potencial desse relacionamento, criando entusiasmo e desejo de aprofundamento.
 
-    Analise estas informações valiosas que obtivemos através de nosso questionário especializado:
+    Analise as seguintes informações:
 
-    ${nomeAutor} revelou um perfil fascinante:
-    - Temperamento principal: ${temperamentoPrincipalAutor} (Personalidade dominante)
-    - Temperamento secundário: ${temperamentoSecundarioAutor} (Influência secundária)
-    - Linguagem do amor principal: ${linguagemPrincipalAutor} (Como melhor expressa amor)
-    - Linguagem do amor secundária: ${linguagemSecundariaAutor} (Forma secundária de expressão)
+    ${nomeAutor} apresentou as seguintes características:
+    - Temperamento principal: ${temperamentoPrincipalAutor}
+    - Temperamento secundário: ${temperamentoSecundarioAutor}
+    - Linguagem do amor principal: ${linguagemPrincipalAutor}
+    - Linguagem do amor secundária: ${linguagemSecundariaAutor}
 
-    E descobrimos estas características intrigantes sobre ${nomePretendente}:
-    - Temperamento principal: ${temperamentoPrincipalPretendente} (Personalidade dominante)
-    - Temperamento secundário: ${temperamentoSecundarioPretendente} (Influência secundária)
-    - Linguagem do amor principal: ${linguagemPrincipalPretendente} (Como melhor recebe amor)
-    - Linguagem do amor secundária: ${linguagemSecundariaPretendente} (Forma secundária de recepção)
+    Já ${nomePretendente} possui as seguintes características:
+    - Temperamento principal: ${temperamentoPrincipalPretendente}
+    - Temperamento secundário: ${temperamentoSecundarioPretendente}
+    - Linguagem do amor principal: ${linguagemPrincipalPretendente}
+    - Linguagem do amor secundária: ${linguagemSecundariaPretendente}
 
-    História do Relacionamento:
-    ${historiaRelacionamento}
+    ${historiaRelacionamento ? `História do Relacionamento: ${historiaRelacionamento}` : ''}
 
-    Diretrizes para a análise:
-    1. Foque nos temperamentos e linguagens do amor
-    2. Comece destacando o potencial único e especial desta combinação de temperamentos, incorporando insights da história do relacionamento, se disponível
-    3. Revele insights sobre como as linguagens do amor podem criar momentos mágicos, com base em eventos específicos da história, se disponível
-    4. Sutilmente indique que existem técnicas específicas que ${nomeAutor} precisará dominar, considerando os desafios mencionados na história, se disponível
-    5. Sugira que há níveis mais profundos de conexão possíveis com o conhecimento adequado, utilizando exemplos da história, se disponível
 
-    Pontos cruciais a abordar:
-    - Mostre o potencial extraordinário do relacionamento usando os temperamentos específicos e como eles se manifestaram na história, se disponível
-    - Destaque como as linguagens do amor de cada um podem se complementar, com base em interações descritas na história, se disponível
-    - Indique sutilmente que há desafios que precisarão ser navegados com sabedoria, referenciando eventos específicos da história, se disponível
-    - Sugira que há técnicas e conhecimentos específicos que podem transformar a dinâmica do relacionamento, com base nos padrões observados na história, se disponível
-    - Desperte curiosidade sobre como alcançar esse potencial, utilizando exemplos concretos da história, se disponível
-    - Só utilize os nomes dos personagens se você validar que o nome realmente existe. Alguns colocam texto como: "asdsa" para apenas preencher o input.
+     Diretrizes para sua análise:
+    - Seja envolvente e direto, como se estivesse explicando para ${nomeAutor}.
+    - Mostre como essa combinação pode criar uma conexão especial.
+    - Destaque como as linguagens do amor se complementam e podem fortalecer a relação.
+    - Identifique desafios naturais dessa combinação e como superá-los.
+    - Reforce que há muito mais a ser descoberto sobre essa conexão e como aprofundá-la.
 
-    Estruture a resposta em exatamente 4 parágrafos, cada um com um propósito específico:
+    Estrutura da Resposta (exatamente 4 parágrafos):
+     1. O Potencial Único:  
+       - Mostre como essa combinação específica de temperamentos pode criar uma conexão especial.  
+       - Use um tom positivo e motivador, despertando esperança e empolgação.  
 
-    Parágrafo 1 - O Potencial Único:
-    - Destaque a combinação específica dos temperamentos (${temperamentoPrincipalPretendente} com ${temperamentoPrincipalAutor})
-    - Mostre como essa combinação é rara e valiosa, com base em eventos da história, se disponível
-    - Crie uma visão inspiradora do que é possível, utilizando exemplos da história, se disponível
-    - Foque nas características complementares que foram evidenciadas na história, se disponível
+    2. Como essa Conexão Pode se Fortalecer:  
+       - Explique como as linguagens do amor de ambos podem se complementar.  
+       - Dê exemplos de como pequenas atitudes podem transformar o relacionamento.  
 
-    Parágrafo 2 - A Magia das Linguagens do Amor:
-    - Explore como as linguagens específicas (${linguagemPrincipalPretendente} e ${linguagemPrincipalAutor}) se entrelaçam, com base em interações descritas na história, se disponível
-    - Mostre momentos mágicos que podem surgir dessa combinação, utilizando exemplos da história, se disponível
-    - Sugira possibilidades inexploradas, com base em padrões observados na história, se disponível
-    - Deixe claro que há técnicas específicas para maximizar essa conexão, com base nos desafios mencionados na história, se disponível
+    3. Os Desafios Naturais:  
+       - Mostre que toda relação tem desafios, mas que podem ser superados.  
+       - Dê uma visão clara de quais são os principais pontos de atenção dessa combinação.  
 
-    Parágrafo 3 - Os Desafios e Mistérios:
-    - Mencione sutilmente os desafios naturais dessa combinação específica, referenciando eventos da história, se disponível
-    - Sugira que há conhecimentos específicos necessários, com base nos desafios mencionados na história, se disponível
-    - Indique que ${nomeAutor} precisará de certas habilidades, com base em padrões observados na história, se disponível
-    - Desperte curiosidade sobre como desenvolver essas habilidades, utilizando exemplos da história, se disponível
-
-    Parágrafo 4 - O Chamado à Ação Sutil:
-    - Reforce o potencial extraordinário desta combinação específica, com base em eventos da história, se disponível
-    - Sugira que há níveis mais profundos a serem descobertos, utilizando exemplos da história, se disponível
-    - Deixe questões estratégicas em aberto, com base nos padrões observados na história, se disponível
-    - Crie um senso de urgência sutil para buscar mais conhecimento, utilizando exemplos da história, se disponível
-
-    Tom da mensagem:
-    - Extremamente otimista sobre o potencial
-    - Levemente misterioso sobre os caminhos para o sucesso
-    - Sugestivo sobre a necessidade de conhecimento específico
-    - Inspirador e motivador
-    - Evite mencionar produtos ou serviços diretamente
-    - Use os nomes dos temperamentos e linguagens, nunca números
-
-    IMPORTANTE: Retorne apenas o objeto JSON sem formatação ou caracteres extras. Use exatamente esta estrutura:
+    4. Um Novo Nível de Conexão:  
+       - Indique que existe um caminho claro para aprofundar essa conexão.  
+       - Finalize com uma reflexão estratégica:
+         - "Como seria seu relacionamento se você soubesse exatamente como tocar o coração de ${nomePretendente}?"
+         - "Imagine a diferença que faria se você tivesse um mapa claro para fortalecer essa relação."
+         - "O próximo passo para transformar essa conexão já está ao seu alcance."
+    
+         Instruções importantes:  
+    - NÃO mencione números ou porcentagens na análise.  
+    - NÃO tente vender diretamente, apenas gere curiosidade sobre como aprofundar a conexão.  
+    - IMPORTANTE: Retorne apenas o objeto JSON sem formatação ou caracteres extras. Use exatamente esta estrutura:
     {"titulo":"título aqui","subtitulo":"subtítulo aqui","paragrafos":["parágrafo 1","parágrafo 2","parágrafo 3","parágrafo 4"]}
   `;
 
