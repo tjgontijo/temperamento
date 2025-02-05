@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 type ApresentacaoGuiaProps = {
   nome_pretendente: string;
 };
@@ -57,12 +59,13 @@ export function ApresentacaoGuia({ nome_pretendente }: ApresentacaoGuiaProps) {
               
               {/* Imagem do guia */}
               <div className="relative bg-white rounded-2xl shadow-2xl p-4 transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                <img
+                <Image
                   src="/guia-capa.png"
                   alt="Guia Match Perfeito"
                   width={400}
                   height={300}
                   className="w-full h-auto rounded-lg"
+                  priority
                 />
               </div>
             </div>
