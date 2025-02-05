@@ -1,108 +1,408 @@
 'use client';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { FaLock, FaUnlock, FaHeart } from 'react-icons/fa';
 
-export function ResultadosIniciais({ 
-  nome_pretendente, 
-  temperamentoPrincipal, 
-  temperamentoSecundario,
-  linguagemPrincipal,
-  linguagemSecundaria,
-  analise
-}: { 
+type PercentageCircleProps = {
+  percentage: number;
+  label: string;
+  color: string;
+  isDominant?: 'dominant' | 'secondary' | 'equal';
+};
+
+const PercentageCircle = ({ 
+  percentage, 
+  label, 
+  color, 
+  isDominant 
+}: PercentageCircleProps) => (
+  <div className="flex flex-col items-center group">
+    <div 
+      className="relative w-24 h-24 md:w-32 md:h-32 rounded-full flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-105"
+      style={{
+        background: `conic-gradient(${color} ${percentage * 360}deg, #e0e0e0 ${percentage * 360}deg)`
+      }}
+    >
+      <div className="absolute w-20 h-20 md:w-28 md:h-28 bg-white rounded-full flex items-center justify-center shadow-inner">
+        <span className="text-2xl md:text-3xl font-bold text-gray-800">
+          {Math.round(percentage * 100)}%
+        </span>
+      </div>
+    </div>
+    <div className="mt-4 text-center">
+      <p className="text-sm md:text-base font-semibold text-gray-900 group-hover:text-indigo-700 transition">
+        {label}
+      </p>
+      <p className="text-xs md:text-sm text-gray-600 italic font-light group-hover:text-indigo-600 transition">
+        {isDominant === 'dominant' 
+          ? 'Característica Dominante' 
+          : isDominant === 'secondary' 
+            ? 'Influência Secundária' 
+            : 'Equilíbrio Emocional'}
+      </p>
+    </div>
+  </div>
+);
+
+type ResultadosIniciaisProps = {
   nome_pretendente: string;
-  temperamentoPrincipal: string;
-  temperamentoSecundario: string;
-  linguagemPrincipal: string;
-  linguagemSecundaria: string;
   analise: {
     titulo: string;
     subtitulo: string;
     paragrafos: string[];
+  };
+};
+
+type DadosResultadoType = {
+  temperamento: {
+    principal: string;
+    secundario: string;
+    percentualPrincipal: number;
+    percentualSecundario: number;
+  };
+  linguagem: {
+    principal: string;
+    secundario: string;
+    percentualPrincipal: number;
+    percentualSecundario: number;
+  };
+  temperamentoAutor: {
+    principal: string;
+    secundario: string;
+    percentualPrincipal: number;
+    percentualSecundario: number;
+  };
+  linguagemAutor: {
+    principal: string;
+    secundario: string;
+    percentualPrincipal: number;
+    percentualSecundario: number;
+  };
+};
+
+const HeartAnimation = ({ isActive }: { isActive: boolean }) => {
+  const hearts = Array(50).fill(0).map((_, index) => ({  
+    id: index,
+    x: Math.random() * 300 - 150,  
+    initialY: window.innerHeight,  
+    targetY: -window.innerHeight,  
+    delay: Math.random() * 1.5,  
+    scale: Math.random() * 0.7 + 0.3,  
+    rotate: Math.random() * 360,
+    opacity: Math.random() * 0.5 + 0.5,  
+    size: Math.random() * 25 + 10  
+  }));
+
+  return isActive ? (
+    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+      {hearts.map((heart) => (
+        <motion.div
+          key={heart.id}
+          initial={{ 
+            opacity: 0, 
+            x: heart.x, 
+            y: heart.initialY,  
+            scale: 0,
+            rotate: heart.rotate
+          }}
+          animate={{ 
+            opacity: [heart.opacity, 1, 0],  
+            x: [heart.x, heart.x + Math.random() * 200 - 100],  
+            y: [heart.initialY, heart.targetY],  
+            scale: [0, heart.scale, 0],  
+            rotate: heart.rotate + 360  
+          }}
+          transition={{
+            duration: 8,  
+            delay: heart.delay,
+            repeat: 1,
+            repeatType: 'loop',
+            ease: "easeInOut"  
+          }}
+          className="absolute"
+          style={{ 
+            left: `${80 + heart.x / 2}%`,  
+          }}
+        >
+          <FaHeart 
+            className="drop-shadow-lg"  
+            style={{ 
+              width: `${heart.size}px`,  
+              height: `${heart.size}px`,
+              color: `rgba(255, 105, 180, ${heart.opacity})`,  
+            }} 
+          />
+        </motion.div>
+      ))}
+    </div>
+  ) : null;
+};
+
+const UnlockButton = ({ 
+  isUnlocked, 
+  onUnlock,
+  isHeartAnimationActive
+}: { 
+  isUnlocked: boolean, 
+  onUnlock: () => void,
+  isHeartAnimationActive: boolean
+}) => {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onUnlock}
+      disabled={isUnlocked}
+      className={`
+        relative overflow-hidden rounded-full px-6 py-3 text-white font-bold 
+        transition-all duration-300 ease-in-out
+        ${isUnlocked 
+          ? 'bg-green-500 cursor-not-allowed' 
+          : 'bg-purple-600 hover:bg-purple-700'}
+      `}
+    >
+      {/* Background de loading */}
+      {!isUnlocked && (
+        <motion.div
+          className="absolute inset-0 bg-purple-400 z-0"
+          initial={{ width: '0%' }}
+          animate={{ 
+            width: isHeartAnimationActive ? '100%' : '0%'
+          }}
+          transition={{ 
+            duration: 7,  
+            repeat: isHeartAnimationActive ? 1 : 0,
+            repeatType: 'loop',
+            ease: 'linear'
+          }}
+        />
+      )}
+
+      {/* Conteúdo do botão */}
+      <div className="relative z-10 flex items-center justify-center space-x-2">
+        {isUnlocked ? (
+          <>
+            <FaUnlock className="w-5 h-5" />
+            <span>Análise Desbloqueada</span>
+          </>
+        ) : (
+          <>
+            <FaLock className="w-5 h-5" />
+            <span>Desbloquear Análise do Casal</span>
+          </>
+        )}
+      </div>
+    </motion.button>
+  );
+};
+
+export function ResultadosIniciais({
+  nome_pretendente,
+  analise
+}: ResultadosIniciaisProps) {
+  const [dadosResultado, setDadosResultado] = useState<DadosResultadoType | null>(null);
+  const [analiseUnlocked, setAnaliseUnlocked] = useState(false);
+  const [isHeartAnimationActive, setIsHeartAnimationActive] = useState(false);
+
+  useEffect(() => {
+    const resultadosQuestionario = localStorage.getItem('resultados_questionario');
+    if (resultadosQuestionario) {
+      setDadosResultado(JSON.parse(resultadosQuestionario));
+    }
+  }, []);
+
+  const handleUnlock = () => {
+    if (!analiseUnlocked) {
+      setIsHeartAnimationActive(true);
+      
+      // Tempo total sincronizado com a animação dos corações
+      setTimeout(() => {
+        setIsHeartAnimationActive(false);
+        setAnaliseUnlocked(true);
+      }, 8000);  // 8 segundos, igual à duração da animação
+    }
+  };
+
+  if (!dadosResultado) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-xl text-gray-600">Carregando resultados...</p>
+      </div>
+    );
   }
-}) {
-  if (!nome_pretendente) {
-    throw new Error('Nome do pretendente não encontrado');
-  }
+
+  const {      
+    temperamento, 
+    linguagem,
+    temperamentoAutor,
+    linguagemAutor
+  } = dadosResultado;
 
   return (
-    <section className="bg-gradient-to-br from-purple-50 to-indigo-100 py-16 px-4 md:px-8 lg:px-16">
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-          Análise Personalizada
-        </h2>
-        <h3 className="text-2xl md:text-3xl font-semibold text-indigo-700 mb-8">
-          Revelando os Segredos do Coração de {nome_pretendente}
-        </h3>
-        <p className="text-lg text-gray-600 mb-12 leading-relaxed">
-          Nossa análise avançada revelou aspectos únicos da personalidade dele que podem ser a chave para uma conexão profunda e duradoura.
-        </p>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="relative bg-gradient-to-br from-purple-50 to-indigo-100 min-h-screen p-4 md:p-8 lg:p-12"
+    >
+      {/* Animação de corações */}
+      <HeartAnimation isActive={isHeartAnimationActive} />
 
-        {/* Perfil de Temperamento */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 text-left">
-          <h4 className="text-2xl font-bold text-indigo-800 mb-6">
-            Perfil de Temperamento
-          </h4>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h5 className="text-xl font-semibold text-gray-700 mb-4">
-                Temperamento Principal
-              </h5>
-              <p className="text-lg text-gray-600">
-                {temperamentoPrincipal}
-              </p>
+      <div className="relative z-10 max-w-xl mx-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8 space-y-8">
+        {/* Título Persuasivo */}
+        <div className="text-center bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-2xl mb-8 shadow-xl">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+            O Código Secreto do Amor de {nome_pretendente}
+          </h1>
+          <p className="text-base md:text-xl text-indigo-100 max-w-2xl mx-auto text-center">
+            Com base em suas respostas conseguimos revelar com profundidade o perfil do seu pretendente.
+          </p>
+        </div>
+
+        {/* Temperamento Pretendente */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-4">
+            Mapa Emocional de {nome_pretendente}
+          </h2>
+          <div className="flex justify-center space-x-8 md:space-x-12">
+            <div className="text-center">
+              <PercentageCircle 
+                percentage={temperamento.percentualPrincipal} 
+                label={temperamento.principal}
+                color="#6366f1"
+                isDominant={temperamento.percentualPrincipal > temperamento.percentualSecundario ? 'dominant' : temperamento.percentualPrincipal < temperamento.percentualSecundario ? 'secondary' : 'equal'}
+              />
             </div>
-            <div>
-              <h5 className="text-xl font-semibold text-gray-700 mb-4">
-                Influência Secundária
-              </h5>
-              <p className="text-lg text-gray-600">
-                {temperamentoSecundario}
-              </p>
+            <div className="text-center">
+              <PercentageCircle 
+                percentage={temperamento.percentualSecundario} 
+                label={temperamento.secundario}
+                color="#a855f7"
+                isDominant={temperamento.percentualSecundario > temperamento.percentualPrincipal ? 'dominant' : temperamento.percentualSecundario < temperamento.percentualPrincipal ? 'secondary' : 'equal'}
+              />
             </div>
           </div>
         </div>
 
-        {/* Linguagem do Amor */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12 text-left">
-          <h4 className="text-2xl font-bold text-indigo-800 mb-6">
-            Linguagem do Amor
-          </h4>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h5 className="text-xl font-semibold text-gray-700 mb-4">
-                Linguagem Principal
-              </h5>
-              <p className="text-lg text-gray-600">
-                {linguagemPrincipal}
-              </p>
+        {/* Linguagem do Amor Pretendente */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-semibold text-pink-800 mb-6 border-b-2 border-pink-200 pb-4">
+            Como {nome_pretendente} Recebe Amor
+          </h2>
+          <div className="flex justify-center space-x-8 md:space-x-12">
+            <div className="text-center">
+              <PercentageCircle 
+                percentage={linguagem.percentualPrincipal} 
+                label={linguagem.principal}
+                color="#ec4899"
+                isDominant={linguagem.percentualPrincipal > linguagem.percentualSecundario ? 'dominant' : linguagem.percentualPrincipal < linguagem.percentualSecundario ? 'secondary' : 'equal'}
+              />
             </div>
-            <div>
-              <h5 className="text-xl font-semibold text-gray-700 mb-4">
-                Linguagem Secundária
-              </h5>
-              <p className="text-lg text-gray-600">
-                {linguagemSecundaria}
-              </p>
+            <div className="text-center">
+              <PercentageCircle 
+                percentage={linguagem.percentualSecundario} 
+                label={linguagem.secundario}
+                color="#f472b6"
+                isDominant={linguagem.percentualSecundario > linguagem.percentualPrincipal ? 'dominant' : linguagem.percentualSecundario < linguagem.percentualPrincipal ? 'secondary' : 'equal'}
+              />
             </div>
           </div>
         </div>
 
-        {/* Análise Detalhada */}
-        <div className="bg-white rounded-xl shadow-lg p-8 text-left">
-          <h4 className="text-2xl font-bold text-indigo-800 mb-6">
-            {analise.titulo}
-          </h4>
-          <h5 className="text-xl font-semibold text-gray-700 mb-6">
-            {analise.subtitulo}
-          </h5>
-          <div className="space-y-4">
-            {analise.paragrafos.map((paragrafo, index) => (
-              <p key={index} className="text-lg text-gray-600 leading-relaxed">
-                {paragrafo}
-              </p>
-            ))}
+        {/* Bônus: Perfil do Autor */}
+        <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 mb-8 border-2 border-purple-200">
+          <h2 className="text-2xl md:text-3xl font-bold text-indigo-800 mb-4 text-center">
+            Tomamos a Liberdade e também mapeamos o seu perfil 😉
+          </h2>
+          <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6 text-center">
+            Como um presente especial, além do perfil de {nome_pretendente}, 
+            revelamos as camadas mais profundas da sua própria personalidade e forma de amar. 
+            Uma jornada inesperada de autoconhecimento.
+          </p>
+          
+          {/* Temperamento Autor */}
+          <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 text-center">
+            <h3 className="text-xl md:text-2xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-4">
+              Seu Universo Interno
+            </h3>
+            <div className="flex justify-center space-x-8 md:space-x-12">
+              <div className="text-center">
+                <PercentageCircle 
+                  percentage={temperamentoAutor.percentualPrincipal} 
+                  label={temperamentoAutor.principal}
+                  color="#6366f1"
+                  isDominant={temperamentoAutor.percentualPrincipal > temperamentoAutor.percentualSecundario ? 'dominant' : temperamentoAutor.percentualPrincipal < temperamentoAutor.percentualSecundario ? 'secondary' : 'equal'}
+                />
+              </div>
+              <div className="text-center">
+                <PercentageCircle 
+                  percentage={temperamentoAutor.percentualSecundario} 
+                  label={temperamentoAutor.secundario}
+                  color="#a855f7"
+                  isDominant={temperamentoAutor.percentualSecundario > temperamentoAutor.percentualPrincipal ? 'dominant' : temperamentoAutor.percentualSecundario < temperamentoAutor.percentualPrincipal ? 'secondary' : 'equal'}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Linguagem do Amor Autor */}
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <h3 className="text-xl md:text-2xl font-semibold text-pink-800 mb-6 border-b-2 border-pink-200 pb-4">
+              Como Você Expressa Amor
+            </h3>
+            <div className="flex justify-center space-x-8 md:space-x-12">
+              <div className="text-center">
+                <PercentageCircle 
+                  percentage={linguagemAutor.percentualPrincipal} 
+                  label={linguagemAutor.principal}
+                  color="#ec4899"
+                  isDominant={linguagemAutor.percentualPrincipal > linguagemAutor.percentualSecundario ? 'dominant' : linguagemAutor.percentualPrincipal < linguagemAutor.percentualSecundario ? 'secondary' : 'equal'}
+                />
+              </div>
+              <div className="text-center">
+                <PercentageCircle 
+                  percentage={linguagemAutor.percentualSecundario} 
+                  label={linguagemAutor.secundario}
+                  color="#f472b6"
+                  isDominant={linguagemAutor.percentualSecundario > linguagemAutor.percentualPrincipal ? 'dominant' : linguagemAutor.percentualSecundario < linguagemAutor.percentualPrincipal ? 'secondary' : 'equal'}
+                />
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Botão de Desbloquear */}
+        <div className="flex justify-center mt-8">
+          <UnlockButton 
+            isUnlocked={analiseUnlocked}
+            onUnlock={handleUnlock}
+            isHeartAnimationActive={isHeartAnimationActive}
+          />
+        </div>
+
+        {/* Análise desbloqueada com animação */}
+        <AnimatePresence>
+          {analiseUnlocked && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="mt-8 p-6 bg-purple-50 rounded-2xl"
+            >
+              <h3 className="text-2xl font-bold text-purple-800 mb-4">
+                {analise.titulo}
+              </h3>
+              <p className="text-lg text-purple-700 mb-4">
+                {analise.subtitulo}
+              </p>
+              {analise.paragrafos.map((paragrafo, index) => (
+                <p key={index} className="text-base text-gray-700 mb-4">
+                  {paragrafo}
+                </p>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </section>
+    </motion.div>
   );
 }
