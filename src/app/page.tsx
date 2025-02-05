@@ -27,7 +27,7 @@ export default function Home() {
                 para criar uma conexão verdadeira e duradoura.
               </p>
               <Button
-                onClick={() => router.push('/formulario-contexto')}
+                onClick={() => router.push('/questionario')}
                 className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
                 Iniciar Questionário
