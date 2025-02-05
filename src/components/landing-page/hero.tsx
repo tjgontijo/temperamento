@@ -11,30 +11,35 @@ export function Hero({ nome_autor, nome_pretendente }: HeroProps) {
   }
 
   return (
-    <div className="bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 text-white py-40 md:py-40 px-4 relative overflow-hidden">
+    <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white min-h-[80vh] flex items-center py-16 md:py-24 px-4 relative overflow-hidden">
       {/* Elementos decorativos de fundo */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-8 -left-8 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-8 -right-8 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl" />
       </div>
       
-      <div className="max-w-4xl mx-auto text-center relative">
+      <div className="max-w-2xl mx-auto text-center relative space-y-6">
         {/* Tag de exclusividade */}
-        <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full mb-6 text-sm md:text-base">
-          ✨ Análise Exclusiva e Personalizada
+        <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm md:text-base">
+          🔍 Sua Análise Foi Concluída!
         </div>
 
-        <h1 className="text-3xl md:text-5xl font-bold mb-6 md:mb-8 drop-shadow-lg leading-tight">
-          <span className="block mb-2">Parabéns, {nome_autor}!</span>
-          <span className="block text-pink-200">
-            Descobrimos o Caminho Direto para o Coração de {nome_pretendente}
-          </span>
-        </h1>
+        <div className="space-y-4 text-white/90 leading-relaxed">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+            {nome_autor}, este é o caminho mais rápido para conquistar {nome_pretendente} e criar a conexão irresistível.
+          </h1>
 
-        <p className="text-lg md:text-2xl font-medium leading-relaxed max-w-3xl mx-auto text-pink-50">
-          Em poucos minutos, você terá acesso ao guia mais poderoso e personalizado 
-          para criar uma conexão irresistível com {nome_pretendente}.
-        </p>
+          <p className="text-base md:text-lg mb-4">
+            Esta análise exclusiva revela exatamente como {nome_pretendente} se conecta emocionalmente 
+            e o que ele realmente precisa para abrir o coração. Se você deseja fazer esse relacionamento 
+            acontecer – seja um primeiro encontro, fortalecer o interesse dele ou construir algo para a vida toda – 
+            agora você tem a resposta clara.
+          </p>
+
+          <p className="text-lg md:text-xl font-bold text-pink-100">
+            O que vou revelar agora vai transformar completamente a dinâmica entre vocês dois. Então preste bastante atenção 🧐
+          </p>
+        </div>
       </div>
     </div>
   );
