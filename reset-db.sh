@@ -35,4 +35,7 @@ fuser -k 3000/tcp
 print_box "Limpando Logs..."
 echo "" > /www/server/nodejs/vhost/logs/decifrandocoracoes.log
 
+print_box "Definindo Permissão para www..."
+chown -R www:www /www/wwwroot/decifrandocoracoes.com
+
 print_box "Processo concluído!"
