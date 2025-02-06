@@ -12,24 +12,18 @@ print_box() {
 }
 
 print_box "Removendo diretórios e arquivos desnecessários..."
-rm -rf .next node_modules/@prisma/client node_modules/.prisma prisma/migrations
+rm -rf .next node_modules/@prisma/client node_modules/.prisma prisma/migrations  node_modules/.cache
 
 print_box "Limpando cache do npm..."
 npm cache clean --force
-
-print_box "Removendo cache do node_modules."
-rm -rf node_modules/.cache
-
-print_box "Gerando cliente do Prisma..."
-npx prisma generate
-
-print_box "Limpando registros do banco de dados..."
-npx ts-node prisma/clear-db.ts
 
 print_box "Instalando dependências..."
 npm install
 
 print_box "Executando migrações do Prisma..."
 npx prisma migrate dev --name init --force-reset
+
+print_box "Gerando cliente do Prisma..."
+npx prisma generate
 
 print_box "Processo concluído!"
