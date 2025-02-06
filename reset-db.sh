@@ -11,8 +11,8 @@ print_box() {
     printf '└%*s┘\n' "$border_length" | tr ' ' '-'
 }
 
-print_box "Removendo diretórios e arquivos desnecessários..."
-rm -rf .next node_modules/@prisma/client node_modules/.prisma prisma/migrations  node_modules/.cache
+print_box "Removendo diretórios e arquivos..."
+rm -rf .next node_modules prisma/migrations package-lock.json
 
 print_box "Limpando cache do npm..."
 npm cache clean --force
@@ -25,5 +25,11 @@ npx prisma migrate dev --name init
 
 print_box "Gerando cliente do Prisma..."
 npx prisma generate
+
+print_box "Fazendo o build da Aplicação..."
+npm run build
+
+print_box "Matando processos na porta 3000..."
+fuser -k 3000/tcp
 
 print_box "Processo concluído!"
