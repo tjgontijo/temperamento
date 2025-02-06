@@ -12,7 +12,7 @@ print_box() {
 }
 
 print_box "Removendo diretórios e arquivos..."
-rm -rf .next node_modules prisma/migrations package-lock.json
+rm -rf .next node_modules/@prisma/client node_modules/.cache node_modules/.prisma/client prisma/migrations package-lock.json
 
 print_box "Limpando cache do npm..."
 npm cache clean --force
