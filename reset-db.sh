@@ -20,6 +20,9 @@ npm cache clean --force
 print_box "Removendo cache do node_modules."
 rm -rf node_modules/.cache
 
+print_box "Limpando registros do banco de dados..."
+npx ts-node prisma/clear-db.ts
+
 print_box "Resetando banco de dados..."
 npx prisma migrate reset --force
 
