@@ -13,7 +13,7 @@ echo "Instalando dependências..."
 npm install
 
 echo "Executando migrações do Prisma..."
-npx prisma migrate dev --name init
+npx prisma migrate dev --name init --force-reset
 
 echo "Gerando cliente do Prisma..."
 npx prisma generate
