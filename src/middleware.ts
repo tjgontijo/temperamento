@@ -6,6 +6,16 @@ export function middleware(request: NextRequest) {
   const host = request.headers.get('host')
   const protocol = request.headers.get('x-forwarded-proto') || 'https'
 
+  // Ignora redirecionamentos em desenvolvimento local
+  const isLocalhost = host?.includes('localhost') || 
+                      host?.includes('127.0.0.1') || 
+                      host?.includes('192.168.') ||
+                      host?.includes('::1')
+
+  if (isLocalhost) {
+    return NextResponse.next()
+  }
+
   // Redireciona de http para https
   if (protocol !== 'https') {
     return NextResponse.redirect(`https://${host}${url.pathname}${url.search}`)
