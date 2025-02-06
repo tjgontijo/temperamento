@@ -10,7 +10,7 @@ echo "Removendo cache do node_modules."
 rm -rf node_modules/.cache
 
 echo "Instalando dependências..."
-npm ci
+npm install
 
 echo "Executando migrações do Prisma..."
 npx prisma migrate dev --name init
