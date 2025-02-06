@@ -6,16 +6,16 @@ rm -rf .next package-lock.json node_modules/@prisma/client node_modules/.prisma 
 echo "Limpando cache do npm..."
 npm cache clean --force
 
+echo "Removendo cache do node_modules."
+rm -rf node_modules/.cache
+
 echo "Instalando dependências..."
-npm install
+npm ci
 
 echo "Executando migrações do Prisma..."
 npx prisma migrate dev --name init
 
 echo "Gerando cliente do Prisma..."
 npx prisma generate
-
-##echo "Rodando seed do banco de dados..."
-##npx prisma db seed
 
 echo "Processo concluído!"
