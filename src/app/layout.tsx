@@ -8,10 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://decifrandocoracoes.com'),
   title: {
-    default: process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME || 'Decifrando Corações',
+    default: "Descubra Como Criar uma Conexão Irresistível com Ele",
     template: `%s | ${process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME || 'Decifrando Corações'}`,
   },
-  description: "Descubra o temperamento e a linguagem do amor do seu pretendente para criar uma conexão verdadeira e duradoura.",
+  description: "Aprenda a entender o que realmente conquista um homem e transforme sua relação. Descubra o caminho mais rápido para criar uma conexão emocional forte e duradoura.",
   keywords: [
     "como conquistar um homem",
     "como entender um homem",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://decifrandocoracoes.com',
     title: process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME || 'Decifrando Corações',
-    description: "Descubra o temperamento e a linguagem do amor do seu pretendente para criar uma conexão verdadeira e duradoura.",
+    description: "Aprenda a entender o que realmente conquista um homem e transforme sua relação. Descubra o caminho mais rápido para criar uma conexão emocional forte e duradoura.",
     siteName: process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME || 'Decifrando Corações',
     images: [
       {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME || 'Decifrando Corações',
-    description: "Descubra o temperamento e a linguagem do amor do seu pretendente para criar uma conexão verdadeira e duradoura.",
+    description: "Aprenda a entender o que realmente conquista um homem e transforme sua relação. Descubra o caminho mais rápido para criar uma conexão emocional forte e duradoura.",
     images: ['/images/og-image.png']
   },
   icons: {
