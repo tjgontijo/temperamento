@@ -21,7 +21,7 @@ print_box "Instalando dependências..."
 npm install
 
 print_box "Executando migrações do Prisma..."
-npx prisma migrate dev --name init --force-reset
+npx prisma migrate dev --name init
 
 print_box "Gerando cliente do Prisma..."
 npx prisma generate
