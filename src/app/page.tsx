@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, Heart, Lightbulb, MessageCircle, Target, Users2, AlertTriangle } from "lucide-react";
+import { Heart, MessageCircle, Target, Users2, AlertTriangle } from "lucide-react";
 import { DepoimentoCard } from "@/components/layout/depoimento-card";
 import { useRouter } from 'next/navigation';
 
@@ -151,7 +151,7 @@ export default function Home() {
                 </div>
               </div>
               <blockquote className="text-2xl italic text-gray-800 mb-6">
-                "Eu achava que meu namorado era frio, mas depois do teste entendi que ele expressa amor de uma forma diferente da minha. Isso mudou tudo!"
+                &quot;Eu achava que meu namorado era frio, mas depois do teste entendi que ele expressa amor de uma forma diferente da minha. Isso mudou tudo!&quot;
               </blockquote>
               <div className="text-right">
                 <p className="font-semibold text-purple-900">Ana Paula, 28</p>
@@ -263,7 +263,7 @@ export default function Home() {
                 </div>
               </div>
               <blockquote className="text-2xl italic text-gray-800 mb-6">
-                "A gente brigava muito porque eu achava que ele não se importava. Depois da análise, percebi que o jeito dele de demonstrar amor era diferente do meu. Agora nossa relação está muito mais leve e feliz!"
+                &quot;A gente brigava muito porque eu achava que ele não se importava. Depois da análise, percebi que o jeito dele de demonstrar amor era diferente do meu. Agora nossa relação está muito mais leve e feliz!&quot;
               </blockquote>
               <div>
                 <p className="font-semibold text-purple-900">Mariana, 32</p>
