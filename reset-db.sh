@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Removendo diretórios e arquivos desnecessários..."
-rm -rf .next package-lock.json node_modules/@prisma/client node_modules/.prisma prisma/migrations
+rm -rf .next node_modules/@prisma/client node_modules/.prisma prisma/migrations
 
 echo "Limpando cache do npm..."
 npm cache clean --force
