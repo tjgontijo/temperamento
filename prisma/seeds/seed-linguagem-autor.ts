@@ -1,4 +1,4 @@
-import { PrismaClient, TipoAlternativa } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -44,9 +44,9 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
       "pergunta": "Se você e {nome} estivessem passando por um momento difícil no relacionamento, o que te ajudaria a se sentir mais segura?",
       "complemento": "A forma como você busca conforto pode revelar muito sobre o que te faz sentir amada.",
       "alternativas": [
-          { "texto": "Sentir o abraço dele forte, sem precisar dizer nada.", "tipoAlternativa": "TOQUE_FISICO" },
-          { "texto": "Ouvir dele palavras sinceras dizendo que tudo vai ficar bem e o quanto sou importante.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
-          { "texto": "Receber um gesto simbólico que me lembrasse do que vivemos juntos.", "tipoAlternativa": "PRESENTES" },
+          { "texto": "Manter o contato físico, com abraços e carinhos, sem necessariamente precisar dizer nada.", "tipoAlternativa": "TOQUE_FISICO" },
+          { "texto": "Ouvir dele palavras sinceras dizendo que tudo vai ficar bem, o quanto me ama e sou importante.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
+          { "texto": "Receber um gesto e/ou um objeto simbólico que me lembrasse do que vivemos juntos.", "tipoAlternativa": "PRESENTES" },
           { "texto": "Perceber que ele está disposto a fazer algo para melhorar as coisas sem eu precisar pedir.", "tipoAlternativa": "ATOS_SERVICO" },
           { "texto": "Ter um tempo só nosso, longe de distrações, para conversarmos e nos reconectarmos.", "tipoAlternativa": "TEMPO_QUALIDADE" }
       ]
@@ -56,11 +56,11 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
       "pergunta": "Se {nome} quisesse te surpreender em um dia comum, o que te deixaria mais feliz?",
       "complemento": "O que faria você se sentir mais especial e valorizada inesperadamente?",
       "alternativas": [
-          { "texto": "Me dar algo simbólico que mostrasse que ele pensa em mim.", "tipoAlternativa": "PRESENTES" },
-          { "texto": "Um abraço forte e demorado que me fizesse esquecer do mundo.", "tipoAlternativa": "TOQUE_FISICO" },
+          { "texto": "Me presentear com algo que mostrasse que ele pensa em mim.", "tipoAlternativa": "PRESENTES" },
+          { "texto": "Me dar um abraço forte e demorado que me fizesse esquecer do mundo.", "tipoAlternativa": "TOQUE_FISICO" },
           { "texto": "Ele aparecer do nada só para me ver e passar um tempo comigo.", "tipoAlternativa": "TEMPO_QUALIDADE" },
           { "texto": "Ele resolver algo para mim ou me ajudar sem eu precisar pedir.", "tipoAlternativa": "ATOS_SERVICO" },
-          { "texto": "Uma mensagem inesperada dizendo o quanto ele gosta de mim.", "tipoAlternativa": "PALAVRA_AFIRMACAO" }
+          { "texto": "Uma mensagem inesperada dizendo o quanto ele me ama e sou importante para ele.", "tipoAlternativa": "PALAVRA_AFIRMACAO" }
       ]
   },
   {
@@ -68,7 +68,7 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
       "pergunta": "Se {nome} fosse demonstrar o quanto gosta de você na frente dos outros, o que mais te deixaria feliz?",
       "complemento": "O jeito que você se sente valorizada em público pode dizer muito sobre o que te faz bem no relacionamento.",
       "alternativas": [
-          { "texto": "Se {nome} me presenteasse com algo simbólico, mesmo que pequeno.", "tipoAlternativa": "PRESENTES" },
+          { "texto": "Se {nome} me desse uma rosa de maneira inesperada.", "tipoAlternativa": "PRESENTES" },
           { "texto": "Se {nome} segurasse minha mão, me abraçasse ou demonstrasse carinho físico.", "tipoAlternativa": "TOQUE_FISICO" },
           { "texto": "Se {nome} prestasse atenção em mim e me incluísse nas conversas.", "tipoAlternativa": "TEMPO_QUALIDADE" },
           { "texto": "Se {nome} falasse de mim de forma carinhosa e fizesse questão de me elogiar.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
@@ -81,7 +81,7 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
       "complemento": "A forma como você gosta de ser lembrada pode revelar muito sobre sua maneira de sentir amor.",
       "alternativas": [
           { "texto": "Ele me surpreenderia com algo simbólico que me lembrasse dele.", "tipoAlternativa": "PRESENTES" },
-          { "texto": "Ele resolveria algo para mim ou faria algo prático para demonstrar cuidado.", "tipoAlternativa": "ATOS_SERVICO" },
+          { "texto": "Ele resolveria algo para mim, me aliviando um pouco do stress do dia a dia.", "tipoAlternativa": "ATOS_SERVICO" },
           { "texto": "Ele faria questão de me abraçar forte na primeira oportunidade.", "tipoAlternativa": "TOQUE_FISICO" },
           { "texto": "Ele reservaria um tempinho, nem que fosse pouco, para estar comigo.", "tipoAlternativa": "TEMPO_QUALIDADE" },
           { "texto": "Uma ligação rápida ou uma mensagem dizendo que sente minha falta.", "tipoAlternativa": "PALAVRA_AFIRMACAO" }
@@ -107,16 +107,16 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
         { "texto": "Se ele viesse falar comigo e dissesse que me ama.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
         { "texto": "Se ele separasse um tempo para ficarmos juntos e conversarmos.", "tipoAlternativa": "TEMPO_QUALIDADE" },
         { "texto": "Se ele me abraçasse apertado e mostrasse que está tudo bem.", "tipoAlternativa": "TOQUE_FISICO" },
-        { "texto": "Se ele fizesse algo prático para demonstrar que se importa comigo.", "tipoAlternativa": "ATOS_SERVICO" },
+        { "texto": "Se ele fizesse algo prático para demonstrar que se importa comigo, como deixar a louça lavada ou fazer o jantar.", "tipoAlternativa": "ATOS_SERVICO" },
         { "texto": "Se ele me desse algo simbólico como forma de reconciliação.", "tipoAlternativa": "PRESENTES" }
     ]
 },
 {
     "tipoQuestaoId": tipoQuestao.id,
-    "pergunta": "Se você e {nome} estivessem à distância por um tempo, como ele poderia te fazer sentir amada?",
+    "pergunta": "Se {nome} estivesse viajando a trabalho há muitos dias, como ele poderia te fazer sentir amada?",
     "complemento": "A forma como você mantém a conexão pode revelar muito sobre sua forma de se sentir especial.",
     "alternativas": [
-        { "texto": "Se ele me mandasse mensagens e áudios carinhosos sempre que possível.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
+        { "texto": "Se ele me mandasse mensagens e áudios carinhosos e me ligasse sempre que possível.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
         { "texto": "Se ele planejasse momentos para conversarmos e mantermos nossa conexão.", "tipoAlternativa": "TEMPO_QUALIDADE" },
         { "texto": "Se ele fizesse chamadas de vídeo e demonstrasse carinho, mesmo que à distância.", "tipoAlternativa": "TOQUE_FISICO" },
         { "texto": "Se ele encontrasse maneiras de facilitar minha rotina, mesmo de longe.", "tipoAlternativa": "ATOS_SERVICO" },
@@ -140,11 +140,11 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
     "pergunta": "Se você estivesse tendo um dia ruim, como gostaria que {nome} reagisse?",
     "complemento": "A forma como você busca conforto emocional pode revelar sua principal linguagem do amor.",
     "alternativas": [
-        { "texto": "Se ele me dissesse algo inspirador e me lembrasse do quanto sou especial.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
-        { "texto": "Se ele parasse tudo e ficasse comigo para me animar.", "tipoAlternativa": "TEMPO_QUALIDADE" },
-        { "texto": "Se ele me abraçasse apertado e ficasse perto de mim.", "tipoAlternativa": "TOQUE_FISICO" },
-        { "texto": "Se ele assumisse algumas tarefas minhas para aliviar meu dia.", "tipoAlternativa": "ATOS_SERVICO" },
-        { "texto": "Se ele me surpreendesse com um gesto ou presente inesperado.", "tipoAlternativa": "PRESENTES" }
+        { "texto": "Que ele me dissesse algo inspirador e me lembrasse do quanto sou especial.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
+        { "texto": "Que ele parasse tudo e ficasse comigo para me animar.", "tipoAlternativa": "TEMPO_QUALIDADE" },
+        { "texto": "Que ele me abraçasse apertado e ficasse perto de mim.", "tipoAlternativa": "TOQUE_FISICO" },
+        { "texto": "Que ele assumisse algumas tarefas minhas para aliviar meu dia.", "tipoAlternativa": "ATOS_SERVICO" },
+        { "texto": "Que ele me surpreendesse com um gesto ou presente inesperado.", "tipoAlternativa": "PRESENTES" }
     ]
 },
 {
@@ -155,8 +155,8 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
       { "texto": "Se ele dissesse palavras bonitas, reforçando o quanto sou importante para ele.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
       { "texto": "Se ele planejasse um momento só nosso, para curtirmos juntos.", "tipoAlternativa": "TEMPO_QUALIDADE" },
       { "texto": "Se ele fizesse algo prático por mim, como resolver um problema sem que eu pedisse.", "tipoAlternativa": "ATOS_SERVICO" },
-      { "texto": "Se ele me surpreendesse com um presente simbólico, sem motivo específico.", "tipoAlternativa": "PRESENTES" },
-      { "texto": "Se ele viesse e me abraçasse forte, sem precisar falar nada.", "tipoAlternativa": "TOQUE_FISICO" }
+      { "texto": "Se ele me surpreendesse com um presente especial, um chocolate que eu goste, sem motivo específico.", "tipoAlternativa": "PRESENTES" },
+      { "texto": "Se ele viesse e me abraçasse forte, e me enchesse de carinho.", "tipoAlternativa": "TOQUE_FISICO" }
   ]
 },
 {
@@ -164,11 +164,11 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
   "pergunta": "Se {nome} te dissesse 'eu te amo', como você gostaria que ele complementasse essa demonstração?",
   "complemento": "A maneira como você imagina esse momento pode revelar como se sente mais amada.",
   "alternativas": [
-      { "texto": "Se ele olhasse nos meus olhos e explicasse tudo o que sente por mim.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
-      { "texto": "Se ele estivesse presente, tirando um tempo só para nós dois.", "tipoAlternativa": "TEMPO_QUALIDADE" },
-      { "texto": "Se ele me abraçasse forte e me fizesse sentir segura.", "tipoAlternativa": "TOQUE_FISICO" },
-      { "texto": "Se ele me mostrasse isso com uma ação, cuidando de algo para mim.", "tipoAlternativa": "ATOS_SERVICO" },
-      { "texto": "Se ele me presenteasse com algo simbólico que representasse nosso amor.", "tipoAlternativa": "PRESENTES" }
+      { "texto": "Gostaria que ele olhasse nos meus olhos e falasse tudo o que sente por mim.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
+      { "texto": "Que ele estivesse presente, tirando um tempo só para nós dois.", "tipoAlternativa": "TEMPO_QUALIDADE" },
+      { "texto": "Que ele me abraçasse forte e me fizesse sentir segura.", "tipoAlternativa": "TOQUE_FISICO" },
+      { "texto": "Com uma ação, cuidando de algo para mim, para ver que ele presta atenção nas minhas necessidades.", "tipoAlternativa": "ATOS_SERVICO" },
+      { "texto": "Que ele me presenteasse com algo simbólico que representasse nosso amor.", "tipoAlternativa": "PRESENTES" }
   ]
 },
 {
@@ -176,11 +176,11 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
   "pergunta": "Se {nome} estivesse distraído com algo e você quisesse que ele demonstrasse mais atenção, o que te faria sentir melhor?",
   "complemento": "Sua resposta pode indicar como você se sente mais valorizada no relacionamento.",
   "alternativas": [
-      { "texto": "Se ele olhasse para mim e dissesse algo carinhoso, reafirmando o que sente.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
-      { "texto": "Se ele parasse o que estivesse fazendo e reservasse um tempo para estarmos juntos.", "tipoAlternativa": "TEMPO_QUALIDADE" },
-      { "texto": "Se ele simplesmente viesse até mim e segurasse minha mão ou me abraçasse.", "tipoAlternativa": "TOQUE_FISICO" },
-      { "texto": "Se ele percebesse que eu preciso de algo e fizesse isso por mim sem que eu pedisse.", "tipoAlternativa": "ATOS_SERVICO" },
-      { "texto": "Se ele aparecesse com um mimo ou uma lembrança inesperada para me fazer sorrir.", "tipoAlternativa": "PRESENTES" }
+      { "texto": "Que ele olhasse para mim e dissesse algo carinhoso, reafirmando o que sente.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
+      { "texto": "Que ele parasse o que estivesse fazendo e reservasse um tempo para estarmos juntos.", "tipoAlternativa": "TEMPO_QUALIDADE" },
+      { "texto": "Que ele simplesmente viesse até mim e segurasse minha mão ou me abraçasse.", "tipoAlternativa": "TOQUE_FISICO" },
+      { "texto": "Que ele percebesse que eu preciso de algo e fizesse isso por mim sem que eu pedisse.", "tipoAlternativa": "ATOS_SERVICO" },
+      { "texto": "Que ele aparecesse com um mimo ou uma lembrança inesperada para me fazer sorrir.", "tipoAlternativa": "PRESENTES" }
   ]
 },
 {
@@ -200,7 +200,7 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
   "pergunta": "Se você estivesse contando algo importante para {nome}, o que te faria sentir que ele realmente se importa?",
   "complemento": "Sua resposta pode indicar o que te faz sentir mais ouvida e valorizada.",
   "alternativas": [
-      { "texto": "Se ele dissesse palavras de apoio e reconhecimento sobre o que eu estou contando.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
+      { "texto": "Se ele dissesse palavras de apoio e reconhecimento sobre o que eu estou contando, mostrando que ele se importa.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
       { "texto": "Se ele realmente prestasse atenção, sem distrações, e ficasse ali comigo.", "tipoAlternativa": "TEMPO_QUALIDADE" },
       { "texto": "Se ele se aproximasse e demonstrasse fisicamente que está presente.", "tipoAlternativa": "TOQUE_FISICO" },
       { "texto": "Se ele fizesse algo concreto para me ajudar com a situação.", "tipoAlternativa": "ATOS_SERVICO" },
@@ -260,10 +260,10 @@ export const seedLinguagemAutor = async (prismaClient?: PrismaClient) => {
   "pergunta": "Se você estivesse passando por um momento de insegurança no relacionamento, o que {nome} poderia fazer para te fazer se sentir amada novamente?",
   "complemento": "A maneira como você busca segurança emocional pode indicar sua principal forma de se sentir amada.",
   "alternativas": [
-      { "texto": "Se ele dissesse exatamente o que sente por mim, sem deixar dúvidas.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
+      { "texto": "Gostaria que ele dissesse exatamente o que sente por mim, sem deixar dúvidas.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
       { "texto": "Se ele passasse mais tempo comigo e fizesse questão de me dar atenção.", "tipoAlternativa": "TEMPO_QUALIDADE" },
-      { "texto": "Se ele se aproximasse e me envolvesse com carinho e proximidade física.", "tipoAlternativa": "TOQUE_FISICO" },
-      { "texto": "Se ele me ajudasse com algo que estou precisando, sem eu pedir.", "tipoAlternativa": "ATOS_SERVICO" },
+      { "texto": "Que ele me desse um abraço forte, se aproximasse e me envolvesse com carinho e proximidade física.", "tipoAlternativa": "TOQUE_FISICO" },
+      { "texto": "Se ele me ajudasse com algo que estou precisando, sem eu pedir. Mostraria que ele presta atenção em mim.", "tipoAlternativa": "ATOS_SERVICO" },
       { "texto": "Se ele me desse um presente simbólico que me lembrasse o quanto sou especial para ele.", "tipoAlternativa": "PRESENTES" }
   ]
 }
