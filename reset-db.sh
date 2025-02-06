@@ -33,6 +33,6 @@ print_box "Matando processos na porta 3000..."
 fuser -k 3000/tcp
 
 print_box "Limpando Logs..."
-tail -f /www/server/nodejs/vhost/logs/decifrandocoracoes.log
+echo "" > /www/server/nodejs/vhost/logs/decifrandocoracoes.log
 
 print_box "Processo concluído!"
