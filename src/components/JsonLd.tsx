@@ -17,11 +17,16 @@ export function JsonLdScript() {
       "name": "Teste de Temperamento e Linguagem do Amor"
     },
     "keywords": [
-      "temperamento",
-      "linguagem do amor",
-      "relacionamento",
-      "psicologia",
-      "teste de personalidade"
+      "como conquistar um homem",
+      "linguagens do amor",
+      "entender um homem",
+      "psicologia de relacionamento",
+      "como fazer ele se interessar",
+      "criar conexão emocional",
+      "relacionamento saudável",
+      "método para conquistar",
+      "inteligência emocional no amor",
+      "guia de conquista"
     ]
   };
 
