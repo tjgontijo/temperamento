@@ -13,12 +13,20 @@ export const metadata: Metadata = {
   },
   description: "Descubra o temperamento e a linguagem do amor do seu pretendente para criar uma conexão verdadeira e duradoura.",
   keywords: [
-    "temperamento",
-    "linguagem do amor",
-    "relacionamento",
-    "conexão",
-    "psicologia",
-    "teste de personalidade"
+    "como conquistar um homem",
+    "como entender um homem",
+    "como saber se ele gosta de mim",
+    "como fazer um homem se apaixonar",
+    "como deixar um homem interessado",
+    "como ter um relacionamento saudável",
+    "como melhorar a comunicação no relacionamento",
+    "como saber se ele é o amor da minha vida",
+    "linguagens do amor como aplicar",
+    "como usar a psicologia para conquistar alguém",
+    "guia de conquista",
+    "método para conquistar",
+    "curso de sedução",
+    "inteligência emocional no amor"
   ],
   openGraph: {
     type: 'website',
