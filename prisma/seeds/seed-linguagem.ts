@@ -33,8 +33,8 @@ export const seedLinguagem = async (prismaClient?: PrismaClient) => {
       "complemento": "A forma como ele reage ao seu carinho pode indicar a maneira que ele mais gosta de receber amor.",
       "alternativas": [
           { "texto": "{nome} fica visivelmente feliz quando eu elogio e digo palavras carinhosas.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
-          { "texto": "{nome} se ilumina quando passamos tempo de qualidade juntos, sem distrações.", "tipoAlternativa": "TEMPO_QUALIDADE" },
-          { "texto": "{nome} parece mais conectado quando eu demonstro carinho físico, como abraços e toques sutis.", "tipoAlternativa": "TOQUE_FISICO" },
+          { "texto": "{nome} se ilumina quando dedico atenção exclusiva para ele, sem distrações.", "tipoAlternativa": "TEMPO_QUALIDADE" },
+          { "texto": "{nome} parece mais conectado quando eu demonstro carinho, como abraços e toques sutis.", "tipoAlternativa": "TOQUE_FISICO" },
           { "texto": "{nome} se sente especial quando faço algo por ele, como ajudá-lo em algo importante.", "tipoAlternativa": "ATOS_SERVICO" },
           { "texto": "{nome} adora quando eu o surpreendo com um presente ou lembrança simbólica.", "tipoAlternativa": "PRESENTES" }
       ]
@@ -46,7 +46,7 @@ export const seedLinguagem = async (prismaClient?: PrismaClient) => {
       "alternativas": [
           { "texto": "{nome} fica claramente melhor quando eu falo palavras de incentivo e carinho para ele.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
           { "texto": "{nome} parece se acalmar quando paramos tudo para ficar juntos sem pressa.", "tipoAlternativa": "TEMPO_QUALIDADE" },
-          { "texto": "{nome} relaxa mais rápido quando eu o abraço ou fico fisicamente próxima.", "tipoAlternativa": "TOQUE_FISICO" },
+          { "texto": "{nome} relaxa mais rapidamente quando eu o abraço ou fico fisicamente próxima.", "tipoAlternativa": "TOQUE_FISICO" },
           { "texto": "{nome} se sente aliviado quando eu ajudo com alguma tarefa que está pesando para ele.", "tipoAlternativa": "ATOS_SERVICO" },
           { "texto": "{nome} parece animado quando eu o surpreendo com algo simbólico para alegrar seu dia.", "tipoAlternativa": "PRESENTES" }
       ]
@@ -57,7 +57,7 @@ export const seedLinguagem = async (prismaClient?: PrismaClient) => {
       "complemento": "A reação dele pode indicar o tipo de gesto que ele mais valoriza em um relacionamento.",
       "alternativas": [
           { "texto": "{nome} fica radiante quando eu digo algo carinhoso ou expresso minha admiração por ele.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
-          { "texto": "{nome} parece mais conectado quando dedicamos tempo de qualidade um ao outro.", "tipoAlternativa": "TEMPO_QUALIDADE" },
+          { "texto": "{nome} parece mais conectado quando dedicamos um tempo juntos, apenas nós dois.", "tipoAlternativa": "TEMPO_QUALIDADE" },
           { "texto": "{nome} se aproxima ainda mais quando eu o toco, seja segurando sua mão ou abraçando.", "tipoAlternativa": "TOQUE_FISICO" },
           { "texto": "{nome} se sente muito valorizado quando percebe que eu faço algo para facilitar sua vida.", "tipoAlternativa": "ATOS_SERVICO" },
           { "texto": "{nome} demonstra alegria quando recebe algo especial que mostre que pensei nele.", "tipoAlternativa": "PRESENTES" }
@@ -69,7 +69,7 @@ export const seedLinguagem = async (prismaClient?: PrismaClient) => {
       "complemento": "A forma como ele percebe o seu amor pode indicar o que ele mais valoriza em um relacionamento.",
       "alternativas": [
           { "texto": "{nome} se enche de orgulho quando eu falo sobre o quanto ele é especial para mim.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
-          { "texto": "{nome} parece mais envolvido quando dedicamos tempo exclusivo um ao outro.", "tipoAlternativa": "TEMPO_QUALIDADE" },
+          { "texto": "{nome} parece mais envolvido quando dedicamos tempo exclusivo um ao outro, como um jantar só nosso, ou assistir um filme juntos.", "tipoAlternativa": "TEMPO_QUALIDADE" },
           { "texto": "{nome} responde com carinho quando eu me aproximo e demonstro afeto físico.", "tipoAlternativa": "TOQUE_FISICO" },
           { "texto": "{nome} valoriza muito quando eu faço algo prático para ajudá-lo no dia a dia.", "tipoAlternativa": "ATOS_SERVICO" },
           { "texto": "{nome} fica surpreso e feliz quando eu o presenteio com algo especial.", "tipoAlternativa": "PRESENTES" }
