@@ -20,6 +20,9 @@ npm cache clean --force
 print_box "Removendo cache do node_modules."
 rm -rf node_modules/.cache
 
+print_box "Gerando cliente do Prisma..."
+npx prisma generate
+
 print_box "Limpando registros do banco de dados..."
 npx ts-node prisma/clear-db.ts
 
@@ -28,8 +31,5 @@ npm install
 
 print_box "Executando migrações do Prisma..."
 npx prisma migrate dev --name init --force-reset
-
-print_box "Gerando cliente do Prisma..."
-npx prisma generate
 
 print_box "Processo concluído!"
