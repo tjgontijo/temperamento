@@ -10,10 +10,15 @@ print_box() {
     local length=${#message}
     local padding=2
     local border_length=$((length + padding * 2))
-    
-    printf '┌%*s┐\n' "$border_length" | tr ' ' '-'
-    printf '│ %*s │\n' "$((length + padding))" "$message"
-    printf '└%*s┘\n' "$border_length" | tr ' ' '-'
+
+    # Linha superior
+    printf '┌%s┐\n' "$(printf '─%.0s' $(seq $border_length))"
+
+    # Mensagem centralizada
+    printf '│ %s%s │\n' "$message" "$(printf ' %.0s' $(seq $((border_length - length - 2))))"
+
+    # Linha inferior
+    printf '└%s┘\n' "$(printf '─%.0s' $(seq $border_length))"
 }
 
 print_box "🔄 Removendo diretórios e arquivos desnecessários..."
