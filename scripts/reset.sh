@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e  # Faz o script parar se houver erro
-
 BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$BASE_DIR" || exit 1
 
@@ -30,14 +28,8 @@ npm cache clean --force
 print_box "📦 Instalando dependências do projeto..."
 npm install
 
-print_box "Resetando banco de dados..."
-npx prisma migrate reset --force --skip-seed || { echo "❌ Erro ao rodar as reset"; exit 1; }
-
-print_box "Aplicando migrações..."
-npx prisma migrate deploy || { echo "❌ Erro ao rodar as deploy"; exit 1; }
-
-print_box "Rodando seeds..."
-npx prisma db seed || { echo "❌ Erro ao rodar as seed"; exit 1; }
+print_box "Criando nova migration inicial..."
+npx prisma migrate dev --name init || { echo "❌ Erro ao rodar as reset"; exit 1; }
 
 print_box "⚙️ Gerando cliente do Prisma..."
 npx prisma generate
