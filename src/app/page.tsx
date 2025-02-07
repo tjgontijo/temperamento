@@ -1,17 +1,21 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { Heart, MessageCircle, Target, Users2, AlertTriangle } from "lucide-react";
 import { DepoimentoCard } from "@/components/layout/depoimento-card";
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Home() {
   const router = useRouter();
 
   return (
     <main className="relative overflow-hidden">
+      {/* Header */}
+      <Header />
+
       {/* Decorative Blurred Shapes */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
@@ -19,36 +23,44 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 flex items-center">
-        <div className="container mx-auto px-4 py-16 relative z-10">
-          <div className="max-w-3xl mx-auto text-center">
-            <motion.div>
-              <h1 className="text-2xl md:text-3xl font-bold text-purple-900 mb-8 leading-tight uppercase">
-                Descubra o temperamento e a linguagem do amor dele e veja o que realmente aproxima ou afasta vocês dois.
-              </h1>
-              <div className="text-lg text-gray-700 mb-10 space-y-4">
-                <p>
-                  Você já percebeu que, por mais que exista química, às vezes ele parece distante? 
-                  Ou que, mesmo gostando de você, as coisas não fluem como você gostaria? Isso acontece porque cada pessoa sente e expressa o amor de um jeito único.
-                </p>                
-              </div>
-              <div className="text-lg text-gray-700 mb-10 space-y-4">
-              <p className="font-semibold text-purple-800">
-                  Mas e se houvesse uma forma de entender como ele realmente pensa e o que faz um relacionamento dar certo para ele?
-                </p>
-              </div>
-              <div className="flex flex-col items-center space-y-4">
-                <p className="text-xl text-gray-600 mb-6 italic">
-                  E é assim que eu vou te ajudar! Responda algumas perguntas e receba uma análise personalizada sobre como ele pensa e o que faz um relacionamento dar certo para ele
-                </p>
-                <Button
-                  onClick={() => router.push('/questionario')}
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-14 rounded-full shadow-xl text-xl"
-                >
-                  Começar Análise Gratuita
-                </Button>
-              </div>
-            </motion.div>
+      <section className="relative min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 flex items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-100 via-pink-50 to-purple-50 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/pattern-background.svg')] opacity-10 pointer-events-none"></div>
+        <div className="container mx-auto px-4 py-16 relative z-10 grid md:grid-cols-2 gap-8 items-center">
+          {/* Coluna de Texto */}
+          <div className="space-y-6 text-center md:text-left">
+            <h1 className="text-3xl md:text-4xl font-bold text-purple-900 mb-4 leading-tight uppercase">
+              Por que ele age assim? Sem perceber, você pode estar afastando ele…
+            </h1>
+            <div className="text-lg text-gray-700 mb-6 space-y-4">
+              <p>
+                Você já tentou de tudo, mas ele continua agindo de um jeito que não faz sentido? Talvez ele esteja demonstrando carinho e você nem tenha percebido. Ou pior: você pode estar fazendo algo que afasta ele sem querer.
+              </p>                
+            </div>
+            <div className="text-lg text-gray-700 mb-6">
+              <p className="font-semibold text-purple-800 italic">
+                Existe uma forma de entender como ele pensa no amor e o que realmente aproxima vocês. Quer saber como?
+              </p>
+            </div>
+            <div className="flex justify-center md:justify-start">
+              <Button 
+                onClick={() => router.push('/questionario')} 
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-14 rounded-full shadow-xl text-xl"
+              >
+                Fazer o Teste Agora
+              </Button>
+            </div>
+          </div>
+
+          {/* Coluna de Imagem */}
+          <div className="flex justify-center items-center w-full">
+            <Image 
+              src="/deco-girls-background-hero-3.png" 
+              alt="Mulher Apontando" 
+              width={500} 
+              height={500} 
+              className="w-full h-auto object-cover md:object-contain md:max-w-full -mx-4 md:mx-0 rounded-b-[20px] translate-x-20 md:translate-x-8"
+              priority
+            />
           </div>
         </div>
       </section>
