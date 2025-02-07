@@ -30,8 +30,14 @@ npm cache clean --force
 print_box "📦 Instalando dependências do projeto..."
 npm install
 
-print_box "Resetando banco de dados e rodando seeds..."
-npx prisma migrate reset --force || { echo "❌ Erro ao rodar as migrações"; exit 1; }
+print_box "Resetando banco de dados..."
+npx prisma migrate reset --force --skip-seed || { echo "❌ Erro ao rodar as reset"; exit 1; }
+
+print_box "Aplicando migrações..."
+npx prisma migrate deploy || { echo "❌ Erro ao rodar as deploy"; exit 1; }
+
+print_box "Rodando seeds..."
+npx prisma db seed || { echo "❌ Erro ao rodar as seed"; exit 1; }
 
 print_box "⚙️ Gerando cliente do Prisma..."
 npx prisma generate
