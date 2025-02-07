@@ -6,16 +6,16 @@ OUTPUT_FILE="/tmp/verificacao_static.txt"
 # Inicia a captura da saída
 {
   echo "📌 Arquivos referenciados no HTML:"
-  curl -s https://decifrandocoracoes.com | grep -o '/_next/static[^"]*' | sort | uniq
+  curl -s https://decifrandocoracoes.com | grep -o '/_next/static[^"]*'
 
   echo -e "\n📌 Arquivos reais em _next/static/chunks/:"
-  ls -l /www/wwwroot/decifrandocoracoes.com/.next/static/chunks/
+  ls -l /var/www/decifrandocoracoes/.next/static/chunks/
 
   echo -e "\n📌 Arquivos reais em _next/static/css/:"
-  ls -l /www/wwwroot/decifrandocoracoes.com/.next/static/css/
+  ls -l /var/www/decifrandocoracoes/.next/static/css/
 
   echo -e "\n📌 Arquivos reais em _next/static/media/:"
-  ls -l /www/wwwroot/decifrandocoracoes.com/.next/static/media/
+  ls -l /var/www/decifrandocoracoes/.next/static/media/
 } > "$OUTPUT_FILE"
 
 # Exibe a saída no terminal
