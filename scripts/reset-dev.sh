@@ -23,7 +23,7 @@ print_box "📦 Instalando dependências..."
 npm install
 
 print_box "📌 Executando migrações do Prisma..."
-npx prisma migrate reset --force || { echo "❌ Erro ao rodar as migrações"; exit 1; }
+npx prisma migrate dev --name init || { echo "❌ Erro ao rodar as migrações"; exit 1; }
 
 print_box "⚙️ Gerando cliente do Prisma..."
 npx prisma generate
