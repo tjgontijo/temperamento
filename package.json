@@ -8,7 +8,7 @@
     "start": "next start",
     "deploy": "next build && next start",
     "lint": "next lint",
-    "reset": "sh reset-db.sh",
+    "reset": "sh scripts/reset.sh",
     "seed": "ts-node --project prisma/tsconfig.json -r tsconfig-paths/register prisma/seed.ts",
     "start-standalone": "node .next/standalone/server.js"
   },
