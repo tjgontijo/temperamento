@@ -133,6 +133,9 @@ export const limparDadosContexto = () => {
 export const limparTodosDados = () => {
   limparRespostas();
   limparDadosContexto();
+  limparAnalise();
+  limparResultadosQuestionario();
+  limparTiposQuestionario();
 };
 
 export const salvarAnalise = (analise: {
