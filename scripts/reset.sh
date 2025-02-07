@@ -34,15 +34,6 @@ npx prisma migrate dev --name init || { echo "❌ Erro ao rodar as reset"; exit 
 print_box "⚙️ Gerando cliente do Prisma..."
 npx prisma generate
 
-print_box "Resetando banco de dados..."
-npx prisma migrate reset --force --skip-seed
-
-print_box "Aplicando migrações..."
-npx prisma migrate deploy
-
-print_box "Rodando seeds..."
-npx prisma db seed
-
 print_box "🚀 Criando build da Aplicação..."
 npm run build || { echo "❌ Erro ao gerar o build"; exit 1; }
 
