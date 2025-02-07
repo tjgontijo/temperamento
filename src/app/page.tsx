@@ -22,11 +22,7 @@ export default function Home() {
       <section className="relative min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 flex items-center">
         <div className="container mx-auto px-4 py-16 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
+            <motion.div>
               <h1 className="text-2xl md:text-3xl font-bold text-purple-900 mb-8 leading-tight uppercase">
                 Descubra o temperamento e a linguagem do amor dele e veja o que realmente aproxima ou afasta vocês dois.
               </h1>

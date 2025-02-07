@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { JsonLdScript } from "@/components/JsonLd";
+import { JsonLdScript } from "@/components/scripts/JsonLd";
+import { HeadScripts } from '@/components/scripts/HeadScripts';
+import { BodyScripts } from '@/components/scripts/BodyScripts';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -77,8 +79,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="scroll-smooth">
+    <html lang="pt-BR">
+      <head>
+        <HeadScripts />
+      </head>
       <body className={inter.className}>
+        {/* Componente para scripts adicionais */}
+        <BodyScripts />
+        
         <JsonLdScript />
         {children}
       </body>
