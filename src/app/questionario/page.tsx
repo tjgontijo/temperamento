@@ -67,6 +67,7 @@ import {
   obterRespostas,
   salvarResultadosQuestionario,
   obterResultadosQuestionario,
+  limparTodosDados
 } from '@/utils/storage';
 import { buscarQuestoesPorTipo } from '@/lib/actions/questionario-actions';
 import { calcularResultado } from '@/lib/actions/resultado-actions';
@@ -83,6 +84,11 @@ export default function QuestionarioPage() {
   const [etapaQuestionario, setEtapaQuestionario] = useState<'contexto' | 'perguntas'>('contexto');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    // Limpar todos os dados antes de iniciar o questionário
+    limparTodosDados();
+  }, []);
 
   useEffect(() => {
     setIsClient(true);
