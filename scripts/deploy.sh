@@ -11,12 +11,6 @@ PROJECT_DIR="/var/www/decifrandocoracoes"
 echo "==> Entrando no diretório do projeto: $PROJECT_DIR"
 cd "$PROJECT_DIR" || { echo "Erro: diretório do projeto não encontrado!"; exit 1; }
 
-echo "==> Otimizando imagens no diretório public..."
-find public -type f -iname "*.jpg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
-find public -type f -iname "*.jpeg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
-find public -type f -iname "*.png" -exec pngquant --force --ext .png --quality=80-90 --skip-if-larger {} \;
-find public -type f -iname "*.png" -exec optipng -o7 −strip all −verbose -full {} \;
-
 echo "==> Removendo build anterior (.next)..."
 rm -rf .next
 
@@ -25,6 +19,12 @@ npm cache clean --force
 
 echo "==> Atualizando o repositório (git pull)..."
 git pull
+
+echo "==> Otimizando imagens no diretório public..."
+find public -type f -iname "*.jpg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
+find public -type f -iname "*.jpeg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
+find public -type f -iname "*.png" -exec pngquant --force --ext .png --quality=80-90 --skip-if-larger {} \;
+find public -type f -iname "*.png" -exec optipng -o7 −strip all −verbose -full {} \;
 
 echo "==> Executando build do Next.js..."
 npm run build
