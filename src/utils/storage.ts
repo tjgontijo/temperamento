@@ -10,6 +10,7 @@ const TIPOS_STORAGE_KEY = 'tipos_questionario';
 type RespostaData = {
   tipoQuestaoId: string;
   tipoAlternativaId: string;
+  alternativaId: string;
 };
 
 // Tipos de Contexto
@@ -61,10 +62,11 @@ type TiposQuestionario = {
 export const salvarResposta = (
   questaoId: string,
   tipoQuestaoId: string,
-  tipoAlternativaId: string
+  tipoAlternativaId: string,
+  alternativaId: string
 ) => {
-  if (!questaoId || !tipoQuestaoId || !tipoAlternativaId) {
-    console.error('Dados inválidos para salvar resposta:', { questaoId, tipoQuestaoId, tipoAlternativaId });
+  if (!questaoId || !tipoQuestaoId || !tipoAlternativaId || !alternativaId) {
+    console.error('Dados inválidos para salvar resposta:', { questaoId, tipoQuestaoId, tipoAlternativaId, alternativaId });
     return;
   }
 
@@ -76,7 +78,8 @@ export const salvarResposta = (
       ...respostas,
       [questaoId]: {
         tipoQuestaoId,
-        tipoAlternativaId
+        tipoAlternativaId,
+        alternativaId
       }
     };
     
