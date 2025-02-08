@@ -64,7 +64,7 @@ export function Header() {
             className="hidden md:flex text-purple-600 bg-white border-white hover:bg-purple-50"
             onClick={() => window.location.href = '/questionario'}
           >
-            Fazer Teste
+            Começar Minha Análise
           </Button>
 
           {/* Menu Mobile */}
