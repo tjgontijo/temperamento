@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME || 'Decifrando Corações',
     images: [
       {
-        url: '/images/og-image.png',
+        url: '/logo.png',
         width: 1200,
         height: 630,
         alt: 'Decifrando Corações - Descubra seu temperamento'
@@ -50,10 +50,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME || 'Decifrando Corações',
     description: "Aprenda a entender o que realmente conquista um homem e transforme sua relação. Descubra o caminho mais rápido para criar uma conexão emocional forte e duradoura.",
-    images: ['/images/og-image.png']
+    images: ['/logo.png']
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/logo.png',
     apple: '/apple-touch-icon.png'
   },
   robots: {
