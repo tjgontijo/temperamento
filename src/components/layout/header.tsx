@@ -60,8 +60,7 @@ export function Header() {
         {/* Botão de Ação */}
         <div className="flex items-center space-x-4">
           <Button 
-            variant="outline" 
-            className="hidden md:flex text-purple-600 bg-white border-white hover:bg-purple-50"
+            className="hidden md:flex text-purple-600 bg-white hover:bg-purple-100 border-none shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out"
             onClick={() => window.location.href = '/questionario'}
           >
             Começar Minha Análise
@@ -139,13 +138,13 @@ export function Header() {
                   Depoimentos
                 </Link>
                 <Button 
-                  className="w-3/4 bg-white text-purple-600 hover:bg-purple-50"
+                  className="w-3/4 bg-white text-purple-600 hover:bg-purple-50 whitespace-normal text-center hover:scale-105 transition-transform duration-300"
                   onClick={() => {
                     closeMobileMenu();
                     window.location.href = '/questionario';
                   }}
                 >
-                  Fazer Teste
+                  Começar Minha Análise
                 </Button>
               </nav>
             </div>
