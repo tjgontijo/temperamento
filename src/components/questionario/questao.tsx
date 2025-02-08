@@ -20,7 +20,6 @@ interface QuestaoProps {
   progresso: number;
   isUltima?: boolean;
   isPrimeira?: boolean;
-  nomeAutor?: string;
   nomePretendente?: string;
   isLoading?: boolean;
 }
@@ -36,11 +35,17 @@ export function Questao({
   progresso,
   isUltima = false,
   isPrimeira = false,
-  nomeAutor,
   nomePretendente,
   isLoading = false,
 }: QuestaoProps) {
   const [localValor, setLocalValor] = useState(respostaSelecionada);
+
+  // Log para debug
+  console.log('Resposta Selecionada:', {
+    respostaSelecionada,
+    localValor,
+    pergunta
+  });
 
   // Atualiza o valor local quando a pergunta ou valor mudam
   useEffect(() => {
@@ -58,12 +63,15 @@ export function Questao({
   };
 
   // Formata o texto substituindo as variáveis
-  const formatarTexto = (texto: string | undefined) => {
-    if (!texto) return '';
+  const formatarTextoComDestaque = (texto: string, nomePretendente?: string) => {
+    if (!texto) return texto;
+
+    const nomeDestacado = nomePretendente || 'ele';
     
-    return texto
-      .replace('{nome}', nomePretendente || '')
-      .replace('{nome_autor}', nomeAutor || '');
+    return texto.replace(
+      /\{nome\}/g, 
+      `<span class="font-bold text-purple-600">${nomeDestacado}</span>`
+    );
   };
 
   // Garante que opcoes é sempre um array
@@ -97,20 +105,28 @@ export function Questao({
             >
               <motion.h2 
                 className="text-2xl font-medium text-gray-900 leading-tight"
-                dangerouslySetInnerHTML={{ __html: formatarTexto(pergunta) }}
+                dangerouslySetInnerHTML={{ 
+                  __html: formatarTextoComDestaque(
+                    pergunta, 
+                    nomePretendente
+                  ) 
+                }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
               />
               {complemento && (
                 <motion.p 
                   className="text-base font-normal text-gray-500 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: formatarTexto(complemento) }}
+                  dangerouslySetInnerHTML={{ 
+                    __html: formatarTextoComDestaque(
+                      complemento, 
+                      nomePretendente
+                    ) 
+                  }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
                 />
               )}
             </motion.div>
@@ -151,13 +167,19 @@ export function Questao({
                   <Button
                     key={opcao.valor}
                     onClick={() => handleOpcaoClick(opcao.valor)}
+                    variant="questionario"
                     className={`w-full p-6 h-auto text-left flex items-start justify-start whitespace-normal font-normal ${
                       opcao.valor === localValor
-                        ? 'bg-purple-600 hover:bg-purple-700 text-white'
-                        : 'bg-white hover:bg-purple-50 text-gray-700 border-2 border-gray-200'
+                        ? 'border-2 border-purple-600 text-gray-700 bg-purple-50'
+                        : 'bg-white text-gray-700 border-2 border-gray-200 hover:bg-white'
                     }`}
                   >
-                    <span dangerouslySetInnerHTML={{ __html: formatarTexto(opcao.texto) }} />
+                    <span dangerouslySetInnerHTML={{ 
+                      __html: formatarTextoComDestaque(
+                        opcao.texto, 
+                        nomePretendente
+                      ) 
+                    }} />
                   </Button>
                 ))}
               </div>
@@ -175,7 +197,7 @@ export function Questao({
               <Button
                 // onClick={handleNext}
                 disabled={!localValor.trim() || isLoading}
-                className="w-full bg-purple-600 hover:bg-purple-700 h-14 text-base font-medium rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-purple-600 h-14 text-base font-medium rounded-xl transition-all transform active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -191,7 +213,7 @@ export function Questao({
               <Button
                 onClick={onBack}
                 variant="ghost"
-                className="w-full text-gray-400 hover:text-purple-600 hover:bg-purple-50 gap-2"
+                className="w-full text-gray-400 gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Voltar
