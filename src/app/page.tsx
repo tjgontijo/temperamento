@@ -27,7 +27,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[url('/pattern-background.svg')] opacity-10 pointer-events-none"></div>
         <div className="container mx-auto px-4 py-16 relative z-10 grid md:grid-cols-2 gap-8 items-center">
           {/* Coluna de Texto */}
-          <div className="space-y-6 text-center md:text-left">
+          <div className="space-y-6 md:space-y-7 text-center md:text-left">
             <h1 className="text-3xl md:text-4xl font-bold text-purple-900 mb-4 leading-tight uppercase">
               Por que ele age assim? Sem perceber, você pode estar afastando ele…
             </h1>
@@ -55,10 +55,18 @@ export default function Home() {
           <div className="flex justify-center items-center w-full">
             <Image 
               src="/deco-girls-background-hero.png" 
-              alt="Mulher Apontando" 
+              alt="Mulher Pensativa" 
               width={500} 
               height={500} 
-              className="w-full h-auto object-cover md:object-contain md:max-w-full -mx-4 md:mx-0 rounded-b-[20px] translate-x-3 md:translate-x-8"
+              className="block md:hidden w-full h-auto object-cover md:object-contain md:max-w-full -mx-4 md:mx-0 rounded-b-[20px] translate-x-3 md:translate-x-8"
+              priority
+            />
+            <Image 
+              src="/deco-girls-background-hero-desktop.png" 
+              alt="Mulher Pensativa" 
+              width={500} 
+              height={500} 
+              className="hidden md:block w-full h-auto object-cover md:object-contain md:max-w-full -mx-4 md:mx-0"
               priority
             />
           </div>
@@ -340,7 +348,31 @@ export default function Home() {
               cidade="Florianópolis, SC"
               texto="O material complementar foi fundamental. As dicas práticas e exercícios me ajudaram a construir uma conexão muito mais profunda com meu parceiro."
             />
+            <DepoimentoCard
+              nome="Fernanda"
+              idade={35}
+              cidade="Maringá, PR"
+              texto="Cresci em uma família tradicional e sempre tive dificuldade em entender as nuances emocionais do meu parceiro. O relatório me mostrou padrões de comunicação que eu nunca tinha percebido antes."
+            />
           </div>
+        </div>
+      </section>
+
+      {/* CTA Depoimentos Section */}
+      <section className="bg-gradient-to-r from-purple-100 to-pink-100 py-20 text-center">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-purple-900 mb-6">
+            Sua História de Transformação Começa Aqui
+          </h2>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-10">
+            Centenas de mulheres já descobriram como entender melhor seus relacionamentos. Agora é sua vez de desvendar os segredos da conexão emocional e transformar sua história de amor.
+          </p>
+          <Button
+            onClick={() => router.push('/questionario')}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-6 px-12 rounded-full shadow-xl text-xl hover:scale-105 transition-transform duration-300"
+          >
+            Iniciar Minha Análise Gratuita
+          </Button>
         </div>
       </section>
       <Footer />
