@@ -54,11 +54,11 @@ export default function Home() {
           {/* Coluna de Imagem */}
           <div className="flex justify-center items-center w-full">
             <Image 
-              src="/deco-girls-background-hero-3.png" 
+              src="/deco-girls-background-hero.png" 
               alt="Mulher Apontando" 
               width={500} 
               height={500} 
-              className="w-full h-auto object-cover md:object-contain md:max-w-full -mx-4 md:mx-0 rounded-b-[20px] translate-x-20 md:translate-x-8"
+              className="w-full h-auto object-cover md:object-contain md:max-w-full -mx-4 md:mx-0 rounded-b-[20px] translate-x-3 md:translate-x-8"
               priority
             />
           </div>
