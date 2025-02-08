@@ -371,7 +371,7 @@ export default function Home() {
             onClick={() => router.push('/questionario')}
             className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-8 rounded-full shadow-xl text-xl hover:scale-105 transition-transform duration-300 whitespace-normal text-center"
           >
-            Descubra o Que Está Afastando Vocês
+            Estou Pronta Para Mudar Minha História
           </Button>
         </div>
       </section>
