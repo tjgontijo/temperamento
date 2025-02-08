@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -6,9 +7,15 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-bold text-xl mb-4">
-              {process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME}
-            </h3>
+            <Link href="/" className="inline-block mb-4">
+              <Image 
+                src="/logo.png" 
+                alt="Decifrando Corações" 
+                width={150} 
+                height={50}
+                className="max-h-12 w-auto"
+              />
+            </Link>
             <p className="text-purple-200">
               Transformando relacionamentos através do autoconhecimento e compreensão mútua.
             </p>
@@ -74,7 +81,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-purple-800 mt-8 pt-8 text-center text-purple-200">
-          <p> {new Date().getFullYear()} {process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME}. Todos os direitos reservados.</p>
+          <p> {new Date().getFullYear()} Decifrando Corações. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
