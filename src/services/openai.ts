@@ -23,15 +23,13 @@ export async function analisarCasal(
 
   ${nomeAutor} é a pessoa que está realizando o teste e apresentou as seguintes características:
   - Temperamento: ${temperamentoPrincipalAutor}
-  - Linguagem do Amor: ${linguagemPrincipalAutor}
-  
+  - Linguagem do Amor: ${linguagemPrincipalAutor}  
 
   ${nomePretendente} é a pessoa pela qual ${nomeAutor} está interessada e apresentou as seguintes características:
   - Temperamento: ${temperamentoPrincipalPretendente}
-  - Linguagem do Amor: ${linguagemPrincipalPretendente}
-  
+  - Linguagem do Amor: ${linguagemPrincipalPretendente}  
 
-  ${historiaRelacionamento ? `História do Relacionamento fornecida por ${nomeAutor}: "${historiaRelacionamento}"` : ''}
+  ${historiaRelacionamento ? `A história do relacionamento fornecida por ${nomeAutor} é essa: "${historiaRelacionamento}"` : ''}
 
   ### Diretrizes para a Análise
 
