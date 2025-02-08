@@ -83,6 +83,7 @@ export default function Home() {
             <p className="text-xl text-gray-700 mb-8">
               Você já sentiu que ele gosta de você, mas, às vezes, parece distante ou confuso? 
               Isso acontece porque cada pessoa tem uma forma única de se conectar emocionalmente. 
+              <br />
               Com esta análise, você vai finalmente entender o que aproxima ou afasta vocês dois.
             </p>
           </div>
