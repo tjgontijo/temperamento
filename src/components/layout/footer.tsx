@@ -39,17 +39,17 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Recursos</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/blog" className="text-purple-200 hover:text-white">
+                <Link href="#" className="text-purple-200 hover:text-white">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/ebooks" className="text-purple-200 hover:text-white">
+                <Link href="#" className="text-purple-200 hover:text-white">
                   E-books
                 </Link>
               </li>
               <li>
-                <Link href="/cursos" className="text-purple-200 hover:text-white">
+                <Link href="#" className="text-purple-200 hover:text-white">
                   Cursos
                 </Link>
               </li>
@@ -60,12 +60,12 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/privacidade" className="text-purple-200 hover:text-white">
+                <Link href="#" className="text-purple-200 hover:text-white">
                   Política de Privacidade
                 </Link>
               </li>
               <li>
-                <Link href="/termos" className="text-purple-200 hover:text-white">
+                <Link href="#" className="text-purple-200 hover:text-white">
                   Termos de Uso
                 </Link>
               </li>
@@ -74,7 +74,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-purple-800 mt-8 pt-8 text-center text-purple-200">
-          <p>© {new Date().getFullYear()} {process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME}. Todos os direitos reservados.</p>
+          <p> {new Date().getFullYear()} {process.env.NEXT_PUBLIC_SYSTEM_FULL_NAME}. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
