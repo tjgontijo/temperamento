@@ -66,7 +66,6 @@ import {
   obterDadosContexto,
   obterRespostas,
   salvarResultadosQuestionario,
-  obterResultadosQuestionario,
   limparTodosDados
 } from '@/utils/storage';
 import { buscarQuestoesPorTipo } from '@/lib/actions/questionario-actions';
@@ -118,8 +117,12 @@ export default function QuestionarioPage() {
       tipoAlternativaId: alternativaSelecionada.tipoAlternativaId,
     };
 
-    console.log('Salvando resposta:', resposta);
-    salvarResposta(resposta.questaoId, resposta.tipoQuestaoId, resposta.tipoAlternativaId);
+    salvarResposta(
+      resposta.questaoId, 
+      resposta.tipoQuestaoId, 
+      resposta.tipoAlternativaId,
+      resposta.alternativaId
+    );
   };
 
   const handleResposta = async (alternativaId: string) => {
@@ -164,22 +167,14 @@ export default function QuestionarioPage() {
             contexto.nome_autor || '',
             contexto.nome_pretendente || '',
             resultados.temperamento.principal,
-            resultados.temperamento.secundario,
             resultados.linguagem.principal,
-            resultados.linguagem.secundario,
             resultados.temperamentoAutor.principal,
-            resultados.temperamentoAutor.secundario,
             resultados.linguagemAutor.principal,
-            resultados.linguagemAutor.secundario,
             contexto.historia_relacionamento || ''
           ),
         };
 
-        console.log('Resultados completos:', JSON.stringify(resultadosCompletos, null, 2));
         salvarResultadosQuestionario(resultadosCompletos);
-
-        const resultadosObtidos = obterResultadosQuestionario();
-        console.log('Resultados obtidos no questionário:', JSON.stringify(resultadosObtidos, null, 2));
 
         router.push('/resultado');
       } catch (error) {
@@ -227,7 +222,7 @@ export default function QuestionarioPage() {
   const isPrimeira = indiceQuestaoAtual === 0;
   const isUltima = indiceQuestaoAtual === questoes.length - 1;
 
-  const respostaAtual = questao ? obterRespostas()[questao.id]?.tipoAlternativaId || '' : '';
+  const respostaAtual = questao ? obterRespostas()[questao.id]?.alternativaId || '' : '';
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -246,8 +241,7 @@ export default function QuestionarioPage() {
         progresso={progresso}
         isUltima={isUltima}
         isPrimeira={isPrimeira}
-        isLoading={isLoading}
-        nomeAutor={obterDadosContexto()?.nome_autor}
+        isLoading={isLoading}        
         nomePretendente={obterDadosContexto()?.nome_pretendente}
       />
     </motion.div>
