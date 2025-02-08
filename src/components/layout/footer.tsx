@@ -11,9 +11,9 @@ export function Footer() {
               <Image 
                 src="/logo.png" 
                 alt="Decifrando Corações" 
-                width={150} 
-                height={50}
-                className="max-h-12 w-auto"
+                width={250} 
+                height={80}
+                className="max-h-20 w-auto"
               />
             </Link>
             <p className="text-purple-200">
