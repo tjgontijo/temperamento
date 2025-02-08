@@ -44,9 +44,9 @@ export default function Home() {
             <div className="flex justify-center md:justify-start">
               <Button 
                 onClick={() => router.push('/questionario')} 
-                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-14 rounded-full shadow-xl text-xl"
+                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-9 rounded-full shadow-xl text-xl whitespace-normal text-center hover:scale-105 transition-transform duration-300"
               >
-                Fazer o Teste Agora
+                Descubra o Que Está Afastando Vocês
               </Button>
             </div>
           </div>
@@ -143,9 +143,9 @@ export default function Home() {
             </h3>
             <Button
               onClick={() => router.push('/questionario')}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-14 rounded-full shadow-xl text-xl"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-8 rounded-full shadow-xl text-xl hover:scale-105 transition-transform duration-300 whitespace-normal text-center"
             >
-              Começar Análise Gratuita
+              Veja o Que Descobrimos Sobre Vocês
             </Button>
           </div>
         </div>
@@ -251,13 +251,13 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <h3 className="text-2xl md:text-3xl font-bold text-purple-900 mb-6">
-              Agora que você sabe como funciona, está pronta para entender o que realmente acontece entre vocês?
+              Está pronta para descobrir o que realmente acontece entre vocês?
             </h3>
             <Button
               onClick={() => router.push('/questionario')}
-              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-14 rounded-full shadow-xl text-xl"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-8 rounded-full shadow-xl text-xl hover:scale-105 transition-transform duration-300 whitespace-normal text-center"
             >
-              Começar Análise Gratuita
+              Veja o Que Descobrimos Sobre Vocês
             </Button>
           </div>
         </div>
@@ -369,9 +369,9 @@ export default function Home() {
           </p>
           <Button
             onClick={() => router.push('/questionario')}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-6 px-12 rounded-full shadow-xl text-xl hover:scale-105 transition-transform duration-300"
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-8 px-8 rounded-full shadow-xl text-xl hover:scale-105 transition-transform duration-300 whitespace-normal text-center"
           >
-            Iniciar Minha Análise Gratuita
+            Transformar Meu Relacionamento Agora
           </Button>
         </div>
       </section>
