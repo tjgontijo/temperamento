@@ -4,6 +4,7 @@ import "./globals.css";
 import { JsonLdScript } from "@/components/scripts/JsonLd";
 import { HeadScripts } from '@/components/scripts/HeadScripts';
 import { BodyScripts } from '@/components/scripts/BodyScripts';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -75,20 +76,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="pt-BR">
       <head>
         <HeadScripts />
       </head>
       <body className={inter.className}>
-        {/* Componente para scripts adicionais */}
         <BodyScripts />
-        
-        <JsonLdScript />
         {children}
+        <Toaster />
+        <JsonLdScript />
       </body>
     </html>
   );
