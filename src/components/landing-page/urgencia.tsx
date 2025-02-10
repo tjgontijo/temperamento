@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Clock } from 'lucide-react';
 
-export function Urgencia({ nome_pretendente }: { nome_pretendente: string }) {
+export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
   const [timeLeft, setTimeLeft] = useState({
     horas: 0,
     minutos: 20,
@@ -37,7 +37,7 @@ export function Urgencia({ nome_pretendente }: { nome_pretendente: string }) {
 
   const formatNumber = (num: number) => num.toString().padStart(2, '0');
 
-  if (!nome_pretendente) {
+  if (!nome_parceiro) {
     throw new Error('Nome do pretendente não encontrado');
   }
 
@@ -60,7 +60,7 @@ export function Urgencia({ nome_pretendente }: { nome_pretendente: string }) {
         </h2>
 
         <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
-          Não deixe passar a chance de conquistar {nome_pretendente} com um guia 100% personalizado. 
+          Não deixe passar a chance de conquistar {nome_parceiro} com um guia 100% personalizado. 
           Essa oferta especial vai desaparecer em:
         </p>
 
@@ -87,7 +87,7 @@ export function Urgencia({ nome_pretendente }: { nome_pretendente: string }) {
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-4">
           <button className="w-full md:w-auto bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl">
-            QUERO CONQUISTAR {(nome_pretendente || '').toUpperCase()}
+            QUERO CONQUISTAR {(nome_parceiro || '').toUpperCase()}
           </button>
           
           <div className="text-sm text-gray-600 flex items-center gap-2">

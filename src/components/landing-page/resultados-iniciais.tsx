@@ -45,7 +45,7 @@ const PercentageCircle = ({
 );
 
 type ResultadosIniciaisProps = {
-  nome_pretendente: string;
+  nome_parceiro: string;
   analise: {
     titulo: string;
     subtitulo: string;
@@ -81,16 +81,16 @@ type DadosResultadoType = {
 };
 
 const HeartAnimation = ({ isActive }: { isActive: boolean }) => {
-  const hearts = Array(50).fill(0).map((_, index) => ({  
+  const hearts = Array(300).fill(0).map((_, index) => ({  
     id: index,
     x: Math.random() * 300 - 150,  
     initialY: window.innerHeight,  
     targetY: -window.innerHeight,  
-    delay: Math.random() * 1.5,  
+    delay: Math.random() * 5,  
     scale: Math.random() * 0.7 + 0.3,  
     rotate: Math.random() * 360,
     opacity: Math.random() * 0.5 + 0.5,  
-    size: Math.random() * 25 + 10  
+    size: Math.random() * 30 + 10  
   }));
 
   return isActive ? (
@@ -106,7 +106,7 @@ const HeartAnimation = ({ isActive }: { isActive: boolean }) => {
             rotate: heart.rotate
           }}
           animate={{ 
-            opacity: [heart.opacity, 1, 0],  
+            opacity: [0, heart.opacity, 1, 0.5, 0],  
             x: [heart.x, heart.x + Math.random() * 200 - 100],  
             y: [heart.initialY, heart.targetY],  
             scale: [0, heart.scale, 0],  
@@ -170,9 +170,7 @@ const UnlockButton = ({
             width: isHeartAnimationActive ? '100%' : '0%'
           }}
           transition={{ 
-            duration: 7,  
-            repeat: isHeartAnimationActive ? 1 : 0,
-            repeatType: 'loop',
+            duration: 8,  
             ease: 'linear'
           }}
         />
@@ -197,7 +195,7 @@ const UnlockButton = ({
 };
 
 export function ResultadosIniciais({
-  nome_pretendente,
+  nome_parceiro,
   analise
 }: ResultadosIniciaisProps) {
   const [dadosResultado, setDadosResultado] = useState<DadosResultadoType | null>(null);
@@ -251,17 +249,17 @@ export function ResultadosIniciais({
         {/* Título Persuasivo */}
         <div className="text-center bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-2xl mb-8 shadow-xl">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-            O Código Secreto do Amor de {nome_pretendente}
+            O Código Secreto do Amor de {nome_parceiro}
           </h1>
           <p className="text-base md:text-xl text-indigo-100 max-w-2xl mx-auto text-center">
-            Com base em suas respostas conseguimos revelar com profundidade o perfil do seu pretendente.
+            Com base em suas respostas conseguimos revelar com profundidade como {nome_parceiro} se conecta emocionalmente.
           </p>
         </div>
 
         {/* Temperamento Pretendente */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 text-center">
           <h2 className="text-2xl md:text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-4">
-            Mapa Emocional de {nome_pretendente}
+            Mapa Emocional de {nome_parceiro}
           </h2>
           <div className="flex justify-center space-x-8 md:space-x-12">
             <div className="text-center">
@@ -286,7 +284,7 @@ export function ResultadosIniciais({
         {/* Linguagem do Amor Pretendente */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 text-center">
           <h2 className="text-2xl md:text-3xl font-semibold text-pink-800 mb-6 border-b-2 border-pink-200 pb-4">
-            Como {nome_pretendente} Recebe Amor
+            Como {nome_parceiro} Recebe Amor
           </h2>
           <div className="flex justify-center space-x-8 md:space-x-12">
             <div className="text-center">
@@ -314,9 +312,7 @@ export function ResultadosIniciais({
             Tomamos a Liberdade e também mapeamos o seu perfil 😉
           </h2>
           <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6 text-center">
-            Como um presente especial, além do perfil de {nome_pretendente}, 
-            revelamos as camadas mais profundas da sua própria personalidade e forma de amar. 
-            Uma jornada inesperada de autoconhecimento.
+            O amor não é uma via de mão única. Por isso, além de desvendar como {nome_parceiro} sente e se conecta, revelamos também o que torna você única na forma de amar. Saber como você ama e se conecta pode mudar completamente a forma como essa relação se desenvolve.
           </p>
           
           {/* Temperamento Autor */}
