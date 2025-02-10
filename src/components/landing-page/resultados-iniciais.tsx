@@ -256,7 +256,7 @@ export function ResultadosIniciais({
           </p>
         </div>
 
-        {/* Temperamento Pretendente */}
+        {/* Temperamento Parceiro */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 text-center">
           <h2 className="text-2xl md:text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-4">
             Mapa Emocional de {nome_parceiro}
@@ -281,7 +281,7 @@ export function ResultadosIniciais({
           </div>
         </div>
 
-        {/* Linguagem do Amor Pretendente */}
+        {/* Linguagem do Amor Parceiro */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 text-center">
           <h2 className="text-2xl md:text-3xl font-semibold text-pink-800 mb-6 border-b-2 border-pink-200 pb-4">
             Como {nome_parceiro} Recebe Amor
