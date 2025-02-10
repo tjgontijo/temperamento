@@ -39,7 +39,7 @@ type ResultadoCategoriaType = {
 
 type InformacoesContextoType = {
   nome_autor: string;
-  nome_pretendente: string;
+  nome_parceiro: string;
   historia_relacionamento: string;
 };
 
@@ -160,12 +160,12 @@ export default function QuestionarioPage() {
           ...resultados,
           informacoes: {
             nome_autor: contexto.nome_autor,
-            nome_pretendente: contexto.nome_pretendente,
+            nome_parceiro: contexto.nome_parceiro,
             historia_relacionamento: contexto.historia_relacionamento,
           },
           analise: await analisarCasal(
             contexto.nome_autor || '',
-            contexto.nome_pretendente || '',
+            contexto.nome_parceiro || '',
             resultados.temperamento.principal,
             resultados.linguagem.principal,
             resultados.temperamentoAutor.principal,
@@ -242,7 +242,7 @@ export default function QuestionarioPage() {
         isUltima={isUltima}
         isPrimeira={isPrimeira}
         isLoading={isLoading}        
-        nomePretendente={obterDadosContexto()?.nome_pretendente}
+        nomePretendente={obterDadosContexto()?.nome_parceiro}
       />
     </motion.div>
   );
