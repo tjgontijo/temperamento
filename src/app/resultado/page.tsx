@@ -13,7 +13,7 @@ type ResultadoCategoriaType = {
 
 type InformacoesContextoType = {
   nome_autor: string;
-  nome_pretendente: string;
+  nome_parceiro: string;
   historia_relacionamento: string;
 };
 
@@ -38,11 +38,11 @@ import { Hero } from '@/components/landing-page/hero';
 import { Introducao } from '@/components/landing-page/introducao';
 import { ResultadosIniciais } from '@/components/landing-page/resultados-iniciais';
 import {ApresentacaoGuia} from '@/components/landing-page/apresentacao-guia';
-import { Beneficios } from '@/components/landing-page/beneficios';
+//import { Beneficios } from '@/components/landing-page/beneficios';
 import { Oferta } from '@/components/landing-page/oferta';
 import { Urgencia } from '@/components/landing-page/urgencia';
 import { Transition } from '@/components/landing-page/transition';
-
+import { FAQ } from '@/components/landing-page/faq';
 
 export default function Resultado() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function Resultado() {
         }
 
         const resultadosCarregados = JSON.parse(resultadosString) as ResultadoCalculadoType;
-        if (!resultadosCarregados.informacoes?.nome_pretendente) {
+        if (!resultadosCarregados.informacoes?.nome_parceiro) {
           throw new Error('Dados incompletos');
         }
 
@@ -114,39 +114,37 @@ export default function Resultado() {
     <div className="min-h-screen bg-white">
       <Hero 
         nome_autor={resultado.informacoes.nome_autor}
-        nome_pretendente={resultado.informacoes.nome_pretendente}
+        nome_parceiro={resultado.informacoes.nome_parceiro}
       />
       
       <Introducao 
-        nome_pretendente={resultado.informacoes.nome_pretendente}
+        nome_parceiro={resultado.informacoes.nome_parceiro}
       />
       
       <ResultadosIniciais 
-        nome_pretendente={resultado.informacoes.nome_pretendente}
+        nome_parceiro={resultado.informacoes.nome_parceiro}
         analise={resultado.analise || {
           titulo: 'Análise Personalizada',
           subtitulo: 'Compreendendo Sua Dinâmica de Relacionamento',
           paragrafos: ['Não foi possível gerar a análise completa.']
         }}
       />
-      <Transition nome_pretendente={resultado.informacoes.nome_pretendente} />
+      <Transition nome_parceiro={resultado.informacoes.nome_parceiro} />
       
-      <ApresentacaoGuia 
-        nome_pretendente={resultado.informacoes.nome_pretendente}
-      />
+      <ApresentacaoGuia />
       
-      <Beneficios 
+      {/* <Beneficios 
         temperamentoPrincipal={resultado.temperamento.principal}
         linguagemPrincipal={resultado.linguagem.principal}
-      />
+      /> */}
       
            
       <Oferta 
-        nome_pretendente={resultado.informacoes.nome_pretendente}
+        nome_parceiro={resultado.informacoes.nome_parceiro}
       />
-      
+      <FAQ />
       {/* Substituir a chamada do componente Urgencia */}
-      <Urgencia nome_pretendente={resultado.informacoes.nome_pretendente} />
+      <Urgencia nome_parceiro={resultado.informacoes.nome_parceiro} />
     </div>
   );
 }
