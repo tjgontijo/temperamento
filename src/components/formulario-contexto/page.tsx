@@ -22,16 +22,16 @@ const questoesContexto: Array<{
     "descricao": "Precisamos do seu nome exato para garantir que a análise seja precisa."
   },
   {
-    "id": "nome_pretendente",
+    "id": "nome_parceiro",
     "tipo": "input",
-    "pergunta": "Qual o Primeiro Nome do seu pretendente?",    
-    "descricao": "O nome do pretendente é essencial para calcular a compatibilidade entre vocês."
+    "pergunta": "Qual o Primeiro Nome da pessoa que você quer analisar?",    
+    "descricao": "O nome é essencial para calcular a compatibilidade entre vocês."
   },
   {
     "id": "historia_relacionamento",
     "tipo": "textarea",
-    "pergunta": "Conte um pouco sobre a história do relacionamento",    
-    "descricao": "Quanto mais detalhes você compartilhar, mais precisa será a análise."
+    "pergunta": "Conte um pouco sobre a história de vocês dois",    
+    "descricao": "Quanto mais detalhes você compartilhar sobre como se conheceram e como é a relação de vocês, mais precisa será a análise."
   }
 ];
 
@@ -54,7 +54,7 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
         // Salvamos as respostas
         await salvarDadosContexto({
           nome_autor: respostas.nome_autor,
-          nome_pretendente: respostas.nome_pretendente,
+          nome_parceiro: respostas.nome_parceiro,
           historia_relacionamento: respostas.historia_relacionamento
         });
         
