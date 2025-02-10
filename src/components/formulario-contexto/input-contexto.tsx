@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft } from 'lucide-react';
+import { validarNome } from '@/services/nome-validator';
 
 interface InputContextoProps {
   pergunta: string;
@@ -32,19 +33,103 @@ export function InputContexto({
   isPrimeira = false,
 }: InputContextoProps) {
   const [localValor, setLocalValor] = useState(valor);
+  const [erro, setErro] = useState<string>('');
+  const [validando, setValidando] = useState(false);
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
-  // Atualiza o valor local quando o valor da prop muda
   useEffect(() => {
     setLocalValor(valor);
   }, [valor]);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [tipo]);
+
   const handleChange = (novoValor: string) => {
+    setErro(''); // Limpa mensagem de erro ao digitar
+
+    if (tipo === 'input') {
+      // Remove caracteres especiais e números, mantém apenas letras e espaços
+      novoValor = novoValor.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+      
+      // Remove espaços extras e pega apenas o primeiro nome
+      novoValor = novoValor.trim().split(/\s+/)[0] || '';
+      
+      // Limita a 50 caracteres
+      novoValor = novoValor.slice(0, 50);
+      
+      // Capitaliza a primeira letra
+      novoValor = novoValor.charAt(0).toUpperCase() + novoValor.slice(1).toLowerCase();
+
+      // Se o usuário tentar digitar mais nomes, mostra uma mensagem
+      if (novoValor.trim() !== novoValor.trim().split(/\s+/)[0]) {
+        setErro('Por favor, digite apenas o primeiro nome');
+      }
+    } else {
+      // Para textarea (história), permite múltiplos espaços e pontuação
+      novoValor = novoValor
+        .replace(/[^\w\sÀ-ÿ.,!?-]/g, '') // Permite letras, números, espaços e pontuação básica
+        .replace(/\s+/g, ' ') // Substitui múltiplos espaços por um único
+        .slice(0, 500); // Limita a 500 caracteres
+    }
+
     setLocalValor(novoValor);
     onChange(novoValor);
   };
 
-  const handleNext = () => {
-    if (localValor.trim() && onNext) {
+  const handleNext = async () => {
+    const valorTratado = localValor.trim();
+    
+    // Validações locais para campos de nome
+    if (tipo === 'input') {
+      // 1. Validação de tamanho mínimo
+      if (valorTratado.length < 2) {
+        setErro('O nome precisa ter pelo menos 2 letras');
+        return;
+      }
+
+      // 2. Validação de tamanho máximo
+      if (valorTratado.length > 50) {
+        setErro('O nome não pode ter mais de 50 letras');
+        return;
+      }
+
+      // 3. Validação de nome único (sem sobrenome)
+      if (valorTratado.includes(' ')) {
+        setErro('Por favor, digite apenas o primeiro nome');
+        return;
+      }
+
+      // 4. Validação de caracteres válidos
+      if (!/^[a-zA-ZÀ-ÿ]+$/.test(valorTratado)) {
+        setErro('O nome deve conter apenas letras');
+        return;
+      }
+
+      // 5. Validação com OpenAI (apenas se passar em todas as validações anteriores)
+      try {
+        setValidando(true);
+        const resultado = await validarNome(valorTratado);
+        console.log('✨ Validação do nome:', {
+          nome: valorTratado,
+          resultado: resultado
+        });
+        if (!resultado.valido) {
+          setErro(resultado.mensagem);
+          setValidando(false);
+          return;
+        }
+        setValidando(false);
+      } catch (error) {
+        console.error('Erro ao validar nome:', error);
+        setValidando(false);
+        // Continua mesmo com erro na validação para não bloquear o usuário
+      }
+    }
+    
+    if (valorTratado && onNext) {
       onNext();
     }
   };
@@ -106,25 +191,41 @@ export function InputContexto({
             transition={{ duration: 0.3 }}
           >
             {tipo === 'textarea' ? (
-              <textarea
-                className="w-full text-lg p-6 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-purple-400 transition-colors min-h-[150px] resize-none bg-white shadow-sm"
-                value={localValor}
-                onChange={(e) => handleChange(e.target.value)}
-                placeholder="Digite sua resposta aqui..."
-              />
+              <div className="space-y-2">
+                <textarea
+                  ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+                  value={localValor}
+                  onChange={(e) => handleChange(e.target.value)}
+                  className={`w-full text-lg p-6 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-purple-400 transition-colors min-h-[150px] resize-none bg-white shadow-sm`}
+                  placeholder="Descreva com suas palavras..."
+                  maxLength={500}
+                />
+                <div className="text-right text-sm text-gray-400">
+                  {localValor.length}/500 caracteres
+                </div>
+              </div>
             ) : (
-              <Input
-                type="text"
-                value={localValor}
-                onChange={(e) => handleChange(e.target.value)}
-                className="w-full text-lg p-6 h-14 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-purple-400 transition-colors text-center bg-white shadow-sm"
-                placeholder="Digite sua resposta aqui..."
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && localValor.trim()) {
-                    handleNext();
-                  }
-                }}
-              />
+              <div className="space-y-2">
+                <Input
+                  ref={inputRef as React.RefObject<HTMLInputElement>}
+                  type="text"
+                  value={localValor}
+                  onChange={(e) => handleChange(e.target.value)}
+                  className={`w-full text-lg p-6 border-2 rounded-xl focus:ring-purple-400 transition-colors text-center bg-white shadow-sm ${
+                    erro ? 'border-red-300' : 'border-gray-200 focus:border-purple-400'
+                  }`}
+                  placeholder="Digite apenas o primeiro nome..."
+                  maxLength={50}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && localValor.trim()) {
+                      handleNext();
+                    }
+                  }}
+                />
+                {erro && (
+                  <p className="text-sm text-red-500 text-center animate-fadeIn">{erro}</p>
+                )}
+              </div>
             )}
           </motion.div>
 
@@ -137,10 +238,10 @@ export function InputContexto({
           >
             <Button
               onClick={handleNext}
-              disabled={!localValor.trim()}
+              disabled={!localValor.trim() || validando}
               className="w-full bg-purple-600 hover:bg-purple-700 h-14 text-base font-medium rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isUltima ? 'Iniciar Questionário' : 'Continuar'}
+              {validando ? 'Validando...' : isUltima ? 'Iniciar Questionário' : 'Continuar'}
             </Button>
 
             {!isPrimeira && onBack && (
