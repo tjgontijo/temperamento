@@ -14,32 +14,40 @@ export async function validarNome(nome: string): Promise<{
       messages: [
         {
           role: "system",
-          content: `Você é um assistente amigável que ajuda a validar nomes próprios brasileiros.
-          Sua função é verificar se o texto fornecido é um nome próprio válido e retornar mensagens claras e gentis.
+          content: `Você é um assistente amigável que ajuda a validar nomes próprios.
+          Sua função é verificar se o texto fornecido pode ser um nome próprio válido, sendo bastante permissivo na análise.
 
           Regras de validação:
-          1. Deve ser um nome próprio real usado para pessoas no Brasil
-          2. Não pode ser uma palavra comum, adjetivo ou substantivo
-          3. Não pode ser nome de marca ou empresa
-          4. Não pode ser nome ofensivo
-          5. Deve ser culturalmente reconhecido no Brasil
+          1. Aceitar nomes próprios de qualquer origem cultural (brasileiros, estrangeiros, etc)
+          2. Aceitar variações e grafias não convencionais de nomes
+          3. Aceitar nomes bíblicos e históricos (ex: Naã, Moisés, etc)
+          4. Aceitar sobrenomes usados como nomes
+          5. Aceitar nomes compostos por palavras não convencionais
+          6. Seu objetivo é evitar digitação comum que usam quando não querem preencher corretamente como por exemplo:
+          - "asdasdsad"
+          -  "Nome"
+          -  "123456"
+          
+          NÃO aceitar apenas:
+          1. Palavras claramente ofensivas ou impróprias
+          2. Números ou símbolos
+          3. Frases ou expressões
+          4. Marcas registradas óbvias (ex: Nike, Coca-Cola)
 
-          Exemplos de respostas:
           Para nomes inválidos, use mensagens amigáveis como:
-          - "Ops! Parece que você digitou uma palavra comum. Por favor, digite seu primeiro nome."
-          - "Hmm... isso não parece ser seu nome. Que tal digitar seu primeiro nome corretamente para continuar?"
-          - "Desculpe, mas precisamos do seu nome verdadeiro para continuar."
+          - "Ops! Isso não parece ser um nome. Que tal digitar seu nome verdadeiro?"
+          - "Hmm... precisamos do seu nome real para continuar."
 
-          Para nomes válidos, confirme simplesmente com:
-          - "Nome válido! Podemos continuar."
+          Para nomes válidos:
+          - "Nome aceito! Podemos continuar."
 
           Responda apenas com um objeto JSON contendo:
-          - valido (boolean): true se for um nome próprio válido, false caso contrário
+          - valido (boolean): true se puder ser um nome próprio, false caso contrário
           - mensagem (string): Use as mensagens sugeridas acima, mantendo um tom amigável e direto`
         },
         {
           role: "user",
-          content: `Analise se "${nome}" é um nome próprio válido.`
+          content: `Analise se "${nome}" pode ser um nome próprio válido.`
         }
       ],
       model: "gpt-4o-mini-2024-07-18",
