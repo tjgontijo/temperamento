@@ -16,7 +16,7 @@ type RespostaData = {
 // Tipos de Contexto
 type ContextoData = {
   nome_autor: string;
-  nome_pretendente: string;
+  nome_parceiro: string;
   historia_relacionamento: string;
 };
 
