@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Clock } from 'lucide-react';
+import { Clock, ShieldCheck } from 'lucide-react';
 
 export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
   const [timeLeft, setTimeLeft] = useState({
@@ -85,25 +85,14 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+        <div className="flex flex-col items-center gap-6">
           <button className="w-full md:w-auto bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl">
-            QUERO CONQUISTAR {(nome_parceiro || '').toUpperCase()}
+            QUERO FORTALECER MEU RELACIONAMENTO COM {(nome_parceiro || '').toUpperCase()}
           </button>
           
           <div className="text-sm text-gray-600 flex items-center gap-2">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5 text-green-500" 
-              viewBox="0 0 20 20" 
-              fill="currentColor"
-            >
-              <path 
-                fillRule="evenodd" 
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
-                clipRule="evenodd" 
-              />
-            </svg>
-            <span>Garantia de 7 dias</span>
+            <ShieldCheck className="w-5 h-5 text-green-500" />
+            <span>7 dias de garantia incondicional</span>
           </div>
         </div>
       </div>
