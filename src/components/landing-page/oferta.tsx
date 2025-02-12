@@ -95,7 +95,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
                   <svg className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                   </svg>
-                  <span className="font-medium text-purple-900">Guia Personalizado</span>
+                  <span className="font-medium text-purple-900">Guia Passo a Passo</span>
                 </li>
                 <li className="flex items-start gap-3 p-3 rounded-lg bg-purple-50">
                   <svg className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -129,12 +129,17 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
                 </li>
               </ul>
 
-              <button className="w-full bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white text-lg font-bold py-4 px-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl relative overflow-hidden group">
+              <a 
+                href="https://pay.kiwify.com.br/HgJq08Z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="utmify block w-full bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white text-lg font-bold py-4 px-8 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl relative overflow-hidden group"
+              >
                 <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <span className="relative">
                   QUERO ESSA CONEXÃO COM {(nome_parceiro || '').toUpperCase()} AGORA!
                 </span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
