@@ -20,6 +20,34 @@ export function HeadScripts() {
         }}
       />
       {/* End Google Tag Manager */}
+
+      {/* UTMify Pixel */}
+      <Script
+        id="utmify-pixel"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.pixelId = "67ad2512def830eb4835837c";
+            var a = document.createElement("script");
+            a.setAttribute("async", "");
+            a.setAttribute("defer", "");
+            a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+            document.head.appendChild(a);
+          `
+        }}
+      />
+      {/* End UTMify Pixel */}
+
+      {/* UTMify UTMs */}
+      <Script
+        id="utmify-utms"
+        src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+        strategy="afterInteractive"
+        async
+        defer
+        data-utmify-prevent-subids
+      />
+      {/* End UTMify UTMs */}
     </>
   );
 }
