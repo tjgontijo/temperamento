@@ -37,6 +37,7 @@ type ResultadoCalculado = {
   linguagem: ResultadoCategoria;
   temperamentoAutor: ResultadoCategoria;
   linguagemAutor: ResultadoCategoria;
+  timestamp?: number;
 };
 
 // Tipos de Questionário
@@ -169,7 +170,11 @@ export const salvarResultadosQuestionario = (resultado: ResultadoCalculado) => {
   }
 
   try {
-    localStorage.setItem(RESULTADOS_STORAGE_KEY, JSON.stringify(resultado));    
+    const resultadoComTimestamp = {
+      ...resultado,
+      timestamp: Date.now()
+    };
+    localStorage.setItem(RESULTADOS_STORAGE_KEY, JSON.stringify(resultadoComTimestamp));    
   } catch (error) {
     console.error('Erro ao salvar resultados:', error);
   }
