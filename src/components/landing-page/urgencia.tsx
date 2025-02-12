@@ -97,9 +97,14 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
         </div>
 
         <div className="flex flex-col items-center gap-6">
-          <button className="w-full md:w-auto bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl">
+          <a 
+            href="https://pay.kiwify.com.br/HgJq08Z"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="utmify w-full md:w-auto bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl"
+          >
             QUERO FORTALECER MEU RELACIONAMENTO COM {(nome_parceiro || '').toUpperCase()}
-          </button>
+          </a>
           
           <div className="text-sm text-gray-600 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-green-500" />
