@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Clock, ShieldCheck } from 'lucide-react';
+import { obterResultadosQuestionario } from '@/utils/storage';
 
 export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
   const [timeLeft, setTimeLeft] = useState({
@@ -11,25 +12,35 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
   });
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        let {  horas, minutos, segundos } = prev;
-        
-        segundos--;
-        
-        if (segundos < 0) {
-          minutos--;
-          segundos = 59;
-        }
-        
-        if (minutos < 0) {
-          horas--;
-          minutos = 59;
-        }        
+    // Obtém o timestamp inicial dos resultados
+    const resultados = obterResultadosQuestionario();
+    const timestampInicial = resultados?.timestamp || Date.now();
+    
+    // Define o tempo limite como 20 minutos (1200000 ms) após o timestamp inicial
+    const tempoLimite = timestampInicial + 1200000;
 
-        
-        return {  horas, minutos, segundos };
-      });
+    const calcularTempoRestante = () => {
+      const agora = Date.now();
+      const diferenca = Math.max(0, tempoLimite - agora);
+      
+      const horas = Math.floor(diferenca / (1000 * 60 * 60));
+      const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+      
+      return { horas, minutos, segundos };
+    };
+
+    // Atualiza o tempo inicial
+    setTimeLeft(calcularTempoRestante());
+
+    const timer = setInterval(() => {
+      const tempoRestante = calcularTempoRestante();
+      setTimeLeft(tempoRestante);
+
+      // Se o tempo acabou, limpa o intervalo
+      if (tempoRestante.horas === 0 && tempoRestante.minutos === 0 && tempoRestante.segundos === 0) {
+        clearInterval(timer);
+      }
     }, 1000);
 
     return () => clearInterval(timer);
