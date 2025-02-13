@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { JsonLdScript } from "@/components/scripts/JsonLd";
 import { HeadScripts } from '@/components/scripts/HeadScripts';
+import UtmifyScripts from '@/components/scripts/utmfy-scripts';
 import { BodyScripts } from '@/components/scripts/BodyScripts';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -82,6 +83,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+      <UtmifyScripts />
         <HeadScripts />
       </head>
       <body className={inter.className}>
