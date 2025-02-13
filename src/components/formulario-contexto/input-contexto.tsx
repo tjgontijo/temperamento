@@ -67,13 +67,8 @@ export function InputContexto({
       if (novoValor.trim() !== novoValor.trim().split(/\s+/)[0]) {
         setErro('Por favor, digite apenas o primeiro nome');
       }
-    } else {
-      // Para textarea (história), permite múltiplos espaços e pontuação
-      novoValor = novoValor
-        .replace(/[^\w\sÀ-ÿ.,!?-]/g, '') // Permite letras, números, espaços e pontuação básica
-        .replace(/\s+/g, ' ') // Substitui múltiplos espaços por um único
-        .slice(0, 500); // Limita a 500 caracteres
     }
+    // Para textarea não fazemos nenhuma formatação, aceitamos o texto como está
 
     setLocalValor(novoValor);
     onChange(novoValor);
@@ -238,7 +233,7 @@ export function InputContexto({
           >
             <Button
               onClick={handleNext}
-              disabled={!localValor.trim() || validando}
+              disabled={tipo === 'input' ? (!localValor.trim() || validando) : validando}
               className="w-full bg-purple-600 hover:bg-purple-700 h-14 text-base font-medium rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {validando ? 'Validando...' : isUltima ? 'Iniciar Questionário' : 'Continuar'}
