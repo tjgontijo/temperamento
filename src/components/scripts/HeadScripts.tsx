@@ -20,31 +20,6 @@ export function HeadScripts() {
         }}
       />
       {/* End Google Tag Manager */}
-
-      {/* UTMify Pixel - Carregado de forma segura */}
-      <Script
-        id="utmify-pixel"
-        strategy="afterInteractive"
-        src="https://cdn.utmify.com.br/scripts/pixel/pixel.js"
-        onLoad={() => {
-          console.log("UTMify Pixel carregado!");
-        }}
-        onError={() => {
-          console.error("Erro ao carregar o script do UTMify Pixel.");
-        }}
-      />
-      {/* End UTMify Pixel */}
-
-      {/* UTMify UTMs */}
-      <Script
-        id="utmify-utms"
-        strategy="afterInteractive"
-        src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-        data-utmify-prevent-subids
-        onLoad={() => console.log("UTMify UTMs carregado!")}
-        onError={() => console.error("Erro ao carregar UTMify UTMs.")}
-      />
-      {/* End UTMify UTMs */}
     </>
   );
 }
