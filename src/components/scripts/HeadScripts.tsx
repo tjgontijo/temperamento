@@ -50,8 +50,7 @@ export function HeadScripts() {
         strategy="afterInteractive"
         async
         defer
-        data-utmify-prevent-subids
-        data-utmify-debug="false"
+        data-utmify-prevent-subids        
       />
       {/* End UTMify UTMs */}
     </>
