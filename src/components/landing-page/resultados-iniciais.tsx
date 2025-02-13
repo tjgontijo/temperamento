@@ -398,17 +398,18 @@ export function ResultadosIniciais({
                   {paragrafo}
                 </p>
               ))}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      {analise.mensagem && (
+               {analise.mensagem && (
         <p 
           className="text-right text-xs italic text-gray-500 mt-4"
         >
           {analise.mensagem}
         </p>
       )}
+            </motion.div>
+          )}
+        </AnimatePresence>       
+      </div>
+      
     </motion.div>
   );
 }
