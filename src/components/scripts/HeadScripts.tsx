@@ -3,11 +3,6 @@
 import Script from 'next/script';
 
 export function HeadScripts() {
-  // Não renderiza scripts em desenvolvimento
-  if (process.env.NODE_ENV === 'development') {
-    return null;
-  }
-
   return (
     <>
       {/* Google Tag Manager */}
@@ -21,38 +16,34 @@ export function HeadScripts() {
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-NW45QNJV');
-          `
+          `,
         }}
       />
       {/* End Google Tag Manager */}
 
-      {/* UTMify Pixel */}
-      {/* <Script
+      {/* UTMify Pixel - Carregado de forma segura */}
+      <Script
         id="utmify-pixel"
         strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.pixelId = "67ad2512def830eb4835837c";
-            var a = document.createElement("script");
-            a.setAttribute("async", "");
-            a.setAttribute("defer", "");
-            a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-            document.head.appendChild(a);
-          `
+        src="https://cdn.utmify.com.br/scripts/pixel/pixel.js"
+        onLoad={() => {
+          console.log("UTMify Pixel carregado!");
         }}
-      /> */}
+        onError={() => {
+          console.error("Erro ao carregar o script do UTMify Pixel.");
+        }}
+      />
       {/* End UTMify Pixel */}
 
       {/* UTMify UTMs */}
-      {/* <Script
+      <Script
         id="utmify-utms"
-        src="https://cdn.utmify.com.br/scripts/utms/latest.js"
         strategy="afterInteractive"
-        async
-        defer
+        src="https://cdn.utmify.com.br/scripts/utms/latest.js"
         data-utmify-prevent-subids
-        data-utmify-debug="false"
-      /> */}
+        onLoad={() => console.log("UTMify UTMs carregado!")}
+        onError={() => console.error("Erro ao carregar UTMify UTMs.")}
+      />
       {/* End UTMify UTMs */}
     </>
   );
