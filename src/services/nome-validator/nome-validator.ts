@@ -7,14 +7,14 @@ export async function validarNomeRedundante(nome: string): Promise<{
   provedor?: 'groq' | 'openai';
 }> {
   try {
-    // Tenta primeiro com Groq
+    console.log('Usando IA Groq para validação de nome');
     const resultadoGroq = await validarNomeGroq(nome);
     return {
       ...resultadoGroq,
       provedor: 'groq'
     };
   } catch {
-    // Se falhar com Groq, tenta com OpenAI
+    console.log('Usando IA OpenAI para validação de nome');
     try {
       const resultadoOpenAI = await validarNome(nome);
       return {
