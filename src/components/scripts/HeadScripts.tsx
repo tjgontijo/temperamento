@@ -3,11 +3,19 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 
+// Extensão da interface Window para incluir pixelId
+declare global {
+  interface Window {
+    pixelId?: string;
+  }
+}
+
 export function HeadScripts() {
   useEffect(() => {
     // Evita a reinserção do script do UTMify Pixel
     if (!document.getElementById('utmify-pixel-script')) {
       window.pixelId = "67ad2512def830eb4835837c";
+      
       const script = document.createElement("script");
       script.id = "utmify-pixel-script";
       script.async = true;
