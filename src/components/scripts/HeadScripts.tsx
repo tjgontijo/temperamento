@@ -44,14 +44,12 @@ export function HeadScripts() {
       {/* End UTMify Pixel */}
 
       {/* UTMify UTMs */}
-      <Script
-        id="utmify-utms"
+      <script
         src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-        strategy="afterInteractive"
+        data-utmify-prevent-subids
         async
         defer
-        data-utmify-prevent-subids        
-      />
+      ></script>
       {/* End UTMify UTMs */}
     </>
   );
