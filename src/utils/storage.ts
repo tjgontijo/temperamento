@@ -110,20 +110,71 @@ export const obterRespostas = (): Record<string, RespostaData> => {
 };
 
 export const salvarDadosContexto = (dados: ContextoData) => {
-  localStorage.setItem(CONTEXTO_STORAGE_KEY, JSON.stringify(dados));
+  console.log(' Iniciando salvarDadosContexto');
+  console.log(' Dados recebidos:', JSON.stringify(dados));
+
+  // Validações adicionais
+  if (!dados.nome_autor || !dados.nome_parceiro) {
+    console.error(' Dados de contexto inválidos');
+    throw new Error('Nome do autor e parceiro são obrigatórios');
+  }
+
+  try {
+    // Verifica suporte a localStorage
+    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+      console.error(' localStorage não disponível');
+      throw new Error('localStorage não suportado');
+    }
+
+    // Serialização segura
+    const dadosSerializados = JSON.stringify({
+      nome_autor: dados.nome_autor.trim(),
+      nome_parceiro: dados.nome_parceiro.trim(),
+      historia_relacionamento: (dados.historia_relacionamento || '').trim()
+    });
+
+    console.log(' Dados serializados:', dadosSerializados);
+
+    localStorage.setItem(CONTEXTO_STORAGE_KEY, dadosSerializados);
+    console.log(' Dados salvos com sucesso no localStorage');
+  } catch (error) {
+    console.error(' Erro crítico ao salvar dados:', error);
+    throw error;
+  }
 };
 
 export const obterDadosContexto = (): ContextoData | null => {
-  if (typeof window === 'undefined') {
+  console.log(' Iniciando obterDadosContexto');
+
+  // Verifica suporte a localStorage
+  if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+    console.error(' localStorage não disponível');
     return null;
   }
 
-  const data = localStorage.getItem(CONTEXTO_STORAGE_KEY);
-  if (!data) {
+  try {
+    const data = localStorage.getItem(CONTEXTO_STORAGE_KEY);
+    console.log(' Dados brutos do localStorage:', data);
+    
+    if (!data) {
+      console.log(' Nenhum dado encontrado no localStorage');
+      return null;
+    }
+
+    const dadosParseados = JSON.parse(data);
+    console.log(' Dados parseados:', JSON.stringify(dadosParseados));
+
+    // Validações finais
+    if (!dadosParseados.nome_autor || !dadosParseados.nome_parceiro) {
+      console.error(' Dados de contexto inválidos');
+      return null;
+    }
+
+    return dadosParseados;
+  } catch (error) {
+    console.error(' Erro ao processar dados do localStorage:', error);
     return null;
   }
-
-  return JSON.parse(data);
 };
 
 export const limparRespostas = () => {
