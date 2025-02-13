@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
 import Script from 'next/script';
+import { useEffect } from 'react';
 
-// Extensão da interface Window para incluir pixelId
+// Corrige o erro de TypeScript declarando a propriedade pixelId no window
 declare global {
   interface Window {
     pixelId?: string;
@@ -12,10 +12,10 @@ declare global {
 
 export function HeadScripts() {
   useEffect(() => {
-    // Evita a reinserção do script do UTMify Pixel
-    if (!document.getElementById('utmify-pixel-script')) {
+    // Garante que o script do UTMify Pixel só seja inserido uma vez
+    if (!window.pixelId && !document.getElementById('utmify-pixel-script')) {
       window.pixelId = "67ad2512def830eb4835837c";
-      
+
       const script = document.createElement("script");
       script.id = "utmify-pixel-script";
       script.async = true;
