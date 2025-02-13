@@ -6,7 +6,7 @@ export function HeadScripts() {
   return (
     <>
       {/* Google Tag Manager */}
-      <Script
+      {/* <Script
         id="gtm-script"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
@@ -18,7 +18,7 @@ export function HeadScripts() {
             })(window,document,'script','dataLayer','GTM-NW45QNJV');
           `,
         }}
-      />
+      /> */}
       {/* End Google Tag Manager */}
     </>
   );
