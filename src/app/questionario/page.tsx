@@ -107,6 +107,44 @@ export default function QuestionarioPage() {
     };
 
     carregarQuestoes();
+
+    const sendMetaEvent = () => {
+      if (typeof window.fbq !== 'function') {
+        console.warn('Meta Pixel ainda não carregado. Tentando novamente em 2 segundos...');
+        setTimeout(sendMetaEvent, 2000);
+        return;
+      }
+
+      try {
+        const utmifyLead = JSON.parse(localStorage.getItem('lead') || '{}');
+
+        const eventData = {
+          event_name: 'questionario_page',
+          event_time: Math.floor(new Date().getTime() / 1000),
+          event_source_url: window.location.href,
+          traffic_source: document.referrer || undefined,
+          parameters: window.location.search,
+          external_id: utmifyLead._id || undefined,
+          em: utmifyLead.email || undefined,
+          ph: utmifyLead.phone || undefined,
+          fn: utmifyLead.firstName || undefined,
+          ln: utmifyLead.lastName || undefined,
+          country: utmifyLead.geolocation?.country || undefined,
+          ct: utmifyLead.geolocation?.city || undefined,
+          st: utmifyLead.geolocation?.state || undefined,
+          zp: utmifyLead.geolocation?.zipcode || undefined,
+          client_user_agent: navigator.userAgent,
+          client_ip_address: utmifyLead.ip || utmifyLead.ipv6 || undefined,
+        };
+
+        console.log('Enviando evento questionario_page para Meta Ads:', eventData);
+        window.fbq('trackCustom', 'questionario_page', eventData);
+      } catch (error) {
+        console.error('Erro ao enviar evento questionario_page para Meta Ads:', error);
+      }
+    };
+
+    sendMetaEvent();
   }, []);
 
   const handleSalvarResposta = (questao: QuestaoType, alternativaSelecionada: AlternativaType) => {
