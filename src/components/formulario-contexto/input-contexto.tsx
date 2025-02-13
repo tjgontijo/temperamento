@@ -48,9 +48,6 @@ export function InputContexto({
   }, [tipo]);
 
   const handleChange = (novoValor: string) => {
-    console.log(`🔄 handleChange chamado para tipo: ${tipo}`);
-    console.log(`📥 Novo valor recebido: "${novoValor}"`);
-
     setErro(''); // Limpa mensagem de erro ao digitar
 
     if (tipo === 'input') {
@@ -73,44 +70,35 @@ export function InputContexto({
     }
     // Para textarea não fazemos nenhuma formatação, aceitamos o texto como está
 
-    console.log(`✅ Valor tratado: "${novoValor}"`);
     setLocalValor(novoValor);
     onChange(novoValor);
   };
 
   const handleNext = async () => {
-    console.log(`🚀 handleNext chamado para tipo: ${tipo}`);
-    console.log(`📥 Valor atual: "${localValor}"`);
-    
     const valorTratado = localValor.trim();
-    console.log(`🔍 Valor tratado: "${valorTratado}"`);
     
     // Validações locais para campos de nome
     if (tipo === 'input') {
       // 1. Validação de tamanho mínimo
       if (valorTratado.length < 2) {
-        console.log('❌ Nome muito curto');
         setErro('O nome precisa ter pelo menos 2 letras');
         return;
       }
 
       // 2. Validação de tamanho máximo
       if (valorTratado.length > 50) {
-        console.log('❌ Nome muito longo');
         setErro('O nome não pode ter mais de 50 letras');
         return;
       }
 
       // 3. Validação de nome único (sem sobrenome)
       if (valorTratado.includes(' ')) {
-        console.log('❌ Nome com mais de uma palavra');
         setErro('Por favor, digite apenas o primeiro nome');
         return;
       }
 
       // 4. Validação de caracteres válidos
       if (!/^[a-zA-ZÀ-ÿ]+$/.test(valorTratado)) {
-        console.log('❌ Nome com caracteres inválidos');
         setErro('O nome deve conter apenas letras');
         return;
       }
@@ -120,14 +108,12 @@ export function InputContexto({
         setValidando(true);
         const resultado = await validarNomeRedundante(valorTratado);
         if (!resultado.valido) {
-          console.log('❌ Nome redundante');
           setErro(resultado.mensagem);
           setValidando(false);
           return;
         }
         setValidando(false);
-      } catch (error) {
-        console.log('⚠️ Erro na validação de nome');
+      } catch {
         setValidando(false);
         // Continua mesmo com erro na validação para não bloquear o usuário
       }
@@ -135,17 +121,12 @@ export function InputContexto({
     
     // Validação para textarea
     if (tipo === 'textarea') {
-      console.log(`📊 Validando textarea: "${valorTratado}"`);
-      
       // Permite avanço mesmo com textarea vazio
       // Não faz nada se o campo estiver em branco
     }
     
-    console.log('✅ Validações passadas. Chamando onNext');
-    
     // Para textarea, sempre permite avanço, mesmo com valor vazio
     if (tipo === 'textarea') {
-      console.log('🔓 Textarea: Permitindo avanço com valor vazio');
       onNext?.();
       return;
     }
