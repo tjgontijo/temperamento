@@ -1,11 +1,21 @@
 'use client';
 
+import { useEffect } from 'react';
 import Script from 'next/script';
 
 export function HeadScripts() {
-  if (process.env.NODE_ENV === 'development') {
-    return null;
-  }
+  useEffect(() => {
+    // Evita a reinserção do script do UTMify Pixel
+    if (!document.getElementById('utmify-pixel-script')) {
+      window.pixelId = "67ad2512def830eb4835837c";
+      const script = document.createElement("script");
+      script.id = "utmify-pixel-script";
+      script.async = true;
+      script.defer = true;
+      script.src = "https://cdn.utmify.com.br/scripts/pixel/pixel.js";
+      document.head.appendChild(script);
+    }
+  }, []);
 
   return (
     <>
@@ -25,31 +35,12 @@ export function HeadScripts() {
       />
       {/* End Google Tag Manager */}
 
-      {/* UTMify Pixel (Inclui script dinâmico via JavaScript) */}
-      <Script
-        id="utmify-pixel"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.pixelId = "67ad2512def830eb4835837c";
-            var a = document.createElement("script");
-            a.setAttribute("async", "");
-            a.setAttribute("defer", "");
-            a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-            document.head.appendChild(a);
-          `,
-        }}
-      />
-      {/* End UTMify Pixel */}
-
       {/* UTMify UTMs */}
       <Script
         id="utmify-utms"
         strategy="afterInteractive"
         src="https://cdn.utmify.com.br/scripts/utms/latest.js"
         data-utmify-prevent-subids
-        async
-        defer
       />
       {/* End UTMify UTMs */}
     </>
