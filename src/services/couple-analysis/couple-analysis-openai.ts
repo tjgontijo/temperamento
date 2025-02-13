@@ -85,7 +85,12 @@ export async function analisarCasal(
     const completion = await openai.chat.completions.create({
       messages: [{ 
         role: "system", 
-        content: "Você é um assistente que SEMPRE retorna apenas JSON válido, sem formatação ou caracteres extras. Nunca inclua ```json ou ``` no início ou fim da resposta. Seu objetivo é criar esperança e desejo de conhecimento mais profundo, sem vender diretamente."
+        content: `Você é um assistente que SEMPRE retorna JSON válido. 
+        Siga estas regras ESTRITAMENTE:
+        1. Retorne um JSON com exatamente 3 chaves: "titulo", "subtitulo", "paragrafos"
+        2. "paragrafos" deve ser um array com EXATAMENTE 4 strings
+        3. Não use caracteres especiais que possam quebrar o JSON
+        4. Mantenha o texto dentro das regras anteriores de análise de casal`
       },
       { 
         role: "user", 
@@ -94,27 +99,55 @@ export async function analisarCasal(
       model: "gpt-4o-mini-2024-07-18",
       temperature: 0.3,
       max_tokens: 1000,
+      response_format: { type: "json_object" }
     });
 
     const content = completion.choices[0].message.content?.trim() || '';
     
-    try {
-      return JSON.parse(content);
-    } catch (error) {
-      console.error('Erro ao fazer parse do JSON:', error);
-      console.error('Conteúdo recebido:', content);
-      return {
-        titulo: "Análise de Compatibilidade",
-        subtitulo: "Descobrindo o potencial desta conexão",
-        paragrafos: ["Não foi possível gerar a análise neste momento. Por favor, tente novamente."]
-      };
-    }
+    // Validação adicional do JSON
+    const parseJson = (jsonString: string) => {
+      try {
+        const parsed = JSON.parse(jsonString);
+        
+        // Validações extras
+        if (!parsed.titulo || !parsed.subtitulo || !Array.isArray(parsed.paragrafos)) {
+          throw new Error('Estrutura de JSON inválida');
+        }
+        
+        if (parsed.paragrafos.length !== 4) {
+          throw new Error('Deve haver exatamente 4 parágrafos');
+        }
+        
+        return parsed;
+      } catch (error) {
+        console.error('Erro de parsing:', error);
+        console.error('Conteúdo recebido:', jsonString);
+        
+        return {
+          titulo: "Análise de Compatibilidade",
+          subtitulo: "Erro na geração da análise",
+          paragrafos: [
+            "Não foi possível gerar a análise detalhada.",
+            "Pedimos desculpas pelo inconveniente.",
+            "Por favor, tente novamente mais tarde.",
+            "Nosso time está trabalhando para resolver este problema."
+          ]
+        };
+      }
+    };
+
+    return parseJson(content);
   } catch (error) {
     console.error('Erro ao gerar análise:', error);
     return {
       titulo: "Análise de Compatibilidade",
       subtitulo: "Erro ao gerar análise",
-      paragrafos: ["Desculpe, não foi possível gerar a análise neste momento."]
+      paragrafos: [
+        "Desculpe, não foi possível gerar a análise neste momento.",
+        "Pedimos desculpas pelo inconveniente.",
+        "Por favor, tente novamente mais tarde.",
+        "Nosso time está trabalhando para resolver este problema."
+      ]
     };
   }
 }
