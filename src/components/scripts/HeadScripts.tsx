@@ -27,7 +27,7 @@ export function HeadScripts() {
       {/* End Google Tag Manager */}
 
       {/* UTMify Pixel */}
-      <Script
+      {/* <Script
         id="utmify-pixel"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
@@ -40,11 +40,11 @@ export function HeadScripts() {
             document.head.appendChild(a);
           `
         }}
-      />
+      /> */}
       {/* End UTMify Pixel */}
 
       {/* UTMify UTMs */}
-      <Script
+      {/* <Script
         id="utmify-utms"
         src="https://cdn.utmify.com.br/scripts/utms/latest.js"
         strategy="afterInteractive"
@@ -52,7 +52,7 @@ export function HeadScripts() {
         defer
         data-utmify-prevent-subids
         data-utmify-debug="false"
-      />
+      /> */}
       {/* End UTMify UTMs */}
     </>
   );
