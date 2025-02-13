@@ -216,7 +216,7 @@ export const obterResultadosQuestionario = (): ResultadoCalculado | null => {
   }
 
   const data = localStorage.getItem(RESULTADOS_STORAGE_KEY);
-  console.log('Dados brutos do localStorage:', data);
+  // console.log('Dados brutos do localStorage:', data);
 
   if (!data) {
     console.error('Nenhum resultado encontrado no localStorage');
@@ -225,7 +225,7 @@ export const obterResultadosQuestionario = (): ResultadoCalculado | null => {
 
   try {
     const resultado = JSON.parse(data);
-    console.log('Resultado parseado:', resultado);
+    // console.log('Resultado parseado:', resultado);
     return resultado;
   } catch (error) {
     console.error('Erro ao parsear resultados:', error);
