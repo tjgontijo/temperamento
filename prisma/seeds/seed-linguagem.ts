@@ -128,11 +128,11 @@ export const seedLinguagem = async (prismaClient?: PrismaClient) => {
     "pergunta": "Se você pergunta a {nome} como ele se sente no relacionamento, qual dessas respostas ele provavelmente daria?",
     "complemento": "A forma como ele descreve o que o faz feliz pode indicar a linguagem do amor dele.",
     "alternativas": [
-        { "texto": "\"Adoro quando você me motiva e reconhece as coisas que faço.\"", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
-        { "texto": "\"O melhor é quando conseguimos passar tempo juntos de verdade.\"", "tipoAlternativa": "TEMPO_QUALIDADE" },
-        { "texto": "\"Gosto quando estamos próximos, quando você me toca, me abraça... isso me faz bem.\"", "tipoAlternativa": "TOQUE_FISICO" },
-        { "texto": "\"O que eu mais gosto é quando você me ajuda com as coisas e se preocupa com o que eu preciso.\"", "tipoAlternativa": "ATOS_SERVICO" },
-        { "texto": "\"Eu gosto de surpresas, pequenos detalhes que mostram que você pensa em mim.\"", "tipoAlternativa": "PRESENTES" }
+        { "texto": "Adoro quando você me motiva e reconhece as coisas que faço.", "tipoAlternativa": "PALAVRA_AFIRMACAO" },
+        { "texto": "O melhor é quando conseguimos passar tempo juntos de verdade.", "tipoAlternativa": "TEMPO_QUALIDADE" },
+        { "texto": "Gosto quando estamos próximos, quando você me toca, me abraça... isso me faz bem.", "tipoAlternativa": "TOQUE_FISICO" },
+        { "texto": "O que eu mais gosto é quando você me ajuda com as coisas e se preocupa com o que eu preciso.", "tipoAlternativa": "ATOS_SERVICO" },
+        { "texto": "Eu gosto de surpresas, pequenos detalhes que mostram que você pensa em mim.", "tipoAlternativa": "PRESENTES" }
     ]
 },
 {
