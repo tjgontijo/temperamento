@@ -40,7 +40,7 @@ export async function realizarAnalise(
     return {
       sucesso: true,
       resultado: resultadoGroq,
-      mensagem: 'Análise realizada com sucesso via Groq',
+      mensagem: 'Análise realizada com sucesso - Groq',
       provedor: 'groq'
     };
   } catch {
@@ -59,7 +59,7 @@ export async function realizarAnalise(
       return {
         sucesso: true,
         resultado: resultadoOpenAI,
-        mensagem: 'Análise realizada com sucesso via OpenAI',
+        mensagem: 'Análise realizada com sucesso - 4o',
         provedor: 'openai'
       };
     } catch {
