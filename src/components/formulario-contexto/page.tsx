@@ -31,7 +31,7 @@ const questoesContexto: Array<{
     "id": "historia_relacionamento",
     "tipo": "textarea",
     "pergunta": "Conte um pouco sobre a história de vocês dois",    
-    "descricao": "Quanto mais detalhes você compartilhar sobre como se conheceram e como é a relação de vocês, mais precisa será a análise."
+    "descricao": "Este campo é opcional, porém, quanto mais detalhes você compartilhar sobre como se conheceram e como é a relação de vocês, mais precisa será a análise."
   }
 ];
 
