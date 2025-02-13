@@ -50,6 +50,8 @@ type ResultadosIniciaisProps = {
     titulo: string;
     subtitulo: string;
     paragrafos: string[];
+    mensagem?: string;
+    provedor?: 'groq' | 'openai';
   };
 };
 
@@ -240,12 +242,13 @@ export function ResultadosIniciais({
     <motion.div 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="relative bg-gradient-to-br from-purple-50 to-indigo-100 min-h-screen p-4 md:p-8 lg:p-12"
+      transition={{ duration: 0.5 }}
+      className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
     >
       {/* Animação de corações */}
       <HeartAnimation isActive={isHeartAnimationActive} />
 
-      <div className="relative z-10 max-w-xl mx-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8 space-y-8">
+      <div className="relative z-10 max-w-xl mx-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-12">
         {/* Título Persuasivo */}
         <div className="text-center bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-2xl mb-8 shadow-xl">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
@@ -399,6 +402,13 @@ export function ResultadosIniciais({
           )}
         </AnimatePresence>
       </div>
+      {analise.mensagem && (
+        <p 
+          className="text-right text-xs italic text-gray-500 mt-4"
+        >
+          {analise.mensagem}
+        </p>
+      )}
     </motion.div>
   );
 }
