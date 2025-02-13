@@ -3,6 +3,11 @@
 import Script from 'next/script';
 
 export function HeadScripts() {
+  // Não renderiza scripts em desenvolvimento
+  if (process.env.NODE_ENV === 'development') {
+    return null;
+  }
+
   return (
     <>
       {/* Google Tag Manager */}
