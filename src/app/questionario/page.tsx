@@ -70,7 +70,7 @@ import {
 } from '@/utils/storage';
 import { buscarQuestoesPorTipo } from '@/lib/actions/questionario-actions';
 import { calcularResultado } from '@/lib/actions/resultado-actions';
-import { analisarCasal } from '@/services/openai';
+import { analisarCasal } from '@/services/couple-analysis/couple-analysis-openai';
 import { Questao } from '@/components/questionario/questao';
 import { FormularioContexto } from '@/components/formulario-contexto/page';
 import { motion } from 'framer-motion';
