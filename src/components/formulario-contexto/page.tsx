@@ -47,34 +47,23 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
   };
 
   const handleNext = async () => {
-    console.log('🔍 handleNext chamado');
-    console.log('Questão atual:', questaoAtual);
-    console.log('Total de questões:', questoesContexto.length);
-    console.log('Respostas atuais:', JSON.stringify(respostas));
-
     if (questaoAtual < questoesContexto.length - 1) {
-      console.log('🚶 Avançando para próxima questão');
       setQuestaoAtual(prev => prev + 1);
       return;
     }
 
     // Última questão
-    console.log('🏁 Última questão alcançada');
-
-    // Validações rigorosas
-    const validarCampo = (campo: string, nomeCampo: string) => {
+    const validarCampo = (campo: string) => {
       if (!campo || campo.trim() === '') {
-        console.error(`❌ Campo obrigatório não preenchido: ${nomeCampo}`);
         return false;
       }
       return true;
     };
 
-    const nomeAutorValido = validarCampo(respostas.nome_autor, 'Nome do Autor');
-    const nomeParceiroValido = validarCampo(respostas.nome_parceiro, 'Nome do Parceiro');
+    const nomeAutorValido = validarCampo(respostas.nome_autor);
+    const nomeParceiroValido = validarCampo(respostas.nome_parceiro);
 
     if (!nomeAutorValido || !nomeParceiroValido) {
-      console.error('❌ Validação de campos falhou');
       return;
     }
 
@@ -85,31 +74,24 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
       historia_relacionamento: (respostas.historia_relacionamento || '').trim()
     };
 
-    console.log('📦 Dados preparados para salvar:', JSON.stringify(dadosContexto));
-
     try {
       // Salvamos as respostas
       await salvarDadosContexto(dadosContexto);
       
-      console.log('💾 Dados salvos com sucesso');
-      
       // Verificar se os dados foram realmente salvos
       const dadosSalvos = obterDadosContexto();
-      console.log('🔍 Dados recuperados do localStorage:', JSON.stringify(dadosSalvos));
       
       // Verificação adicional
       if (!dadosSalvos) {
-        console.error('❌ Falha ao recuperar dados salvos');
         return;
       }
 
       // Notifica o componente pai que o formulário foi concluído
       if (onConcluido) {
-        console.log('✅ Chamando onConcluido');
         onConcluido();
       }
-    } catch (error) {
-      console.error('❌ Erro crítico ao salvar dados:', error);
+    } catch {
+      // Silenciosamente lida com erros de salvamento
     }
   };
 
