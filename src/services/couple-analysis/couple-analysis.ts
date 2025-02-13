@@ -2,10 +2,9 @@ import { analisarCasal } from './couple-analysis-openai';
 import { analisarCasalGroq } from './couple-analysis-groq';
 
 interface ResultadoAnalise {
-  potencialRelacionamento: string;
-  dinamicaInteracao: string;
-  pontosCriticos: string;
-  recomendacoesPersonalizadas: string;
+  titulo: string;
+  subtitulo: string;
+  paragrafos: string[];
 }
 
 interface DadosAnalise {
@@ -27,10 +26,14 @@ export async function realizarAnalise(
   provedor?: 'groq' | 'openai';
 }> {
   try {
-    // Tenta primeiro com Groq
+    console.log('Usando IA Groq para análise de casal');
     const resultadoGroq = await analisarCasalGroq(
       dadosAnalise.nomeAutor, 
-      dadosAnalise.nomeParceiro, 
+      dadosAnalise.nomeParceiro,
+      dadosAnalise.temperamentoParceiro,
+      dadosAnalise.linguagemParceiro,
+      dadosAnalise.temperamentoAutor,
+      dadosAnalise.linguagemAutor,
       dadosAnalise.historiaRelacionamento
     );
     
@@ -41,7 +44,7 @@ export async function realizarAnalise(
       provedor: 'groq'
     };
   } catch {
-    // Se falhar com Groq, tenta com OpenAI
+    console.log('Usando IA OpenAI para análise de casal');
     try {
       const resultadoOpenAI = await analisarCasal(
         dadosAnalise.nomeAutor, 
