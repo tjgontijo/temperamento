@@ -41,11 +41,11 @@ export function Questao({
   const [localValor, setLocalValor] = useState(respostaSelecionada);
 
   // Log para debug
-  console.log('Resposta Selecionada:', {
-    respostaSelecionada,
-    localValor,
-    pergunta
-  });
+  // console.log('Resposta Selecionada:', {
+  //   respostaSelecionada,
+  //   localValor,
+  //   pergunta
+  // });
 
   // Atualiza o valor local quando a pergunta ou valor mudam
   useEffect(() => {
