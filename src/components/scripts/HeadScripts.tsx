@@ -46,6 +46,7 @@ export function HeadScripts() {
         async
         defer
         data-utmify-prevent-subids
+        data-utmify-debug="false"
       />
       {/* End UTMify UTMs */}
     </>
