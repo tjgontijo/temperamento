@@ -70,7 +70,7 @@ import {
 } from '@/utils/storage';
 import { buscarQuestoesPorTipo } from '@/lib/actions/questionario-actions';
 import { calcularResultado } from '@/lib/actions/resultado-actions';
-import { analisarCasal } from '@/services/couple-analysis/couple-analysis-openai';
+import { realizarAnalise } from '@/services/couple-analysis/couple-analysis';
 import { Questao } from '@/components/questionario/questao';
 import { FormularioContexto } from '@/components/formulario-contexto/page';
 import { motion } from 'framer-motion';
@@ -163,15 +163,24 @@ export default function QuestionarioPage() {
             nome_parceiro: contexto.nome_parceiro,
             historia_relacionamento: contexto.historia_relacionamento,
           },
-          analise: await analisarCasal(
-            contexto.nome_autor || '',
-            contexto.nome_parceiro || '',
-            resultados.temperamento.principal,
-            resultados.linguagem.principal,
-            resultados.temperamentoAutor.principal,
-            resultados.linguagemAutor.principal,
-            contexto.historia_relacionamento || ''
-          ),
+          analise: await realizarAnalise({
+            nomeAutor: contexto.nome_autor || '',
+            nomeParceiro: contexto.nome_parceiro || '',
+            temperamentoParceiro: resultados.temperamento.principal,
+            linguagemParceiro: resultados.linguagem.principal,
+            temperamentoAutor: resultados.temperamentoAutor.principal,
+            linguagemAutor: resultados.linguagemAutor.principal,
+            historiaRelacionamento: contexto.historia_relacionamento || ''
+          }).then(resultado => {
+            if (resultado.sucesso && resultado.resultado) {
+              return {
+                ...resultado.resultado,
+                mensagem: resultado.mensagem,
+                provedor: resultado.provedor
+              };
+            }
+            throw new Error('Falha na análise de casal');
+          }),
         };
 
         salvarResultadosQuestionario(resultadosCompletos);
