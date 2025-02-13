@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { InputContexto } from './input-contexto';
 import { Introducao } from '@/components/questionario/introducao';
-import { salvarDadosContexto } from '@/utils/storage';
+import { salvarDadosContexto, obterDadosContexto } from '@/utils/storage';
 
 interface FormularioContextoProps {
   onConcluido?: () => void;
@@ -47,24 +47,69 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
   };
 
   const handleNext = async () => {
+    console.log('🔍 handleNext chamado');
+    console.log('Questão atual:', questaoAtual);
+    console.log('Total de questões:', questoesContexto.length);
+    console.log('Respostas atuais:', JSON.stringify(respostas));
+
     if (questaoAtual < questoesContexto.length - 1) {
+      console.log('🚶 Avançando para próxima questão');
       setQuestaoAtual(prev => prev + 1);
-    } else {
-      try {
-        // Salvamos as respostas
-        await salvarDadosContexto({
-          nome_autor: respostas.nome_autor,
-          nome_parceiro: respostas.nome_parceiro,
-          historia_relacionamento: respostas.historia_relacionamento
-        });
-        
-        // Notifica o componente pai que o formulário foi concluído
-        if (onConcluido) {
-          onConcluido();
-        }
-      } catch (error) {
-        console.error('Erro ao salvar dados:', error);
+      return;
+    }
+
+    // Última questão
+    console.log('🏁 Última questão alcançada');
+
+    // Validações rigorosas
+    const validarCampo = (campo: string, nomeCampo: string) => {
+      if (!campo || campo.trim() === '') {
+        console.error(`❌ Campo obrigatório não preenchido: ${nomeCampo}`);
+        return false;
       }
+      return true;
+    };
+
+    const nomeAutorValido = validarCampo(respostas.nome_autor, 'Nome do Autor');
+    const nomeParceiroValido = validarCampo(respostas.nome_parceiro, 'Nome do Parceiro');
+
+    if (!nomeAutorValido || !nomeParceiroValido) {
+      console.error('❌ Validação de campos falhou');
+      return;
+    }
+
+    // Preparar dados para salvar
+    const dadosContexto = {
+      nome_autor: respostas.nome_autor.trim(),
+      nome_parceiro: respostas.nome_parceiro.trim(),
+      historia_relacionamento: (respostas.historia_relacionamento || '').trim()
+    };
+
+    console.log('📦 Dados preparados para salvar:', JSON.stringify(dadosContexto));
+
+    try {
+      // Salvamos as respostas
+      await salvarDadosContexto(dadosContexto);
+      
+      console.log('💾 Dados salvos com sucesso');
+      
+      // Verificar se os dados foram realmente salvos
+      const dadosSalvos = obterDadosContexto();
+      console.log('🔍 Dados recuperados do localStorage:', JSON.stringify(dadosSalvos));
+      
+      // Verificação adicional
+      if (!dadosSalvos) {
+        console.error('❌ Falha ao recuperar dados salvos');
+        return;
+      }
+
+      // Notifica o componente pai que o formulário foi concluído
+      if (onConcluido) {
+        console.log('✅ Chamando onConcluido');
+        onConcluido();
+      }
+    } catch (error) {
+      console.error('❌ Erro crítico ao salvar dados:', error);
     }
   };
 
