@@ -44,7 +44,7 @@ export function HeadScripts() {
       {/* End UTMify Pixel */}
 
       {/* UTMify UTMs */}
-      {/* <Script
+      <Script
         id="utmify-utms"
         src="https://cdn.utmify.com.br/scripts/utms/latest.js"
         strategy="afterInteractive"
@@ -52,7 +52,7 @@ export function HeadScripts() {
         defer
         data-utmify-prevent-subids
         data-utmify-debug="false"
-      /> */}
+      />
       {/* End UTMify UTMs */}
     </>
   );
