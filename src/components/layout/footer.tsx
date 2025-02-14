@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-purple-900 text-white py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <Link href="/" className="inline-block mb-4">
               <Image 
@@ -22,57 +22,15 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Links Rápidos</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#beneficios" className="text-purple-200 hover:text-white">
-                  Benefícios
-                </Link>
-              </li>
-              <li>
-                <Link href="#como-funciona" className="text-purple-200 hover:text-white">
-                  Como Funciona
-                </Link>
-              </li>
-              <li>
-                <Link href="#depoimentos" className="text-purple-200 hover:text-white">
-                  Depoimentos
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4">Recursos</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#" className="text-purple-200 hover:text-white">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-purple-200 hover:text-white">
-                  E-books
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-purple-200 hover:text-white">
-                  Cursos
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="#" className="text-purple-200 hover:text-white">
+                <Link href="/politica-privacidade" className="text-purple-200 hover:text-white">
                   Política de Privacidade
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-purple-200 hover:text-white">
+                <Link href="/termos-de-uso" className="text-purple-200 hover:text-white">
                   Termos de Uso
                 </Link>
               </li>
