@@ -32,6 +32,7 @@ type ResultadoCalculadoType = {
   analise?: AnaliseCasalType;
 };
 
+import { Metadata } from 'next';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Hero } from '@/components/landing-page/hero';
@@ -42,6 +43,12 @@ import { Oferta } from '@/components/landing-page/oferta';
 import { Urgencia } from '@/components/landing-page/urgencia';
 import { Transition } from '@/components/landing-page/transition';
 import { FAQ } from '@/components/landing-page/faq';
+import { Footer } from '@/components/layout/footer';
+
+export const metadata: Metadata = {
+  title: 'Resultado do Seu Teste',
+  description: 'Descubra insights profundos sobre seu relacionamento'
+};
 
 export default function Resultado() {
   const router = useRouter();
@@ -147,6 +154,7 @@ export default function Resultado() {
       <Oferta nome_parceiro={resultado.informacoes.nome_parceiro} />
       <FAQ />
       <Urgencia nome_parceiro={resultado.informacoes.nome_parceiro} />
+      <Footer />
     </div>
   );
 }
