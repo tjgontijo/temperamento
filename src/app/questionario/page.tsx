@@ -75,6 +75,13 @@ import { Questao } from '@/components/questionario/questao';
 import { FormularioContexto } from '@/components/formulario-contexto/page';
 import { motion } from 'framer-motion';
 import { Loading } from '@/components/ui/loading';
+import { Metadata } from 'next';
+import { Footer } from '@/components/layout/footer';
+
+export const metadata: Metadata = {
+  title: 'Questionário',
+  description: 'Responda o questionário para descobrir o perfil de temperamentoe linguagem do amor do seu parceiro'
+};
 
 export default function QuestionarioPage() {
   const [isClient, setIsClient] = useState(false);
@@ -291,6 +298,7 @@ export default function QuestionarioPage() {
         isLoading={isLoading}        
         nomePretendente={obterDadosContexto()?.nome_parceiro}
       />
+      <Footer />
     </motion.div>
   );
 }
