@@ -1,6 +1,16 @@
 'use client';
 
-// Types específicos
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Hero } from '@/components/landing-page/hero';
+import { Introducao } from '@/components/landing-page/introducao';
+import { ResultadosIniciais } from '@/components/landing-page/resultados-iniciais';
+import { ApresentacaoGuia } from '@/components/landing-page/apresentacao-guia';
+import { Oferta } from '@/components/landing-page/oferta';
+import { Urgencia } from '@/components/landing-page/urgencia';
+import { Transition } from '@/components/landing-page/transition';
+import { FAQ } from '@/components/landing-page/faq';
+
 type ResultadoCategoriaType = {
   principal: string;
   secundario: string;
@@ -32,24 +42,6 @@ type ResultadoCalculadoType = {
   analise?: AnaliseCasalType;
 };
 
-import { Metadata } from 'next';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Hero } from '@/components/landing-page/hero';
-import { Introducao } from '@/components/landing-page/introducao';
-import { ResultadosIniciais } from '@/components/landing-page/resultados-iniciais';
-import { ApresentacaoGuia } from '@/components/landing-page/apresentacao-guia';
-import { Oferta } from '@/components/landing-page/oferta';
-import { Urgencia } from '@/components/landing-page/urgencia';
-import { Transition } from '@/components/landing-page/transition';
-import { FAQ } from '@/components/landing-page/faq';
-import { Footer } from '@/components/layout/footer';
-
-export const metadata: Metadata = {
-  title: 'Resultado do Seu Teste',
-  description: 'Descubra insights profundos sobre seu relacionamento'
-};
-
 export default function Resultado() {
   const router = useRouter();
   const [resultado, setResultado] = useState<ResultadoCalculadoType | null>(null);
@@ -57,6 +49,9 @@ export default function Resultado() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Define o título da página
+    document.title = "Resultado da Análise - Decifrando Corações";
+
     const carregarResultados = () => {
       try {
         if (typeof window === 'undefined') return;
@@ -110,7 +105,6 @@ export default function Resultado() {
 
         console.log('Enviando evento result_page para Meta Ads:', eventData);
         window.fbq('trackCustom', 'result_page', eventData);
-
       } catch (error) {
         console.error('Erro ao enviar evento result_page para Meta Ads:', error);
       }
@@ -154,7 +148,6 @@ export default function Resultado() {
       <Oferta nome_parceiro={resultado.informacoes.nome_parceiro} />
       <FAQ />
       <Urgencia nome_parceiro={resultado.informacoes.nome_parceiro} />
-      <Footer />
     </div>
   );
 }
