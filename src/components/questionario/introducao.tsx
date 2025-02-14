@@ -13,7 +13,7 @@ export function Introducao({ onStart }: IntroducaoProps) {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Bem-vindo à Análise de Compatibilidade
+              Bem-vinda à Análise de Conexão Emocional
             </h1>
             <p className="text-xl text-gray-600">
               Para obter os melhores resultados, por favor, leia as recomendações abaixo
@@ -25,10 +25,10 @@ export function Introducao({ onStart }: IntroducaoProps) {
             <div className="bg-white rounded-lg p-6 shadow-md transform transition-all duration-200 hover:scale-105">
               <div className="flex items-center mb-4">
                 <Heart className="w-8 h-8 text-pink-500 mr-3" />
-                <h2 className="text-xl font-semibold text-gray-900">Seja Sincero</h2>
+                <h2 className="text-xl font-semibold text-gray-900">Seja Sincera</h2>
               </div>
               <p className="text-gray-600">
-                Insira os nomes completos corretamente. Isso é fundamental para uma análise 
+                Insira as informações solicitadas com o máximo de atenção e veracidade. Isso é fundamental para uma análise 
                 precisa e personalizada da compatibilidade entre vocês.
               </p>
             </div>
@@ -52,7 +52,7 @@ export function Introducao({ onStart }: IntroducaoProps) {
                 <h2 className="text-xl font-semibold text-gray-900">Reserve Tempo</h2>
               </div>
               <p className="text-gray-600">
-                O questionário leva cerca de 10-15 minutos. Dedique esse tempo sem 
+                O questionário leva cerca de 05 minutos. Dedique esse tempo sem 
                 interrupções para uma experiência mais proveitosa.
               </p>
             </div>
@@ -79,7 +79,7 @@ export function Introducao({ onStart }: IntroducaoProps) {
               <Heart className="ml-2 w-5 h-5" />
             </button>
             <p className="mt-4 text-sm text-gray-500">
-              Ao começar, você concorda em fornecer informações verdadeiras para a análise
+              Ao começar, você concorda em fornecer informações verdadeiras para o melhor resultado da análise
             </p>
           </div>
         </div>
