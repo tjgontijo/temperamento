@@ -37,7 +37,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
               {/* Preço */}
               <div className="mt-6 mb-8">
                 <div className="flex items-center justify-center gap-2">
-                  <span className="text-3xl font-bold text-gray-400">R$ 67</span>
+                  <span className="text-3xl font-bold text-gray-400">R$ 47</span>
                 </div>
               </div>
 
@@ -66,7 +66,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
           <div className="w-full md:w-1/2 max-w-sm relative">
             {/* Faixa de Desconto */}
             <div className="absolute -top-4 -right-10 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-1 rounded-lg transform rotate-6 shadow-lg z-20 animate-pulse">
-              <span className="text-sm font-bold">50% OFF</span>
+              <span className="text-sm font-bold">64% OFF</span>
             </div>
 
             {/* Card Principal */}
@@ -80,7 +80,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
               <div className="text-center mb-6 pt-4">
                 <div className="text-sm font-semibold text-purple-600 uppercase tracking-wider mb-2">Apenas Hoje</div>
                 <div className="inline-block relative">
-                  <span className="text-6xl font-black text-purple-700">R$37</span>
+                  <span className="text-6xl font-black text-purple-700">R$17</span>
                   <div className="absolute -top-3 -right-6 transform rotate-12 bg-yellow-300 text-yellow-800 text-xs font-bold px-2 py-1 rounded">
                     HOJE
                   </div>
