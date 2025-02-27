@@ -83,8 +83,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-      <UtmifyScripts />
         <HeadScripts />
+        <UtmifyScripts />
       </head>
       <body className={inter.className}>
         <BodyScripts />
