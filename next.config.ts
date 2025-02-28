@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Otimizações de desempenho
   experimental: {
+    optimizeCss: true, // Habilita otimização CSS
     optimizePackageImports: ['@/components', 'lucide-react'],
   },
   
@@ -20,7 +21,7 @@ const nextConfig: NextConfig = {
   },
   
   // Configurações de webpack
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
     // Reduzir tamanho do bundle
     config.optimization.minimize = true;
     
@@ -32,6 +33,26 @@ const nextConfig: NextConfig = {
         net: false,
         tls: false,
       };
+    }
+    
+    // Otimizações apenas para produção
+    if (!dev && !isServer) {
+      // Otimiza CSS
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          ...config.optimization.splitChunks,
+          // Extrai CSS crítico
+          cacheGroups: {
+            styles: {
+              name: 'styles',
+              test: /\.(css|scss)$/,
+              chunks: 'all',
+              enforce: true,
+            },
+          },
+        },
+      }
     }
     
     return config;
