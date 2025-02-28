@@ -7,6 +7,7 @@ import { Heart, MessageCircle, Target, Users2, AlertTriangle } from "lucide-reac
 import { DepoimentoCard } from "@/components/layout/depoimento-card";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { PatternBackground } from '@/components/layout/PatternBackground';
 
 export default function Home() {
   const router = useRouter();
@@ -24,7 +25,9 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 flex items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pink-100 via-pink-50 to-purple-50 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/pattern-background.svg')] opacity-10 pointer-events-none"></div>
+        <div className="relative">
+          <PatternBackground />
+        </div>
         <div className="container mx-auto px-4 py-16 relative z-10 grid md:grid-cols-2 gap-8 items-center">
           {/* Coluna de Texto */}
           <div className="space-y-6 md:space-y-7 text-center md:text-left">
