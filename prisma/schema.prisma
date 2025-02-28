@@ -42,7 +42,7 @@ model Questao {
 // Alternativas para cada questão
 model Alternativa {
   id                String          @id @default(uuid())
-  questao           Questao         @relation(fields: [questaoId], references: [id])
+  questao           Questao         @relation(fields: [questaoId], references: [id], onDelete: Cascade)
   questaoId         String
   texto             String          @db.Text
   tipoAlternativa   TipoAlternativa @relation(fields: [tipoAlternativaId], references: [id])
