@@ -1,11 +1,11 @@
-// src/components/HeadScripts.tsx
 'use client';
 
-import Script from 'next/script';
+import Script from "next/script";
 
-export default function HeadScripts() {
+export function HeadScripts() {
   return (
-    <Script id="clarity" strategy="afterInteractive">
+    <>
+       <Script id="clarity" strategy="afterInteractive">
       {`
         (function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -14,5 +14,8 @@ export default function HeadScripts() {
         })(window, document, "clarity", "script", "q8wnma77xf");
       `}
     </Script>
+    </>
   );
 }
+
+      
