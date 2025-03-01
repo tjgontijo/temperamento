@@ -4,13 +4,18 @@ import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { formatBrazilianPhone, cleanPhone } from '@/lib/masks/phone';
+import { validateBrazilianPhone } from '@/lib/validations/phone';
 import { validarNomeRedundante } from '@/services/nome-validator/nome-validator';
+import { ArrowLeft } from 'lucide-react';
 
 interface InputContextoProps {
   pergunta: string;
   descricao?: string;
-  tipo: 'input' | 'textarea';
+  tipo: 'input' | 'textarea' | 'select' | 'input_whatsapp';
+  opcoes?: string[];
   valor: string;
   onChange: (valor: string) => void;
   onNext?: () => void;
@@ -24,6 +29,7 @@ export function InputContexto({
   pergunta,
   descricao,
   tipo,
+  opcoes,
   valor,
   onChange,
   onNext,
@@ -32,8 +38,8 @@ export function InputContexto({
   isUltima = false,
   isPrimeira = false,
 }: InputContextoProps) {
+  const [erro, setErro] = useState('');
   const [localValor, setLocalValor] = useState(valor);
-  const [erro, setErro] = useState<string>('');
   const [validando, setValidando] = useState(false);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
@@ -42,7 +48,7 @@ export function InputContexto({
   }, [valor]);
 
   useEffect(() => {
-    if (inputRef.current) {
+    if (inputRef.current && tipo !== 'select') {
       inputRef.current.focus();
     }
   }, [tipo]);
@@ -50,26 +56,27 @@ export function InputContexto({
   const handleChange = (novoValor: string) => {
     setErro(''); // Limpa mensagem de erro ao digitar
 
+    if (tipo === 'input_whatsapp') {
+      // Apenas formata para exibição
+      const valorFormatado = formatBrazilianPhone(novoValor);
+      setLocalValor(valorFormatado);
+      onChange(valorFormatado);
+      return;
+    }
+    
     if (tipo === 'input') {
-      // Remove caracteres especiais e números, mantém apenas letras e espaços
-      novoValor = novoValor.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
-      
-      // Remove espaços extras e pega apenas o primeiro nome
-      novoValor = novoValor.trim().split(/\s+/)[0] || '';
-      
       // Limita a 50 caracteres
       novoValor = novoValor.slice(0, 50);
-      
-      // Capitaliza a primeira letra
-      novoValor = novoValor.charAt(0).toUpperCase() + novoValor.slice(1).toLowerCase();
-
-      // Se o usuário tentar digitar mais nomes, mostra uma mensagem
+      // Converte primeira letra para maiúscula
+      novoValor = novoValor.charAt(0).toUpperCase() + novoValor.slice(1);
+      // Permite apenas letras e espaços
+      novoValor = novoValor.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+      // Valida se tem mais de uma palavra
       if (novoValor.trim() !== novoValor.trim().split(/\s+/)[0]) {
         setErro('Por favor, digite apenas o primeiro nome');
       }
     }
-    // Para textarea não fazemos nenhuma formatação, aceitamos o texto como está
-
+    
     setLocalValor(novoValor);
     onChange(novoValor);
   };
@@ -77,56 +84,71 @@ export function InputContexto({
   const handleNext = async () => {
     const valorTratado = localValor.trim();
     
-    // Validações locais para campos de nome
+    // Validação para input comum
     if (tipo === 'input') {
-      // 1. Validação de tamanho mínimo
-      if (valorTratado.length < 2) {
-        setErro('O nome precisa ter pelo menos 2 letras');
+      if (!valorTratado) {
+        setErro('Este campo é obrigatório');
         return;
       }
 
-      // 2. Validação de tamanho máximo
-      if (valorTratado.length > 50) {
-        setErro('O nome não pode ter mais de 50 letras');
-        return;
-      }
-
-      // 3. Validação de nome único (sem sobrenome)
-      if (valorTratado.includes(' ')) {
+      // Valida se tem apenas uma palavra
+      if (valorTratado !== valorTratado.split(/\s+/)[0]) {
         setErro('Por favor, digite apenas o primeiro nome');
         return;
       }
 
-      // 4. Validação de caracteres válidos
+      // Valida se tem apenas letras
       if (!/^[a-zA-ZÀ-ÿ]+$/.test(valorTratado)) {
-        setErro('O nome deve conter apenas letras');
+        setErro('Por favor, use apenas letras');
         return;
       }
 
-      // 5. Validação com Groq/OpenAI (apenas se passar em todas as validações anteriores)
+      // Valida se tem pelo menos 2 caracteres
+      if (valorTratado.length < 2) {
+        setErro('O nome deve ter pelo menos 2 letras');
+        return;
+      }
+
+      // Valida se tem no máximo 50 caracteres
+      if (valorTratado.length > 50) {
+        setErro('O nome deve ter no máximo 50 letras');
+        return;
+      }
+
+      setValidando(true);
       try {
-        setValidando(true);
         const resultado = await validarNomeRedundante(valorTratado);
         if (!resultado.valido) {
           setErro(resultado.mensagem);
           setValidando(false);
           return;
         }
-        setValidando(false);
-      } catch {
+      } catch (error) {
+        console.error('Erro na validação:', error);
+      } finally {
         setValidando(false);
         // Continua mesmo com erro na validação para não bloquear o usuário
       }
+    } else if (tipo === 'input_whatsapp') {
+      // Valida usando apenas os números
+      const apenasNumeros = cleanPhone(valorTratado);
+      if (!validateBrazilianPhone(apenasNumeros)) {
+        setErro('Digite um número de celular válido com DDD');
+        return;
+      }
     }
     
+    // Validação para select
+    if (tipo === 'select') {
+      if (!valorTratado) {
+        setErro('Por favor, selecione uma opção');
+        return;
+      }
+    }
+
     // Validação para textarea
     if (tipo === 'textarea') {
       // Permite avanço mesmo com textarea vazio
-      // Não faz nada se o campo estiver em branco
-    }
-    
-    // Para textarea, sempre permite avanço, mesmo com valor vazio
-    if (tipo === 'textarea') {
       onNext?.();
       return;
     }
@@ -154,7 +176,7 @@ export function InputContexto({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
-          className="space-y-10 w-full"
+          className="space-y-6 w-full"
         >
           {/* Pergunta e Descrição */}
           <AnimatePresence mode="wait">
@@ -192,9 +214,27 @@ export function InputContexto({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {tipo === 'textarea' ? (
+            {tipo === 'select' ? (
               <div className="space-y-2">
-                <textarea
+                <Select value={localValor} onValueChange={handleChange}>
+                  <SelectTrigger className="w-full text-lg p-6 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-purple-400 transition-colors text-center bg-white shadow-sm">
+                    <SelectValue placeholder="Selecione uma opção" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {opcoes?.map((opcao) => (
+                      <SelectItem key={opcao} value={opcao} className="text-lg p-4">
+                        {opcao}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {erro && (
+                  <p className="text-sm text-red-500 text-center animate-fadeIn">{erro}</p>
+                )}
+              </div>
+            ) : tipo === 'textarea' ? (
+              <div className="space-y-2">
+                <Textarea
                   ref={inputRef as React.RefObject<HTMLTextAreaElement>}
                   value={localValor}
                   onChange={(e) => handleChange(e.target.value)}
@@ -205,6 +245,29 @@ export function InputContexto({
                 <div className="text-right text-sm text-gray-400">
                   {localValor.length}/500 caracteres
                 </div>
+              </div>
+            ) : tipo === 'input_whatsapp' ? (
+              <div className="space-y-2">
+                <Input
+                  ref={inputRef as React.RefObject<HTMLInputElement>}
+                  type="tel"
+                  inputMode="numeric"
+                  value={localValor}
+                  onChange={(e) => handleChange(e.target.value)}
+                  className={`w-full text-lg p-6 border-2 rounded-xl focus:ring-purple-400 transition-colors text-center bg-white shadow-sm ${
+                    erro ? 'border-red-300' : 'border-gray-200 focus:border-purple-400'
+                  }`}
+                  placeholder="(00) 00000-0000"
+                  maxLength={15}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && localValor.trim()) {
+                      handleNext();
+                    }
+                  }}
+                />
+                {erro && (
+                  <p className="text-sm text-red-500 text-center animate-fadeIn">{erro}</p>
+                )}
               </div>
             ) : (
               <div className="space-y-2">
@@ -233,7 +296,7 @@ export function InputContexto({
 
           {/* Botões de Navegação */}
           <motion.div
-            className="flex flex-col w-full px-4 pt-4 space-y-4"
+            className="flex flex-col w-full px-4 space-y-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.2 }}
