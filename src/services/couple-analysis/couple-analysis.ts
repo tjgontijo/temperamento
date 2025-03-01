@@ -1,5 +1,5 @@
-import { analisarCasal } from './couple-analysis-openai';
 import { analisarCasalGroq } from './couple-analysis-groq';
+import { analisarCasal } from './couple-analysis-openai';
 
 interface ResultadoAnalise {
   titulo: string;
@@ -9,66 +9,72 @@ interface ResultadoAnalise {
 
 interface DadosAnalise {
   nomeAutor: string;
+  whatsapp: string;
   nomeParceiro: string;
   temperamentoParceiro: string;
   linguagemParceiro: string;
   temperamentoAutor: string;
   linguagemAutor: string;
-  historiaRelacionamento: string;
+  historiaRelacionamento?: string;
+  statusRelacionamento: string;
+  filhos: string;
+}
+
+interface RetornoAnalise {
+  sucesso: boolean;
+  resultado?: ResultadoAnalise;
+  mensagem: string;
+  provedor?: 'groq' | 'openai';
 }
 
 export async function realizarAnalise(
   dadosAnalise: DadosAnalise
-): Promise<{ 
-  sucesso: boolean; 
-  resultado?: ResultadoAnalise; 
-  mensagem: string;
-  provedor?: 'groq' | 'openai';
-}> {
+): Promise<RetornoAnalise> {
   try {
-    console.log('Usando IA Groq para análise de casal');
-    const resultadoGroq = await analisarCasalGroq(
+    console.log('Tentando análise via OpenAI...');
+    const resultadoOpenAI = await analisarCasal(
       dadosAnalise.nomeAutor, 
       dadosAnalise.nomeParceiro,
       dadosAnalise.temperamentoParceiro,
       dadosAnalise.linguagemParceiro,
       dadosAnalise.temperamentoAutor,
       dadosAnalise.linguagemAutor,
-      dadosAnalise.historiaRelacionamento
+      dadosAnalise.historiaRelacionamento || '',
+      dadosAnalise.statusRelacionamento,
+      dadosAnalise.filhos
     );
     
     return {
       sucesso: true,
-      resultado: resultadoGroq,
-      mensagem: 'Análise realizada com sucesso - Groq',
-      provedor: 'groq'
+      resultado: resultadoOpenAI,
+      mensagem: '4o - Análise realizada com sucesso',
+      provedor: 'openai'
     };
   } catch {
-    console.log('Usando IA OpenAI para análise de casal');
+    console.log('OpenAI falhou, tentando Groq como fallback...');
+    
     try {
-      const resultadoOpenAI = await analisarCasal(
+      const resultadoGroq = await analisarCasalGroq(
         dadosAnalise.nomeAutor, 
         dadosAnalise.nomeParceiro,
         dadosAnalise.temperamentoParceiro,
         dadosAnalise.linguagemParceiro,
         dadosAnalise.temperamentoAutor,
         dadosAnalise.linguagemAutor,
-        dadosAnalise.historiaRelacionamento
+        dadosAnalise.historiaRelacionamento || '',
+        dadosAnalise.statusRelacionamento,
+        dadosAnalise.filhos
       );
       
       return {
         sucesso: true,
-        resultado: resultadoOpenAI,
-        mensagem: 'Análise realizada com sucesso - 4o',
-        provedor: 'openai'
+        resultado: resultadoGroq,
+        mensagem: 'Groq - Análise realizada com sucesso',
+        provedor: 'groq'
       };
-    } catch {
-      // Se ambos falharem, retorna erro amigável
-      return {
-        sucesso: false,
-        mensagem: 'Não foi possível realizar a análise no momento. Tente novamente mais tarde.',
-        provedor: undefined
-      };
+    } catch (error) {
+      console.error('Erro ao tentar análise via Groq:', error);
+      throw error;
     }
   }
 }
