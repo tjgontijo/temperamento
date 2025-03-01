@@ -387,10 +387,10 @@ export function ResultadosIniciais({
               exit={{ opacity: 0, y: 50 }}
               className="mt-8 p-6 bg-purple-50 rounded-2xl"
             >
-              <h3 className="text-2xl font-bold text-purple-800 mb-4">
+              <h3 className="text-2xl font-bold text-purple-800 mb-4 text-center">
                 {analise.titulo}
               </h3>
-              <p className="text-lg text-purple-700 mb-4">
+              <p className="text-lg text-purple-700 mb-6 text-center">
                 {analise.subtitulo}
               </p>
               {analise.paragrafos.map((paragrafo, index) => (
