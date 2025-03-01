@@ -6,6 +6,9 @@ const ANALISE_STORAGE_KEY = 'analise_data';
 const RESULTADOS_STORAGE_KEY = 'resultados_questionario';
 const TIPOS_STORAGE_KEY = 'tipos_questionario';
 
+import { webhookService } from '@/services/webhook/webhook.service';
+import { cleanPhone } from '@/lib/masks/phone';
+
 // Tipos de Resposta
 type RespostaData = {
   tipoQuestaoId: string;
@@ -16,7 +19,10 @@ type RespostaData = {
 // Tipos de Contexto
 type ContextoData = {
   nome_autor: string;
+  whatsapp: string;
   nome_parceiro: string;
+  status_relacionamento: string;
+  filhos: string;
   historia_relacionamento: string;
 };
 
@@ -110,8 +116,8 @@ export const obterRespostas = (): Record<string, RespostaData> => {
 };
 
 export const salvarDadosContexto = (dados: ContextoData) => {
-  if (!dados.nome_autor || !dados.nome_parceiro) {
-    throw new Error('Nome do autor e parceiro são obrigatórios');
+  if (!dados.nome_autor || !dados.whatsapp || !dados.nome_parceiro || !dados.status_relacionamento || !dados.filhos) {
+    throw new Error('Nome do autor, WhatsApp, nome do parceiro, status do relacionamento e filhos são obrigatórios');
   }
 
   try {
@@ -121,7 +127,10 @@ export const salvarDadosContexto = (dados: ContextoData) => {
 
     const dadosSerializados = JSON.stringify({
       nome_autor: dados.nome_autor.trim(),
+      whatsapp: cleanPhone(dados.whatsapp),
       nome_parceiro: dados.nome_parceiro.trim(),
+      status_relacionamento: dados.status_relacionamento,
+      filhos: dados.filhos,
       historia_relacionamento: (dados.historia_relacionamento || '').trim()
     });
 
@@ -145,7 +154,7 @@ export const obterDadosContexto = (): ContextoData | null => {
 
     const dadosParseados = JSON.parse(data);
 
-    if (!dadosParseados.nome_autor || !dadosParseados.nome_parceiro) {
+    if (!dadosParseados.nome_autor || !dadosParseados.whatsapp || !dadosParseados.nome_parceiro || !dadosParseados.status_relacionamento || !dadosParseados.filhos) {
       return null;
     }
 
@@ -192,8 +201,7 @@ export const limparAnalise = () => {
   localStorage.removeItem(ANALISE_STORAGE_KEY);
 };
 
-export const salvarResultadosQuestionario = (resultado: ResultadoCalculado) => {  
-  
+export const salvarResultadosQuestionario = async (resultado: ResultadoCalculado) => {  
   if (typeof window === 'undefined') {    
     return;
   }
@@ -203,7 +211,19 @@ export const salvarResultadosQuestionario = (resultado: ResultadoCalculado) => {
       ...resultado,
       timestamp: Date.now()
     };
-    localStorage.setItem(RESULTADOS_STORAGE_KEY, JSON.stringify(resultadoComTimestamp));    
+
+    // Salva no localStorage
+    localStorage.setItem(RESULTADOS_STORAGE_KEY, JSON.stringify(resultadoComTimestamp));
+
+    // Obtém o contexto
+    const contexto = obterDadosContexto();
+    if (contexto) {
+      // Envia para o webhook
+      await webhookService.enviarResultados({
+        resultados: resultadoComTimestamp,
+        contexto
+      });
+    }
   } catch (error) {
     console.error('Erro ao salvar resultados:', error);
   }
