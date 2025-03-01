@@ -11,28 +11,52 @@ interface FormularioContextoProps {
 
 const questoesContexto: Array<{
   id: string;
-  tipo: 'input' | 'textarea';
+  tipo: 'input' | 'textarea' | 'select' | 'input_whatsapp';
   pergunta: string;
   descricao?: string;
-}> = [
-  {
-    "id": "nome_autor",
-    "tipo": "input",
-    "pergunta": "Qual é o seu Primeiro Nome?",    
-    "descricao": "Precisamos do seu nome exato para garantir que a análise seja precisa."
-  },
-  {
-    "id": "nome_parceiro",
-    "tipo": "input",
-    "pergunta": "Qual o Primeiro Nome da pessoa que você quer analisar?",    
-    "descricao": "O nome é essencial para calcular a compatibilidade entre vocês."
-  },
-  {
-    "id": "historia_relacionamento",
-    "tipo": "textarea",
-    "pergunta": "Conte um pouco sobre a história de vocês dois",    
-    "descricao": "Este campo é opcional, porém, quanto mais detalhes você compartilhar sobre como se conheceram e como é a relação de vocês, mais precisa será a análise."
-  }
+  opcoes?: string[];
+  }> = [
+    {
+      "id": "nome_autor",
+      "tipo": "input",
+      "pergunta": "Qual é o seu primeiro nome?"
+    },
+    {
+      "id": "nome_parceiro",
+      "tipo": "input",
+      "pergunta": "Qual é o primeiro nome da pessoa que você quer analisar?"
+    },
+    {
+      "id": "status_relacionamento",
+      "tipo": "select",
+      "pergunta": "Qual dessas opções melhor descreve o relacionamento de vocês?",
+      "opcoes": ["Casual", "Namorados", "Noivos", "Casados", "Pretendente", "Relacionamento Indefinido"],
+      "descricao": "Escolha a opção que mais se aproxima do momento atual entre vocês."
+    },
+    {
+      "id": "filhos",
+      "tipo": "select",
+      "pergunta": "Você têm filhos?",
+      "opcoes": [
+        "Não temos filhos",
+        "Sim, temos filho juntos",
+        "Sim, de outro relacionamento",
+        "Sim, filhos juntos e de outro relacionamento"
+      ],
+      "descricao": "Se tiverem filhos, indique quantos e se são deste relacionamento."
+    },
+    {
+      "id": "historia_relacionamento",
+      "tipo": "textarea",
+      "pergunta": "Poderia contar um pouco sobre a história de vocês dois e o que mais te incomoda ou preocupa no relacionamento atualmente?",
+      "descricao": "Esta pergunta é opcional, porém quanto mais detalhes você se sentir à vontade em compartilhar, melhor poderemos entender sua situação."
+    },
+    {
+      "id": "whatsapp",
+      "tipo": "input_whatsapp",
+      "pergunta": "Quer receber seu resultado via WhatsApp?",
+      "descricao": "Para sua comodidade, também podemos enviar o resultado via Whatsapp"
+    }    
 ];
 
 export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
@@ -61,16 +85,22 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
     };
 
     const nomeAutorValido = validarCampo(respostas.nome_autor);
+    const whatsappValido = validarCampo(respostas.whatsapp);
     const nomeParceiroValido = validarCampo(respostas.nome_parceiro);
+    const statusValido = validarCampo(respostas.status_relacionamento);
+    const filhosValido = validarCampo(respostas.filhos);
 
-    if (!nomeAutorValido || !nomeParceiroValido) {
+    if (!nomeAutorValido || !whatsappValido || !nomeParceiroValido || !statusValido || !filhosValido) {
       return;
     }
 
     // Preparar dados para salvar
     const dadosContexto = {
       nome_autor: respostas.nome_autor.trim(),
+      whatsapp: respostas.whatsapp.trim(),
       nome_parceiro: respostas.nome_parceiro.trim(),
+      status_relacionamento: respostas.status_relacionamento,
+      filhos: respostas.filhos,
       historia_relacionamento: (respostas.historia_relacionamento || '').trim()
     };
 
@@ -113,6 +143,7 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
       pergunta={questao.pergunta}
       descricao={questao.descricao}
       tipo={questao.tipo}
+      opcoes={questao.opcoes}
       valor={respostas[questao.id] || ''}
       onChange={handleResposta}
       onNext={handleNext}
