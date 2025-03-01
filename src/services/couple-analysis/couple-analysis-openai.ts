@@ -7,78 +7,108 @@ const openai = new OpenAI({
 
 export async function analisarCasal(
   nomeAutor: string,
-  nomePretendente: string,
-  temperamentoPrincipalPretendente: string,
-  linguagemPrincipalPretendente: string,
-  temperamentoPrincipalAutor: string,
-  linguagemPrincipalAutor: string,
-  historiaRelacionamento: string
+  nomeParceiro: string,
+  temperamentoParceiro: string,
+  linguagemParceiro: string,
+  temperamentoAutor: string,
+  linguagemAutor: string,
+  historiaRelacionamento: string,
+  statusRelacionamento: string,
+  filhos: string
 ) {
   const prompt = `
-  Você é um especialista em relacionamentos e análise de compatibilidade, com anos de experiência ajudando casais a se entenderem melhor. 
-  Sua missão é revelar o potencial deste relacionamento, validando os sentimentos de ${nomeAutor} e fornecendo insights profundos e práticos 
-  para que ela possa fortalecer essa conexão de maneira realista.
+    ## Identidade  
+    Você é um **consultor especializado em relacionamentos**, com profundo conhecimento em **temperamentos e linguagens do amor**.  
+    Seu papel é ajudar ${nomeAutor} a entender as dinâmicas emocionais do seu relacionamento e oferecer uma **perspectiva clara e validada** sobre os desafios e oportunidades de conexão.  
 
-  ### Informações da Análise
+    ## Objetivo  
+    Seu objetivo é transformar as informações sobre o relacionamento de ${nomeAutor} e ${nomeParceiro} em uma **copy emocional e persuasiva** que mostre para ${nomeAutor} a importância de agir agora para fortalecer sua conexão amorosa.  
 
-  ${nomeAutor} é a pessoa que está realizando o teste e apresentou as seguintes características:
-  - Temperamento: ${temperamentoPrincipalAutor}
-  - Linguagem do Amor: ${linguagemPrincipalAutor}  
+    ## Informações do casal
+    - Temperamento do Parceiro = ${temperamentoParceiro}  
+    - Linguagem do Parceiro = ${linguagemParceiro}  
+    - Temperamento do Autor = ${temperamentoAutor}  
+    - Linguagem do Autor = ${linguagemAutor}  
+    - Status do Relacionamento = ${statusRelacionamento}
+    - Filhos = ${filhos}
 
-  ${nomePretendente} é a pessoa pela qual ${nomeAutor} está interessada e apresentou as seguintes características:
-  - Temperamento: ${temperamentoPrincipalPretendente}
-  - Linguagem do Amor: ${linguagemPrincipalPretendente}  
+    ## Análise da Dor  
+    Se ${historiaRelacionamento} estiver presente, leia atentamente e **identifique a maior dor emocional** que ${nomeAutor} expressou.  
+    - **Analise os padrões emocionais** da história dela para entender quais inseguranças estão mais evidentes.  
+    - **Destaque o impacto emocional** que essa situação tem sobre ${nomeAutor} e como isso a faz se sentir.  
+    - Se a história não estiver presente, foque nos desafios naturais da combinação de temperamento e linguagem do amor.  
+    - A copy deve ser **altamente personalizada**, fazendo ${nomeAutor} sentir que **essa análise foi feita exclusivamente para ela**.  
 
-  ${historiaRelacionamento ? `A história do relacionamento fornecida por ${nomeAutor} é essa: "${historiaRelacionamento}"` : ''}
+    ## **Estrutura da Copy**  
 
-  ### Diretrizes para a Análise
+    ### **1 - Abertura Impactante (Dor & Conflito)**  
+    - **Use a dor** identificada na seção "Análise da Dor" para **criar empatia imediata**.  
+    - Se **não** houver dor explícita, faça uma **pergunta instigante** baseada nas diferenças de temperamento e linguagem do amor, de modo que ${nomeAutor} se identifique.  
+    - O objetivo é que ela pense: **"Isso é exatamente o que estou passando!"**  
 
-  - Seja envolvente e direto, como se estivesse explicando pessoalmente para ${nomeAutor}.
-  - Use um tom próximo e acolhedor, como se estivesse dando um conselho personalizado para ela.
-  - Valide as experiências de ${nomeAutor}, mostrando que as percepções que ela já tem fazem sentido e explicando o que está por trás disso.
-  - Dê exemplos concretos e possíveis cenários que ${nomeAutor} pode ter vivido com ${nomePretendente}, para que a análise soe mais real e próxima da experiência dela.
-  - Traga insights práticos, para que ${nomeAutor} saiba o que pode fazer hoje mesmo para melhorar essa relação.
+    ### **2 - Explicação Baseada em Estudos e Metodologias**  
+    - **Analise os conflitos** entre ${nomeAutor} e ${nomeParceiro} com base em problemas comuns entre **temperamento e linguagem do amor** que cada um apresentadis em "Informações do casal".  
+    - Busque **especialistas renomados** (Gary Chapman, Tim LaHaye, John Gottman, Brene brow) para validar a explicação.  
+    - **Dê exemplos reais** para que ${nomeAutor} **se veja na situação** e sinta que **essa análise foi feita para ela**.  
 
-  ### Estrutura da Resposta (exatamente 4 parágrafos)
+      #### 🔹 **Exemplo prático com base no temperamento de ${nomeParceiro}:**  
+      - **Colérico**: Direto e racional, pode parecer frio em momentos emocionais.  
+        _"Você pode sentir que, quando tenta conversar sobre sentimentos, ele corta o assunto ou dá respostas curtas. Para ele, demonstrar carinho pode ser algo mais prático, como resolver um problema para você, ao invés de ter uma longa conversa emocional."_  
 
-  1. O Potencial Único do Relacionamento  
-    - Mostre como essa combinação específica de temperamentos pode criar uma conexão especial.  
-    - Valide algo que ${nomeAutor} possa já ter percebido sobre o relacionamento, usando a história fornecida.  
-    - Dê um exemplo prático: "Talvez você já tenha notado que, quando vocês discutem, ${nomePretendente} tende a..."  
+      - **Melancólico**: Se fecha e precisa de tempo para processar emoções.  
+        _"Talvez você já tenha sentido que ele se distancia quando está sobrecarregado. Isso não significa que ele não se importe, mas sim que ele precisa de tempo para organizar seus pensamentos antes de responder."_  
 
-  2. Como essa Conexão Pode se Fortalecer  
-    - Explique como as linguagens do amor de ${nomeAutor} e ${nomePretendente} se complementam ou entram em conflito.  
-    - Mostre situações do dia a dia onde esses padrões podem estar se manifestando.  
-    - Dê uma dica prática sobre como ${nomeAutor} pode se comunicar melhor com ${nomePretendente}.  
+      - **Sanguíneo**: Evita conversas sérias e busca sempre um clima leve.  
+        _"Se você tenta discutir um problema e ele muda de assunto ou faz uma piada, pode ser porque ele sente que conversas pesadas desgastam a relação. Mas isso não significa que ele não se importa."_  
 
-  3. Os Desafios Naturais da Relação  
-    - Valide se ${nomeAutor} já percebeu certos desafios e explique por que isso acontece.  
-    - Se possível, traga algo baseado na história do relacionamento.  
-    - Mostre que não é um problema insuperável e que, com algumas mudanças, a dinâmica pode melhorar.  
+      - **Fleumático**: Evita conflitos e fica em silêncio.  
+        _"Se ele parece passivo em discussões e nunca expressa claramente o que sente, pode ser porque ele teme o confronto e prefere evitar desgastes emocionais."_  
 
-  4. Um Novo Nível de Conexão  
-   - Indique que há um caminho claro para fortalecer essa relação e tornar a conexão mais profunda.  
-   - Mostre empatia e valide os sentimentos de ${nomeAutor}, reconhecendo que ela já tentou melhorar a relação, mas talvez não tenha encontrado as respostas certas ainda.  
-   - Reforce sutilmente que, embora o conhecimento sobre o relacionamento seja essencial, **aplicar isso da maneira certa pode ser desafiador sem um direcionamento claro**.  
-   - Use exemplos do dia a dia para que ${nomeAutor} se reconheça no texto, como situações em que ela tentou se aproximar de ${nomePretendente}, mas não obteve a resposta esperada.  
-   - Finalize com uma reflexão estratégica que gere curiosidade e leve ${nomeAutor} a perceber que **seguir um caminho validado pode ser a chave para transformar a relação**.  
+      #### 🔹 **Exemplo prático com base na linguagem do amor de ${nomeParceiro}:**  
+      📌 **Aqui vamos detalhar todas as cinco linguagens, tornando a explicação mais rica e envolvente.**  
 
-   Exemplo de tom a ser seguido:  
-   - "Existe um caminho para fortalecer essa relação e tornar a conexão entre vocês mais profunda e equilibrada. Mas, se fosse fácil, você já teria descoberto sozinha. A verdade é que, muitas vezes, mesmo com os melhores sentimentos, podemos acabar cometendo erros sem perceber. Você já tentou demonstrar amor de um jeito que parecia certo, mas ${nomePretendente} não reagiu como esperava? Ou talvez tenha feito de tudo para manter a relação forte, mas ainda assim sente que algo está fora do lugar?"
-   - "A boa notícia é que entender como ${nomePretendente} realmente pensa e sente já é um grande passo. Mas saber **o que fazer com essas informações** faz toda a diferença. Pequenos ajustes podem transformar completamente a dinâmica entre vocês, desde a forma como vocês conversam até a maneira como lidam com desafios juntos. **A questão é: você quer continuar tentando no escuro ou seguir um caminho que já foi testado e funciona?**"  
+      - **Toque Físico** 🫂  
+        _"Se ele se aproxima buscando abraços, carinho e contato físico constante, mas você não tem esse hábito, ele pode sentir que não está recebendo amor. Para ele, um abraço na hora certa pode significar mais do que qualquer palavra dita."_  
 
-  ### Instruções Importantes  
+      - **Atos de Serviço** 🏡  
+        _"Se ele demonstra carinho ajudando você nas tarefas do dia a dia ou tentando facilitar sua vida, mas você espera palavras doces e mensagens de carinho, pode sentir que ele não expressa amor da forma que gostaria. Para ele, mostrar amor significa ‘agir’ ao invés de ‘falar’."_  
 
-  - NÃO mencione números, porcentagens ou estatísticas na análise.  
-  - NÃO tente vender diretamente, apenas gere curiosidade sobre como aprofundar a conexão.
-  - NÃO fique chamando a autora do questionario pelo nome, utilize o "você."  
-  - Utilize um tom envolvente e empático, como se estivesse conversando diretamente com ${nomeAutor}.  
-  - Certifique-se de que a análise seja altamente personalizada, utilizando insights da história do casal sempre que relevante.  
-  - NÃO gere respostas genéricas ou vagas. A análise deve conter exemplos práticos e situações do dia a dia para que ${nomeAutor} se reconheça no texto.  
-  - NÃO inclua introduções ou explicações fora do formato especificado. 
+      - **Palavras de Afirmação** 💬  
+        _"Se ele precisa ouvir com frequência que você o ama, que ele é especial para você, mas você não costuma expressar isso verbalmente, ele pode começar a sentir que não é valorizado. Pequenos elogios e palavras de incentivo fazem toda a diferença para ele."_  
 
-  - IMPORTANTE: Retorne apenas um objeto JSON válido, sem formatação extra, exatamente nesta estrutura:   
-    {"titulo":"título aqui","subtitulo":"subtítulo aqui","paragrafos":["parágrafo 1","parágrafo 2","parágrafo 3","parágrafo 4"]}
+      - **Tempo de Qualidade** ⏳  
+        _"Se ele se frustra quando vocês passam tempo juntos, mas sem atenção total, pode ser porque, para ele, estar fisicamente presente não é suficiente. Ele precisa de momentos de conexão real, sem distrações."_  
+
+      - **Presentes** 🎁  
+        _"Se ele gosta de surpresas, pequenas lembranças ou gestos simbólicos e você não tem esse costume, pode parecer que você não se importa. Para ele, um presente inesperado não é sobre o valor material, mas sobre o significado por trás do gesto."_  
+
+      ➡ **O objetivo dessa seção é fazer com que ${nomeAutor} veja que os conflitos no relacionamento não vêm de falta de amor, mas sim de diferenças na forma de expressá-lo.**  
+
+    ### **3 - Por Que Isso Acontece (Validação & Autoridade)**  
+    - Explique que isso **não é culpa de ${nomeAutor}**, mas sim uma diferença natural na forma como cada pessoa sente e expressa o amor.  
+    - Mostre que ela **não está sozinha** e que esse tipo de conflito é mais comum do que se imagina.  
+
+    ### **4 - O Perigo de Não Mudar (Custo da Inação & Urgência)**  
+    - Mostre que **o distanciamento emocional não acontece de uma vez**, mas sim aos poucos, em pequenos momentos de frustração acumulados.  
+    - Faça ${nomeAutor} perceber que **cada dia sem mudança está criando uma barreira invisível**.  
+
+    ### **5 - Esperança e Possibilidade de Transformação**  
+    - Mostre que, **mesmo que a situação pareça complicada, existe um caminho para restaurar e fortalecer a conexão emocional**.  
+    - O tom aqui deve ser de **esperança e possibilidade, não de venda**.  
+    - Exemplo:  
+      _"Talvez, até agora, você tenha tentado se conectar com ${nomeParceiro} da melhor forma que pôde. Mas e se pequenas mudanças na forma como vocês se comunicam pudessem transformar completamente essa dinâmica? O primeiro passo para qualquer transformação começa com o entendimento, e você já está muito mais perto do que imagina."_  
+    - O objetivo é **finalizar com uma reflexão**, preparando ${nomeAutor} para a próxima seção da página aonde vamos ter o pitch de vendas.  
+
+    ## **IMPORTANTE**  
+    - **NÃO** use números, estatísticas ou porcentagens.  
+    - **NÃO** tente vender diretamente, apenas gere curiosidade sobre como aprofundar a conexão.  
+    - **NÃO** inclua um call-to-action explícito. O texto deve levar naturalmente à decisão.  
+    - **Use parágrafos curtos e diretos**, enfatizando o sentimento de identificação e urgência.
+    - Obrigatório respontas com no mínimo 400 palavras.
+
+    ## Formato de Saída  
+    Retorne um **JSON válido** no seguinte formato:
+    {"titulo":"título aqui","subtitulo":"subtítulo aqui","paragrafos":["parágrafo 1","parágrafo 2","parágrafo 3","parágrafo 4","parágrafo 5"]}
   `;
 
   try {
@@ -88,9 +118,9 @@ export async function analisarCasal(
         content: `Você é um assistente que SEMPRE retorna JSON válido. 
         Siga estas regras ESTRITAMENTE:
         1. Retorne um JSON com exatamente 3 chaves: "titulo", "subtitulo", "paragrafos"
-        2. "paragrafos" deve ser um array com EXATAMENTE 4 strings
+        2. "paragrafos" deve ser um array com EXATAMENTE 5 strings
         3. Não use caracteres especiais que possam quebrar o JSON
-        4. Mantenha o texto dentro das regras anteriores de análise de casal`
+        4. Mantenha o texto dentro das regras anteriores de análise de casal.`
       },
       { 
         role: "user", 
@@ -98,7 +128,7 @@ export async function analisarCasal(
       }],
       model: "gpt-4o-mini-2024-07-18",
       temperature: 0.3,
-      max_tokens: 1000,
+      max_tokens: 2000,
       response_format: { type: "json_object" }
     });
 
@@ -114,8 +144,8 @@ export async function analisarCasal(
           throw new Error('Estrutura de JSON inválida');
         }
         
-        if (parsed.paragrafos.length !== 4) {
-          throw new Error('Deve haver exatamente 4 parágrafos');
+        if (parsed.paragrafos.length !== 5) {
+          throw new Error('Deve haver exatamente 5 parágrafos');
         }
         
         return parsed;
@@ -130,7 +160,8 @@ export async function analisarCasal(
             "Não foi possível gerar a análise detalhada.",
             "Pedimos desculpas pelo inconveniente.",
             "Por favor, tente novamente mais tarde.",
-            "Nosso time está trabalhando para resolver este problema."
+            "Nosso time está trabalhando para resolver este problema.",
+            "Aguarde atualizações em breve."
           ]
         };
       }
@@ -146,7 +177,8 @@ export async function analisarCasal(
         "Desculpe, não foi possível gerar a análise neste momento.",
         "Pedimos desculpas pelo inconveniente.",
         "Por favor, tente novamente mais tarde.",
-        "Nosso time está trabalhando para resolver este problema."
+        "Nosso time está trabalhando para resolver este problema.",
+        "Aguarde atualizações em breve."
       ]
     };
   }
