@@ -5,81 +5,84 @@ interface ResultadoAnalise {
 }
 
 export async function analisarCasalGroq(
-  nomeAutor: string, 
-  nomeParceiro: string, 
+  nomeAutor: string,
+  nomeParceiro: string,
   temperamentoParceiro: string,
   linguagemParceiro: string,
   temperamentoAutor: string,
   linguagemAutor: string,
-  historiaRelacionamento: string
+  historiaRelacionamento: string,
+  statusRelacionamento: string,
+  filhos: string
 ): Promise<ResultadoAnalise> {
   try {
     const prompt = `
-    Você é um especialista em relacionamentos e análise de compatibilidade, com anos de experiência ajudando casais a se entenderem melhor. 
-    Sua missão é revelar o potencial deste relacionamento, validando os sentimentos de ${nomeAutor} e fornecendo insights profundos e práticos 
-    para que ela possa fortalecer essa conexão de maneira realista.
+    ## Identidade  
+    Você é um(a) especialista em copywriting persuasivo e vendas de produtos digitais, **combinando empatia e acolhimento ao abordar questões emocionais**, com experiência em criar narrativas envolventes que levam o leitor a uma decisão de compra natural e sem resistência.
 
-    ### Informações da Análise
+    ## Objetivo  
+      Seu objetivo é transformar as informações sobre o relacionamento de ${nomeAutor} e ${nomeParceiro} em uma **copy emocional e persuasiva**, mostrando para ${nomeAutor} a importância de agir agora para fortalecer sua conexão amorosa.
 
-    ${nomeAutor} é a pessoa que está realizando o teste e apresentou as seguintes características:
-    - Temperamento: ${temperamentoAutor}
-    - Linguagem do Amor: ${linguagemAutor}  
+    ## Informações do casal
+      - Temperamento do Parceiro = ${temperamentoParceiro}  
+      - Linguagem do Parceiro = ${linguagemParceiro}  
+      - Temperamento do Autor = ${temperamentoAutor}  
+      - Linguagem do Autor = ${linguagemAutor}  
+      - Status do Relacionamento = ${statusRelacionamento}
+      - Filhos = ${filhos}
 
-    ${nomeParceiro} é a pessoa pela qual ${nomeAutor} está interessada e apresentou as seguintes características:
-    - Temperamento: ${temperamentoParceiro}
-    - Linguagem do Amor: ${linguagemParceiro}  
+    ## Análise da Dor  
+      - Se ${historiaRelacionamento} estiver presente, leia atentamente e identifique a **maior dor emocional** que ${nomeAutor} expressou. Use essa dor que ela mencionou para criar identificação imediata.  
+      - Se **não** houver história, foque nos desafios naturais da combinação de temperamentos e linguagem do amor, trazendo **exemplos de situações rotineiras** que podem ilustrar as diferenças.  
+      - A copy deve ser construída de forma que ${nomeAutor} sinta que **essa análise foi feita exclusivamente para ela** e não é algo genérico.
 
-    ${historiaRelacionamento ? `A história do relacionamento fornecida por ${nomeAutor} é essa: "${historiaRelacionamento}"` : ''}
+    ## Análise de Temperamentos  
+      - Analise a **combinação específica** dos temperamentos de ${nomeAutor} (${temperamentoAutor}) e ${nomeParceiro} (${temperamentoParceiro}).  
+      - Identifique os **principais pontos de atrito** e também os **pontos de complementaridade**.  
+      - Foque em exemplos práticos do dia a dia que ilustrem essas dinâmicas.
 
-    ### Diretrizes para a Análise
+    ## Estrutura da Copy  
 
-    - Seja envolvente e direto, como se estivesse explicando pessoalmente para ${nomeAutor}.
-    - Use um tom próximo e acolhedor, como se estivesse dando um conselho personalizado para ela.
-    - Valide as experiências de ${nomeAutor}, mostrando que as percepções que ela já tem fazem sentido e explicando o que está por trás disso.
-    - Dê exemplos concretos e possíveis cenários que ${nomeAutor} pode ter vivido com ${nomeParceiro}, para que a análise soe mais real e próxima da experiência dela.
-    - Traga insights práticos, para que ${nomeAutor} saiba o que pode fazer hoje mesmo para melhorar essa relação.
+    ### 1 - Abertura Impactante (Dor & Conflito)  
+      - **Use a dor** que você identificou anteriormente na "Análise da Dor" para **criar uma empatia imediata**.
+      - Se **não** houver dor identificada, faça uma **pergunta ou provocação genérica** baseada nas diferenças de temperamento e linguagem do amor, de modo que ${nomeAutor} se identifique.  
+      - O objetivo é que ela pense: **"Isso é exatamente o que estou passando!"**
 
-    ### Estrutura da Resposta (exatamente 4 parágrafos)
+    ### 2 - Por Que Isso Acontece (Validação & Autoridade)  
+      - Explique de forma **simples e direta** por que essas diferenças de temperamento e linguagem do amor causam esses desafios.  
+      - Valide os sentimentos de ${nomeAutor}, mostrando que é **natural** ter essas dificuldades.  
+      - Demonstre **autoridade técnica** ao explicar os conceitos, mas mantenha uma linguagem acessível.
 
-    1. O Potencial Único do Relacionamento  
-      - Mostre como essa combinação específica de temperamentos pode criar uma conexão especial.  
-      - Valide algo que ${nomeAutor} possa já ter percebido sobre o relacionamento, usando a história fornecida.  
-      - Dê um exemplo prático: "Talvez você já tenha notado que, quando vocês discutem, ${nomeParceiro} tende a..."  
+    ### 3 - O Perigo de Não Mudar (Urgência & Consequências)  
+      - Descreva o que pode acontecer se esse padrão continuar: **frustração crescente, desgaste emocional, distanciamento**.  
+      - Use um tom de **urgência realista**, sem ser alarmista.  
+      - Foque nas **consequências emocionais** e no impacto no relacionamento.
 
-    2. Como essa Conexão Pode se Fortalecer  
-      - Explique como as linguagens do amor de ${nomeAutor} e ${nomeParceiro} se complementam ou entram em conflito.  
-      - Mostre situações do dia a dia onde esses padrões podem estar se manifestando.  
-      - Dê uma dica prática sobre como ${nomeAutor} pode se comunicar melhor com ${nomeParceiro}.  
+    ### 4 - A Solução Comprovada (Esperança & Possibilidade)  
+      - Mostre que é possível transformar essas diferenças em **forças do relacionamento**.  
+      - Dê **exemplos práticos** de como a compreensão dos temperamentos pode melhorar a comunicação.  
+      - Crie uma **visão positiva** do futuro após essa transformação.
 
-    3. Os Desafios Naturais da Relação  
-      - Valide se ${nomeAutor} já percebeu certos desafios e explique por que isso acontece.  
-      - Se possível, traga algo baseado na história do relacionamento.  
-      - Mostre que não é um problema insuperável e que, com algumas mudanças, a dinâmica pode melhorar.  
+    ### 5 - A Escolha Final (Decisão & Ação)  
+      - Reforce que ${nomeAutor} está diante de uma **escolha importante**.  
+      - Contraste o **custo emocional** de não agir com os **benefícios** de buscar essa transformação.  
+      - Termine com uma mensagem de **esperança e possibilidade**.
 
-    4. Um Novo Nível de Conexão  
-     - Indique que há um caminho claro para fortalecer essa relação e tornar a conexão mais profunda.  
-     - Mostre empatia e valide os sentimentos de ${nomeAutor}, reconhecendo que ela já tentou melhorar a relação, mas talvez não tenha encontrado as respostas certas ainda.  
-     - Reforce sutilmente que, embora o conhecimento sobre o relacionamento seja essencial, **aplicar isso da maneira certa pode ser desafiador sem um direcionamento claro**.  
-     - Use exemplos do dia a dia para que ${nomeAutor} se reconheça no texto, como situações em que ela tentou se aproximar de ${nomeParceiro}, mas não obteve a resposta esperada.  
-     - Finalize com uma reflexão estratégica que gere curiosidade e leve ${nomeAutor} a perceber que **seguir um caminho validado pode ser a chave para transformar a relação**.  
+    ## Diretrizes Gerais  
+      - Use uma linguagem **acolhedora e empática**, evitando um tom professoral ou crítico.  
+      - Mantenha um **equilíbrio** entre validar as dificuldades e mostrar possibilidades de mudança.  
+      - **NÃO** tente vender diretamente, apenas gere curiosidade sobre como aprofundar a conexão.  
+      - **NÃO** inclua um call-to-action explícito. O texto deve levar naturalmente à decisão.  
+      - **Use parágrafos curtos e diretos**, enfatizando o sentimento de identificação e urgência.
+      - Obrigatório respontas com no mínimo 400 palavras.
 
-     Exemplo de tom a ser seguido:  
-     - "Existe um caminho para fortalecer essa relação e tornar a conexão entre vocês mais profunda e equilibrada. Mas, se fosse fácil, você já teria descoberto sozinha. Mas saiba que o que você descobriu até aqui é apenas o início de uma jornada. A verdade é que, muitas vezes, mesmo com os melhores sentimentos, podemos acabar cometendo erros sem perceber. Você já tentou demonstrar amor de um jeito que parecia certo, mas ${nomeParceiro} não reagiu como esperava? Ou talvez tenha feito de tudo para manter a relação forte, mas ainda assim sente que algo está fora do lugar?"
-     - "A boa notícia é que entender como ${nomeParceiro} realmente pensa e sente já é um grande passo. Mas é apenas o início da mudança que você deseja no seu relacionamento. A verdadeira conquista é saber **o que fazer com essas informações**. É isso que fará toda a diferença. Pequenos ajustes podem transformar completamente a dinâmica entre vocês, desde a forma como vocês conversam até a maneira como lidam com desafios juntos. **A questão é: você quer continuar tentando no escuro ou seguir um caminho que já foi testado e funciona?**"  
-
-    ### Instruções Importantes  
-
-    - NÃO mencione números, porcentagens ou estatísticas na análise.  
-    - NÃO tente vender diretamente, apenas gere curiosidade sobre como aprofundar a conexão.
-    - NÃO fique chamando a autora do questionario pelo nome, utilize o "você."  
-    - Utilize um tom envolvente e empático, como se estivesse conversando diretamente com ${nomeAutor}.  
-    - Certifique-se de que a análise seja altamente personalizada, utilizando insights da história do casal sempre que relevante.  
-    - NÃO gere respostas genéricas ou vagas. A análise deve conter exemplos práticos e situações do dia a dia para que ${nomeAutor} se reconheça no texto.  
-    - NÃO inclua introduções ou explicações fora do formato especificado. 
-
-    - IMPORTANTE: Retorne apenas um objeto JSON válido, sem formatação extra, exatamente nesta estrutura:   
-      {"titulo":"título aqui","subtitulo":"subtítulo aqui","paragrafos":["parágrafo 1","parágrafo 2","parágrafo 3","parágrafo 4"]}
-    `;
+    ## Formato de Saída  
+    Retorne um **JSON válido** no seguinte formato:
+    {
+      "titulo": "Título impactante que gere identificação",
+      "subtitulo": "Subtítulo que reforce a dor e sugira possibilidade de mudança",
+      "paragrafos": ["Parágrafo 1", "Parágrafo 2", "Parágrafo 3", "Parágrafo 4", "Parágrafo 5"]
+    }`;
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -96,7 +99,7 @@ export async function analisarCasalGroq(
             content: `Você é um assistente que SEMPRE retorna JSON válido. 
             Siga estas regras ESTRITAMENTE:
             1. Retorne um JSON com exatamente 3 chaves: "titulo", "subtitulo", "paragrafos"
-            2. "paragrafos" deve ser um array com EXATAMENTE 4 strings
+            2. "paragrafos" deve ser um array com EXATAMENTE 5 strings
             3. Não use caracteres especiais que possam quebrar o JSON
             4. Mantenha o texto dentro das regras anteriores de análise de casal`
           },
@@ -121,11 +124,11 @@ export async function analisarCasalGroq(
         
         // Validações extras
         if (!parsed.titulo || !parsed.subtitulo || !Array.isArray(parsed.paragrafos)) {
-          throw new Error('Estrutura de JSON inválida');
+          throw new Error('Formato de resposta inválido');
         }
         
-        if (parsed.paragrafos.length !== 4) {
-          throw new Error('Deve haver exatamente 4 parágrafos');
+        if (parsed.paragrafos.length !== 5) {
+          throw new Error('Deve haver exatamente 5 parágrafos');
         }
         
         return parsed;
@@ -140,7 +143,8 @@ export async function analisarCasalGroq(
             "Não foi possível gerar a análise detalhada.",
             "Pedimos desculpas pelo inconveniente.",
             "Por favor, tente novamente mais tarde.",
-            "Nosso time está trabalhando para resolver este problema."
+            "Nosso time está trabalhando para resolver este problema.",
+            "Aguarde mais informações."
           ]
         };
       }
@@ -158,7 +162,8 @@ export async function analisarCasalGroq(
         "Desculpe, não foi possível gerar a análise neste momento.",
         "Pedimos desculpas pelo inconveniente.",
         "Por favor, tente novamente mais tarde.",
-        "Nosso time está trabalhando para resolver este problema."
+        "Nosso time está trabalhando para resolver este problema.",
+        "Aguarde mais informações."
       ]
     };
   }
