@@ -27,9 +27,9 @@ export function ApresentacaoGuia() {
             📢 Apresentamos
             <span className="w-8 h-0.5 bg-purple-600"></span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-indigo-800 mb-6 leading-tight">
+          {/* <h2 className="text-3xl md:text-4xl font-bold text-indigo-800 mb-6 leading-tight">
             O Mapa da Conexão Emocional
-          </h2>
+          </h2> */}
           <Image src="/cover3d-guia.png" alt="O Guia Completo da Conexão Emocional" width={800} height={600} className="mx-auto" />
           <p className="text-xl md:text-2xl text-gray-700 italic max-w-2xl mx-auto">
           O único método baseado na ciência dos temperamentos e das linguagens do amor que mostra exatamente como criar um vínculo emocional forte e duradouro com ele.
@@ -40,22 +40,19 @@ export function ApresentacaoGuia() {
         {/* 2️⃣ Parágrafos Introdutórios */}
         <div className="space-y-6 text-base md:text-lg text-gray-700 leading-relaxed bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-lg">
         <p className="text-xl md:text-2xl text-gray-700 italic max-w-2xl mx-auto text-center">
-        💡 O que realmente faz um homem se apaixonar profundamente?
-        </p>
+        💡 O que realmente faz um homem se sentir conectado e presente no relacionamento?</p>
         </div>
         <div className="text-left">
           <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-            O que faz um homem querer estar ao seu lado não é apenas atração, e sim a forma como ele se sente emocionalmente conectado a você.
+          Muitas mulheres acreditam que o problema no relacionamento está na rotina, na falta de tempo ou até no jeito do parceiro. Mas a verdade é que o que mantém um homem emocionalmente envolvido não é apenas a atração ou o tempo juntos, e sim a forma como ele se sente emocionalmente seguro e compreendido ao seu lado.
           </p>
           <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-          Muitas mulheres acreditam que a atração inicial é o suficiente para manter um relacionamento, mas a verdade é que a chave para um vínculo inquebrável está na forma como ele se sente emocionalmente conectado a você.
+          Se ele parece distante, se os diálogos já não fluem ou se a conexão que vocês tinham parece ter esfriado, não significa que o amor acabou – significa que vocês perderam a sintonia.</p>
+          <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
+          Agora que você entende como ele pensa, sente e processa emoções, chegou a hora de transformar esse conhecimento em ações estratégicas e eficazes, que fazem com que ele naturalmente se aproxime de você sem resistência e sem esforço forçado.
           </p>
           <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-          Agora que você já entende como ele pensa, sente e expressa o amor, chegou a hora de transformar esse conhecimento em ações estratégicas que realmente funcionam.
-          </p>
-          <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-          🗺️ O Mapa da Conexão Emocional é um passo a passo prático que vai te mostrar exatamente o que fazer, como agir e como se comunicar para fortalecer essa conexão e fazer com que ele veja você como única e insubstituível.
-          </p>
+          O Mapa da Conexão Emocional é um guia prático e transformador que ensina como restaurar e fortalecer a conexão no seu relacionamento – do jeito certo.          </p>
         </div>
 
         {/* 3️⃣ O Que Você Vai Aprender */}
@@ -65,11 +62,11 @@ export function ApresentacaoGuia() {
           </h3>
           <ul className="space-y-4 text-base md:text-lg text-gray-700">
             {[
-              "Como os temperamentos influenciam o comportamento dele e o que isso significa para o relacionamento de vocês.",
-              "Como identificar os gatilhos emocionais que fazem ele se sentir seguro, conectado e verdadeiramente apaixonado.",
-              "O que dizer e como agir para que ele veja você como alguém essencial e única na vida dele.",
-              "Os erros mais comuns que afastam um homem de cada temperamento e como evitá-los.",
-              "Como usar a Linguagem do Amor dele para criar um ciclo de conexão contínuo e manter o interesse sempre vivo."
+              "Como os temperamentos influenciam o comportamento dele e como usá-los a favor da relação.",
+              "Os gatilhos emocionais que fazem um homem se sentir seguro, conectado e verdadeiramente presente.",
+              "Como evitar os erros invisíveis que minam a relação e fazem ele se afastar sem que você perceba.",
+              "A maneira certa de se comunicar para que ele realmente te escute, sem defensivas ou bloqueios emocionais.",
+              "Como criar um vínculo emocional contínuo usando a Linguagem do Amor dele – sem precisar mudar quem você é."
             ]
             .map((item, index) => (
               <li key={index} className="flex items-start group">
@@ -89,11 +86,11 @@ export function ApresentacaoGuia() {
           </h3>
           <ul className="space-y-4 text-base md:text-lg text-green-800">
             {[
-              "Baseado em estudos comprovados sobre Temperamentos e Linguagens do Amor, combinando ciência e prática.",
-              "Método estruturado com passo a passo claro e fácil de aplicar, sem precisar mudar quem você é.",
-              "Resultados que podem ser sentidos em poucos dias ao aplicar as estratégias certas para o temperamento dele.",
-              "Não é sobre manipulação ou joguinhos, mas sim sobre criar uma conexão autêntica e verdadeira.",
-              "A abordagem certa para cada tipo de homem, respeitando sua personalidade e a forma como ele se conecta emocionalmente."
+              "Baseado em estudos científicos sobre Temperamentos e Linguagens do Amor, sem achismos ou joguinhos.",
+              "Passo a passo claro e direto ao ponto, fácil de aplicar no dia a dia.",
+              "Resultados rápidos: pequenas mudanças que já fazem ele perceber a diferença no relacionamento.",
+              "Nada de manipulação ou joguinhos: apenas um caminho autêntico para fortalecer a conexão emocional.",
+              "A abordagem certa para cada tipo de homem, respeitando a personalidade dele e o que realmente o faz se sentir envolvido na relação."
             ]
             .map((item, index) => (
               <li key={index} className="flex items-start group">
@@ -108,15 +105,13 @@ export function ApresentacaoGuia() {
 
         {/* 5️⃣ Chamada para Ação (Comentada) */}
         <div className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl p-8 shadow-2xl hover:scale-[1.02] transition-transform">
-          <div className="flex justify-center items-center mb-4 space-x-3">
-            <span className="text-3xl">📥</span>
+          <div className="flex justify-center items-center mb-4 space-x-3">            
             <h3 className="text-2xl md:text-3xl font-bold">
-              Acesso imediato!
+            O amor por si só não sustenta um relacionamento, a conexão emocional sim.
             </h3>
           </div>
           <p className="text-base md:text-lg mb-6 max-w-2xl mx-auto">
-            Assim que você garantir seu acesso, já poderá começar a aplicar tudo e ver mudanças reais no comportamento dele.
-          </p>
+          Com as estratégias certas, você pode fazer com que ele se sinta mais próximo, mais presente e mais envolvido emocionalmente do que nunca.</p>
           {/* <button className="bg-white text-purple-700 font-bold py-3 px-8 rounded-full text-lg hover:bg-purple-100 transition-colors">
             Garantir Meu Acesso Agora
           </button> */}
