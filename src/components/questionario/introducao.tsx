@@ -16,7 +16,7 @@ export function Introducao({ onStart }: IntroducaoProps) {
               Bem-vinda à Análise de Conexão Emocional
             </h1>
             <p className="text-xl text-gray-600">
-              Para obter os melhores resultados, por favor, leia as recomendações abaixo
+              Este teste foi desenvolvido com base científica para que mulheres como você consiga entender melhor seu parceiro. E para obter os melhores resultados, por favor, siga as recomendações abaixo
             </p>
           </div>
 
@@ -41,7 +41,7 @@ export function Introducao({ onStart }: IntroducaoProps) {
               </div>
               <p className="text-gray-600">
                 Encontre um local tranquilo e silencioso. Sua concentração é essencial 
-                para respostas mais precisas e resultados mais acurados.
+                para respostas mais precisas e resultados mais certeiros.
               </p>
             </div>
 
@@ -52,7 +52,7 @@ export function Introducao({ onStart }: IntroducaoProps) {
                 <h2 className="text-xl font-semibold text-gray-900">Reserve Tempo</h2>
               </div>
               <p className="text-gray-600">
-                O questionário leva cerca de 05 minutos. Dedique esse tempo sem 
+                O questionário leva cerca de 5 minutos. Dedique esse tempo sem 
                 interrupções para uma experiência mais proveitosa.
               </p>
             </div>
@@ -64,7 +64,7 @@ export function Introducao({ onStart }: IntroducaoProps) {
                 <h2 className="text-xl font-semibold text-gray-900">Evite Distrações</h2>
               </div>
               <p className="text-gray-600">
-                Coloque o celular no silencioso e feche outras abas do navegador. 
+                Coloque o celular em modo <strong>Não Perturbe</strong> e se concentre totalmente em suas respostas. 
                 Cada resposta é importante para sua análise final.
               </p>
             </div>
