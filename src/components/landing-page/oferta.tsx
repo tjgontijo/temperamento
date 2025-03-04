@@ -78,7 +78,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
               </ul>
 
               <div className="text-center mb-6">
-                <span className="text-6xl font-bold text-purple-700">R$ 10</span>
+                <span className="text-6xl font-bold text-purple-700">R$19</span>
               </div>
 
               <a 
@@ -156,10 +156,10 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
 
               <div className="text-center mb-6">
                 <div className="inline-block relative">
-                  <span className="text-6xl font-black text-purple-700">R$37</span>
+                  <span className="text-6xl font-black text-purple-700">R$29</span>
                 </div>
                 <p className="text-xs text-gray-600 mt-2 italic">
-                  Aproveite antes que volte para R$97
+                  Aproveite antes que volte para R$49
                 </p>
               </div>
 
