@@ -24,7 +24,7 @@ const questoesContexto: Array<{
     {
       "id": "nome_parceiro",
       "tipo": "input",
-      "pergunta": "Qual é o primeiro nome da pessoa que você quer analisar?"
+      "pergunta": "Qual é o primeiro nome do seu parceiro?"
     },
     {
       "id": "status_relacionamento",
@@ -54,7 +54,7 @@ const questoesContexto: Array<{
     {
       "id": "whatsapp",
       "tipo": "input_whatsapp",
-      "pergunta": "Quer receber seu resultado via WhatsApp?",
+      "pergunta": "Quer receber seu resultado também via WhatsApp?",
       "descricao": "Para sua comodidade, também podemos enviar o resultado via Whatsapp"
     }    
 ];
