@@ -20,7 +20,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
               <div className="mt-2 h-1 w-24 mx-auto bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
             </h2>
 
-            <div className="max-w-3xl mx-auto">
+            {/* <div className="max-w-3xl mx-auto">
               <p className="text-lg md:text-xl text-gray-700 leading-relaxed px-6 py-8 bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm border border-purple-100/20">
                 Agora você tem acesso a um método validado, baseado em ciência e aplicado por milhares de mulheres que transformaram seus relacionamentos. Se você pudesse acelerar esse processo e evitar anos de tentativas frustradas, quanto isso valeria para você?
               </p>
@@ -28,7 +28,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
               <h3 className="text-4xl font-semibold text-purple-800 mt-16 mb-6">
                 Escolha a Melhor Oferta para Você
               </h3>
-            </div>
+            </div> */}
           </div>
         </div>
 
