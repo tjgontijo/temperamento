@@ -145,9 +145,9 @@ export default function Resultado() {
       <ResultadosIniciais nome_parceiro={resultado.informacoes.nome_parceiro} analise={resultado.analise || { titulo: 'Análise Personalizada', subtitulo: 'Compreendendo Sua Dinâmica de Relacionamento', paragrafos: ['Não foi possível gerar a análise completa.'] }} />
       <Transition nome_parceiro={resultado.informacoes.nome_parceiro} />
       <ApresentacaoGuia />
-      <Oferta nome_parceiro={resultado.informacoes.nome_parceiro} />
-      <FAQ />
+      <Oferta nome_parceiro={resultado.informacoes.nome_parceiro} />      
       <Urgencia nome_parceiro={resultado.informacoes.nome_parceiro} />
+      <FAQ />
     </div>
   );
 }
