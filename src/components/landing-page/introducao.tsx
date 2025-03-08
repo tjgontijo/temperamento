@@ -44,9 +44,9 @@ export function Introducao({ nome_parceiro }: IntroducaoProps) {
         {/* 3️⃣ Prova Social e Dados de Validação */}
         <div className="grid grid-cols-3 gap-4 md:gap-6 mt-8">
           {[
-            { number: "96%", text: "Precisão Comportamental" },
-            { number: "15mil+", text: "Análises Realizadas" },
-            { number: "89%", text: "Sucesso em 30 dias" },
+            { number: "93%", text: "Precisão Comportamental" },
+            { number: "37mil+", text: "Análises Realizadas" },
+            { number: "89%", text: "Melhora em 30 dias" },
           ].map((stat, index) => (
             <div 
               key={index} 
@@ -66,7 +66,7 @@ export function Introducao({ nome_parceiro }: IntroducaoProps) {
         {/* 4️⃣ Gatilho de Curiosidade */}
         <div className="text-center mt-8">
           <p className="text-lg md:text-xl font-semibold text-purple-700 italic">
-          Agora que temos as respostas do teste, conseguimos revelar os padrões emocionais de THiago – e como eles impactam diretamente sua relação com ele. Você pode ter notado que, em alguns momentos, ele age de forma distante ou não expressa sentimentos como você gostaria. Agora você vai entender o porquê.
+          Agora que temos as respostas do teste, conseguimos revelar os padrões emocionais de {nome_parceiro} – e como eles impactam diretamente sua relação com ele. Você pode ter notado que, em alguns momentos, ele age de forma distante ou não expressa sentimentos como você gostaria. Agora você vai entender o porquê.
           </p>
         </div>
       </div>
