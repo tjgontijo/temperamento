@@ -46,7 +46,7 @@ export function Transition({ nome_parceiro }: TransitionProps) {
           <h3 className="text-2xl font-semibold text-purple-700 mb-4 text-center">
             Agora, você tem duas escolhas
           </h3>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-4 text-center">
             <div className="bg-red-50 p-4 rounded-lg">
               <h4 className="font-bold text-red-700 mb-2">Caminho 1: Tentar Sozinha</h4>
               <p className="text-sm text-red-600">
@@ -67,7 +67,7 @@ export function Transition({ nome_parceiro }: TransitionProps) {
           <p className="text-xl md:text-2xl font-bold text-purple-800 italic">
             E sabe qual é a boa notícia? 
             <br />
-            Esse método já existe! E pode mudar completamente a dinâmica entre vocês.
+            Esse método já existe! E é capaz de mudar completamente a dinâmica entre vocês.
           </p>
         </div>
       </div>
