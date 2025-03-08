@@ -27,9 +27,6 @@ export function ApresentacaoGuia() {
             📢 Apresentamos
             <span className="w-8 h-0.5 bg-purple-600"></span>
           </div>
-          {/* <h2 className="text-3xl md:text-4xl font-bold text-indigo-800 mb-6 leading-tight">
-            O Mapa da Conexão Emocional
-          </h2> */}
           <Image src="/cover3d-guia.png" alt="O Guia Completo da Conexão Emocional" width={800} height={600} className="mx-auto" />
           <p className="text-xl md:text-2xl text-gray-700 italic max-w-2xl mx-auto">
           O único método baseado na ciência dos temperamentos e das linguagens do amor que mostra exatamente como criar um vínculo emocional forte e duradouro com ele.
@@ -39,7 +36,7 @@ export function ApresentacaoGuia() {
 
         {/* 2️⃣ Parágrafos Introdutórios */}
         <div className="space-y-6 text-base md:text-lg text-gray-700 leading-relaxed bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-lg">
-        <p className="text-xl md:text-2xl text-gray-700 italic max-w-2xl mx-auto text-center">
+        <p className="text-xl md:text-2xl text-gray-800 italic max-w-2xl mx-auto text-center">
         💡 O que realmente faz um homem se sentir conectado e presente no relacionamento?</p>
         </div>
         <div className="text-left">
@@ -49,15 +46,15 @@ export function ApresentacaoGuia() {
           <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
           Se ele parece distante, se os diálogos já não fluem ou se a conexão que vocês tinham parece ter esfriado, não significa que o amor acabou – significa que vocês perderam a sintonia.</p>
           <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-          Agora que você entende como ele pensa, sente e processa emoções, chegou a hora de transformar esse conhecimento em ações estratégicas e eficazes, que fazem com que ele naturalmente se aproxime de você sem resistência e sem esforço forçado.
+          Chegou a hora de transformar esse conhecimento em ações estratégicas e eficazes, que fazem com que ele naturalmente se aproxime de você sem resistência e sem esforço forçado.
           </p>
           <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
-          O Mapa da Conexão Emocional é um guia prático e transformador que ensina como restaurar e fortalecer a conexão no seu relacionamento – do jeito certo.          </p>
+          O <strong>Mapa da Conexão Emocional</strong> é um guia prático e transformador que ensina como fortalecer e até restaurar o seu relacionamento, de forma definitiva.          </p>
         </div>
 
         {/* 3️⃣ O Que Você Vai Aprender */}
         <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border-l-4 border-purple-600">
-          <h3 className="text-2xl font-semibold text-purple-700 mb-6 text-center">
+          <h3 className="text-2xl font-semibold text-purple-700 mb-6 text-left">
             O que você vai aprender:
           </h3>
           <ul className="space-y-4 text-base md:text-lg text-gray-700">
@@ -81,7 +78,7 @@ export function ApresentacaoGuia() {
 
         {/* 4️⃣ Por Que Este Guia Funciona */}
         <div className="bg-green-50 rounded-xl p-6 md:p-8 border-l-4 border-green-600">
-          <h3 className="text-2xl font-semibold text-green-700 mb-6 text-center">
+          <h3 className="text-2xl font-semibold text-green-700 mb-6 text-left">
             Por que este guia funciona?
           </h3>
           <ul className="space-y-4 text-base md:text-lg text-green-800">
@@ -103,19 +100,19 @@ export function ApresentacaoGuia() {
           </ul>
         </div>
 
-        {/* 5️⃣ Chamada para Ação (Comentada) */}
-        <div className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl p-8 shadow-2xl hover:scale-[1.02] transition-transform">
+        5️⃣ Chamada para Ação (Comentada)
+        {/* <div className="text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl p-8 shadow-2xl hover:scale-[1.02] transition-transform">
           <div className="flex justify-center items-center mb-4 space-x-3">            
             <h3 className="text-2xl md:text-3xl font-bold">
             O amor por si só não sustenta um relacionamento, a conexão emocional sim.
             </h3>
           </div>
           <p className="text-base md:text-lg mb-6 max-w-2xl mx-auto">
-          Com as estratégias certas, você pode fazer com que ele se sinta mais próximo, mais presente e mais envolvido emocionalmente do que nunca.</p>
-          {/* <button className="bg-white text-purple-700 font-bold py-3 px-8 rounded-full text-lg hover:bg-purple-100 transition-colors">
+          Com as estratégias ensinadas em nosso Guia, você pode fazer com que ele se fique mais próximo, mais presente e mais envolvido emocionalmente do que nunca.</p>
+          <button className="bg-white text-purple-700 font-bold py-3 px-8 rounded-full text-lg hover:bg-purple-100 transition-colors">
             Garantir Meu Acesso Agora
-          </button> */}
-        </div>
+          </button>
+        </div> */}
       </div>
     </div>
   );
