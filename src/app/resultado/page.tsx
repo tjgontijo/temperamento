@@ -50,45 +50,31 @@ export default function Resultado() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Efeito para lidar com a navegação
   useEffect(() => {
     // Define o título da página
     document.title = "Resultado da Análise - Decifrando Corações";
 
-    // Adiciona uma entrada artificial no histórico
-    window.history.pushState({ page: 'resultado' }, '', window.location.href);
+    // Previne navegação inicial
+    window.history.pushState(null, '', window.location.href);
 
     // Manipula o evento popstate (botão voltar)
-    const handlePopState = (event: PopStateEvent) => {
-      // Previne o comportamento padrão
-      event.preventDefault();
-      window.history.pushState({ page: 'resultado' }, '', window.location.href);
-      
-      // Redireciona para a página de suporte
-      router.push('/suporte');
+    const handlePopState = () => {
+      // Usa window.location para garantir navegação completa
+      window.location.href = '/suporte';
     };
 
-    // Manipula o evento beforeunload (mobile)
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      // Apenas previne se for navegação para trás
-      if (window.performance && window.performance.navigation.type === 2) {
-        event.preventDefault();
-        router.push('/suporte');
-      }
-    };
-
-    // Adiciona os listeners
+    // Adiciona o listener
     window.addEventListener('popstate', handlePopState);
-    window.addEventListener('beforeunload', handleBeforeUnload);
 
-    // Adiciona listener para o botão voltar do Android
-    if (typeof history.pushState === 'function') {
-      history.pushState("jibberish", '', null);
-      window.onpopstate = function () {
-        history.pushState('newjibberish', '', null);
-        router.push('/suporte');
-      };
-    }
+    // Remove o listener ao desmontar o componente
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []); // Não precisa do router aqui pois usamos window.location
 
+  // Efeito para carregar os resultados
+  useEffect(() => {
     const carregarResultados = () => {
       try {
         if (typeof window === 'undefined') return;
@@ -110,7 +96,10 @@ export default function Resultado() {
     };
 
     carregarResultados();
+  }, [router]);
 
+  // Efeito para enviar evento para o Meta Ads
+  useEffect(() => {
     const sendMetaEvent = () => {
       if (typeof window.fbq !== 'function') {
         console.warn('Meta Pixel ainda não carregado. Tentando novamente em 2 segundos...');
@@ -148,13 +137,7 @@ export default function Resultado() {
     };
 
     sendMetaEvent();
-
-    // Remove o listener ao desmontar o componente
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [router]);
+  }, []);
 
   if (loading) {
     return (
