@@ -6,25 +6,7 @@ type TransitionProps = {
 
 export function Transition({ nome_parceiro }: TransitionProps) {
   return (
-    <div className="relative bg-gradient-to-b from-white via-[#D2A878]/20 to-[#F2E8DC] py-16 md:py-24 px-4 overflow-hidden">
-      {/* Elementos decorativos inspirados em mapas */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Grade de coordenadas */}
-        <div 
-          className="absolute top-0 left-0 w-full h-full opacity-10" 
-          style={{
-            backgroundImage: 'linear-gradient(#5B7B7A 1px, transparent 1px), linear-gradient(90deg, #5B7B7A 1px, transparent 1px)',
-            backgroundSize: '40px 40px'
-          }}
-        />
-        
-        {/* Elementos de mapa decorativos */}
-        <div className="absolute top-20 left-12 w-32 h-32 border border-[#D2A878]/30 rounded-lg rotate-12" />
-        <div className="absolute bottom-16 right-16 w-40 h-40 border border-dashed border-[#5B7B7A]/30 rounded-full" />
-        <div className="absolute top-1/3 right-1/4 w-16 h-16 border border-[#8BA888]/30 rounded-full" />
-        <div className="absolute bottom-1/4 left-1/4 w-20 h-20 border-b-2 border-r-2 border-[#C85C40]/20 rotate-45" />
-      </div>
-
+    <div className="relative bg-gradient-to-b from-white via-[#D2A878]/20 to-[#F2E8DC] py-16 md:py-24 px-4">
       <div className="max-w-2xl mx-auto space-y-8 relative z-10">
         {/* 1️⃣ Headline Forte e Direta */}
         <div className="text-center">
