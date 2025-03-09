@@ -30,7 +30,7 @@ export function Bonus() {
               #1
             </div>
             <div className="pt-6 pl-6">
-              <h3 className="text-2xl font-bold text-[#5B7B7A] mb-4">O Guia da Comunicação Feminina Irresistível</h3>
+              <h3 className="text-2xl font-bold text-[#5B7B7A] mb-4">Diálogo Sem Resistência – Como Falar e Ser Ouvida</h3>
               
               <p className="text-[#5B7B7A]/80 mb-6">
                 Descubra como falar com um homem de forma que ele realmente ouça e valorize o que você diz.
