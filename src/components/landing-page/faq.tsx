@@ -37,30 +37,43 @@ export function FAQ() {
 
   const faqItems = [
     {
-      question: "O que eu vou aprender nesse guia?",
-      answer: "Você vai entender como os temperamentos e as linguagens do amor influenciam a conexão emocional e aprender estratégias práticas para fortalecer seu relacionamento."
+      question: "Como esse método pode transformar meu relacionamento?",
+      answer: "Se você sente que, por mais que tente, algo sempre parece estar faltando na sua relação, o Mapa da Conexão Emocional vai te ajudar a finalmente entender o que está impedindo essa conexão profunda com seu parceiro. Você aprenderá como lidar com o temperamento e a linguagem do amor dele, ajustando sua comunicação e atitudes para criar uma relação equilibrada, segura e cheia de significado."
     },
     {
       question: "Esse método funciona para qualquer tipo de relacionamento?",
-      answer: "Sim! O Mapa da Conexão Emocional é baseado na psicologia comportamental e pode ser aplicado em diferentes fases do relacionamento – desde quem está começando a se envolver até quem quer melhorar um relacionamento de longa data."
+      answer: "Sim! O Mapa da Conexão Emocional é baseado na psicologia comportamental e pode ser aplicado tanto para quem está começando um relacionamento quanto para quem deseja resgatar a conexão emocional em uma relação de longa data."
     },
     {
       question: "Vou precisar mudar quem eu sou para aplicar esse método?",
-      answer: "Não! Esse guia não ensina manipulação ou joguinhos, mas sim como criar uma conexão autêntica e real com ele."
+      answer: "Não! O objetivo do método não é que você mude quem você é, mas sim que aprenda a agir estrategicamente, respeitando sua personalidade e a do seu parceiro. Pequenos ajustes na forma como você se comunica e interpreta o comportamento dele podem transformar a relação sem que você perca sua essência."
     },
     {
       question: "Quanto tempo leva para ver resultados?",
-      answer: "Os resultados podem variar, mas muitas mulheres percebem mudanças na dinâmica do relacionamento em poucos dias, quando aplicam as estratégias corretamente."
+      answer: "Os resultados podem variar, mas muitas mulheres percebem mudanças na dinâmica do relacionamento em poucos dias ao aplicarem as estratégias corretas para o temperamento e a linguagem do amor do parceiro."
     },
     {
       question: "Como eu recebo o material após a compra?",
-      answer: "Após a confirmação do pagamento, você receberá acesso imediato ao Mapa da Conexão Emocional na plataforma Kwify. A Kwify é uma das plataformas mais seguras e reconhecidas do Brasil, garantindo que você possa acessar seu material de forma rápida e protegida."
+      answer: "Após a confirmação do pagamento, você terá acesso imediato ao Mapa da Conexão Emocional na plataforma Kwify. A Kwify é uma das plataformas mais seguras do Brasil, garantindo um ambiente confiável e protegido para sua experiência de aprendizado."
     },
     {
       question: "E se eu perceber que o material não se encaixa na minha necessidade?",
-      answer: "Você tem 7 dias de garantia, conforme o Código de Defesa do Consumidor. Caso perceba que o material não atende suas expectativas, poderá solicitar o reembolso de forma simples e sem burocracia diretamente pela plataforma Kwify."
+      answer: "Você tem 7 dias de garantia, conforme o Código de Defesa do Consumidor. Se sentir que o material não atende às suas expectativas, poderá solicitar um reembolso diretamente pela plataforma Kwify, de forma simples e sem burocracia."
+    },
+    {
+      question: "O conteúdo é digital ou físico?",
+      answer: "O Mapa da Conexão Emocional é 100% digital, acessível de qualquer dispositivo. Isso permite que você aplique as estratégias no seu próprio ritmo, sem depender de um material impresso."
+    },
+    {
+      question: "Posso aplicar as estratégias mesmo sem a participação do meu parceiro?",
+      answer: "Sim! O método foi desenvolvido para que você possa iniciar mudanças no relacionamento por conta própria, influenciando positivamente a dinâmica entre vocês, sem precisar que ele estude ou participe diretamente."
+    },
+    {
+      question: "O guia aborda comunicação e resolução de conflitos?",
+      answer: "Sim! Você aprenderá a ajustar sua comunicação para ser realmente ouvida, evitar desgastes desnecessários e criar momentos de conexão real com seu parceiro. O material ensina como transformar conversas comuns em oportunidades para fortalecer a relação, sem criar distanciamento."
     }
   ];
+  
 
   return (
     <div className="bg-gradient-to-br from-[#F2E8DC] via-white to-[#D2A878]/10 py-16 md:py-20 relative">
