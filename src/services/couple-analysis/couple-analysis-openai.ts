@@ -12,7 +12,6 @@ export async function analisarCasal(
   linguagemParceiro: string,
   temperamentoAutor: string,
   linguagemAutor: string,
-  historiaRelacionamento: string,
   statusRelacionamento: string,
   filhos: string
 ) {
@@ -33,17 +32,13 @@ export async function analisarCasal(
     - Filhos = ${filhos}
 
     ## Análise da Dor  
-    Se ${historiaRelacionamento} estiver presente, leia atentamente e **identifique a maior dor emocional** que ${nomeAutor} expressou.  
-    - **Analise os padrões emocionais** da história dela para entender quais inseguranças estão mais evidentes.  
-    - **Destaque o impacto emocional** que essa situação tem sobre ${nomeAutor} e como isso a faz se sentir.  
-    - Se a história não estiver presente, foque nos desafios naturais da combinação de temperamento e linguagem do amor.  
+    - Foque nos desafios naturais da combinação de temperamento e linguagem do amor.  
     - A copy deve ser **altamente personalizada**, fazendo ${nomeAutor} sentir que **essa análise foi feita exclusivamente para ela**.  
 
     ## **Estrutura da Copy**  
 
     ### **1 - Abertura Impactante (Dor & Conflito)**  
-    - **Use a dor** identificada na seção "Análise da Dor" para **criar empatia imediata**.  
-    - Se **não** houver dor explícita, faça uma **pergunta instigante** baseada nas diferenças de temperamento e linguagem do amor, de modo que ${nomeAutor} se identifique.  
+    - Faça uma **pergunta instigante** baseada nas diferenças de temperamento e linguagem do amor, de modo que ${nomeAutor} se identifique.  
     - O objetivo é que ela pense: **"Isso é exatamente o que estou passando!"**  
 
     ### **2 - Explicação Baseada em Estudos e Metodologias**  
@@ -71,7 +66,7 @@ export async function analisarCasal(
         _"Se ele se aproxima buscando abraços, carinho e contato físico constante, mas você não tem esse hábito, ele pode sentir que não está recebendo amor. Para ele, um abraço na hora certa pode significar mais do que qualquer palavra dita."_  
 
       - **Atos de Serviço** 🏡  
-        _"Se ele demonstra carinho ajudando você nas tarefas do dia a dia ou tentando facilitar sua vida, mas você espera palavras doces e mensagens de carinho, pode sentir que ele não expressa amor da forma que gostaria. Para ele, mostrar amor significa ‘agir’ ao invés de ‘falar’."_  
+        _"Se ele demonstra carinho ajudando você nas tarefas do dia a dia ou tentando facilitar sua vida, mas você espera palavras doces e mensagens de carinho, pode sentir que ele não expressa amor da forma que gostaria. Para ele, mostrar amor significa 'agir' ao invés de 'falar'."_  
 
       - **Palavras de Afirmação** 💬  
         _"Se ele precisa ouvir com frequência que você o ama, que ele é especial para você, mas você não costuma expressar isso verbalmente, ele pode começar a sentir que não é valorizado. Pequenos elogios e palavras de incentivo fazem toda a diferença para ele."_  
