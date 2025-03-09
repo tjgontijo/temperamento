@@ -44,19 +44,12 @@ type InformacoesContextoType = {
   filhos: string;
 };
 
-type AnaliseCasalType = {
-  titulo: string;
-  subtitulo: string;
-  paragrafos: string[];
-};
-
 type ResultadoCalculadoType = {
   temperamento: ResultadoCategoriaType;
   linguagem: ResultadoCategoriaType;
   temperamentoAutor: ResultadoCategoriaType;
   linguagemAutor: ResultadoCategoriaType;
   informacoes?: InformacoesContextoType;
-  analise?: AnaliseCasalType;
 };
 
 // Imports
@@ -71,7 +64,6 @@ import {
 } from '@/utils/storage';
 import { buscarQuestoesPorTipo } from '@/lib/actions/questionario-actions';
 import { calcularResultado } from '@/lib/actions/resultado-actions';
-import { realizarAnalise } from '@/services/couple-analysis/couple-analysis';
 import { Questao } from '@/components/questionario/questao';
 import { FormularioContexto } from '@/components/formulario-contexto/page';
 import { motion } from 'framer-motion';
@@ -205,26 +197,7 @@ export default function QuestionarioPage() {
             nome_parceiro: contexto.nome_parceiro,
             status_relacionamento: contexto.status_relacionamento,
             filhos: contexto.filhos
-          },
-          analise: await realizarAnalise({
-            nomeAutor: contexto.nome_autor || '',
-            nomeParceiro: contexto.nome_parceiro || '',
-            temperamentoParceiro: resultados.temperamento.principal,
-            linguagemParceiro: resultados.linguagem.principal,
-            temperamentoAutor: resultados.temperamentoAutor.principal,
-            linguagemAutor: resultados.linguagemAutor.principal,
-            statusRelacionamento: contexto.status_relacionamento || '',
-            filhos: contexto.filhos || ''
-          }).then(resultado => {
-            if (resultado.sucesso && resultado.resultado) {
-              return {
-                ...resultado.resultado,
-                mensagem: resultado.mensagem,
-                provedor: resultado.provedor
-              };
-            }
-            throw new Error('Falha na análise de casal');
-          }),
+          }
         };
 
         salvarResultadosQuestionario(resultadosCompletos);
@@ -251,7 +224,7 @@ export default function QuestionarioPage() {
   }
 
   if (isLoading) {
-    return <Loading message="Analisando suas respostas..." />;
+    return <Loading message="Processando suas respostas..." />;
   }
 
   if (etapaQuestionario === 'contexto') {
