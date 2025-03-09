@@ -29,8 +29,8 @@ export async function realizarAnalise(
   dadosAnalise: DadosAnalise
 ): Promise<RetornoAnalise> {
   try {
-    console.log('Tentando análise via OpenAI...');
-    const resultadoOpenAI = await analisarCasal(
+    console.log('Tentando análise via Groq...');
+    const resultadoGroq = await analisarCasalGroq(
       dadosAnalise.nomeAutor, 
       dadosAnalise.nomeParceiro,
       dadosAnalise.temperamentoParceiro,
@@ -43,15 +43,15 @@ export async function realizarAnalise(
     
     return {
       sucesso: true,
-      resultado: resultadoOpenAI,
-      mensagem: '4o - Análise realizada com sucesso',
-      provedor: 'openai'
+      resultado: resultadoGroq,
+      mensagem: 'Groq - Análise realizada com sucesso',
+      provedor: 'groq'
     };
   } catch {
-    console.log('OpenAI falhou, tentando Groq como fallback...');
+    console.log('Groq falhou, tentando OpenAI como fallback...');
     
     try {
-      const resultadoGroq = await analisarCasalGroq(
+      const resultadoOpenAI = await analisarCasal(
         dadosAnalise.nomeAutor, 
         dadosAnalise.nomeParceiro,
         dadosAnalise.temperamentoParceiro,
@@ -64,12 +64,12 @@ export async function realizarAnalise(
       
       return {
         sucesso: true,
-        resultado: resultadoGroq,
-        mensagem: 'Groq - Análise realizada com sucesso',
-        provedor: 'groq'
+        resultado: resultadoOpenAI,
+        mensagem: 'OpenAI - Análise realizada com sucesso',
+        provedor: 'openai'
       };
     } catch (error) {
-      console.error('Erro ao tentar análise via Groq:', error);
+      console.error('Erro ao tentar análise via OpenAI:', error);
       throw error;
     }
   }
