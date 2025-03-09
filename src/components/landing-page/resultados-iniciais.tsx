@@ -2,6 +2,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { FaLock, FaUnlock, FaHeart } from 'react-icons/fa';
+import { realizarAnalise } from '@/services/couple-analysis/couple-analysis';
+import { obterDadosContexto } from '@/utils/storage';
 
 type PercentageCircleProps = {
   percentage: number;
@@ -79,6 +81,13 @@ type DadosResultadoType = {
     secundario: string;
     percentualPrincipal: number;
     percentualSecundario: number;
+  };
+  analise?: {
+    titulo: string;
+    subtitulo: string;
+    paragrafos: string[];
+    mensagem?: string;
+    provedor?: 'groq' | 'openai';
   };
 };
 
@@ -203,23 +212,71 @@ export function ResultadosIniciais({
   const [dadosResultado, setDadosResultado] = useState<DadosResultadoType | null>(null);
   const [analiseUnlocked, setAnaliseUnlocked] = useState(false);
   const [isHeartAnimationActive, setIsHeartAnimationActive] = useState(false);
+  const [analiseGerada, setAnaliseGerada] = useState(analise);
 
   useEffect(() => {
     const resultadosQuestionario = localStorage.getItem('resultados_questionario');
     if (resultadosQuestionario) {
-      setDadosResultado(JSON.parse(resultadosQuestionario));
+      const dados = JSON.parse(resultadosQuestionario);
+      setDadosResultado(dados);
+      if (dados.analise) {
+        setAnaliseGerada(dados.analise);
+        setAnaliseUnlocked(true);
+      }
     }
-  }, []);
+  }, [analise]);
 
-  const handleUnlock = () => {
+  const handleUnlock = async () => {
     if (!analiseUnlocked) {
       setIsHeartAnimationActive(true);
       
       // Tempo total sincronizado com a animação dos corações
-      setTimeout(() => {
-        setIsHeartAnimationActive(false);
-        setAnaliseUnlocked(true);
-      }, 8000);  // 8 segundos, igual à duração da animação
+      setTimeout(async () => {
+        try {
+          const contexto = obterDadosContexto();
+          if (!contexto || !dadosResultado) {
+            throw new Error('Dados necessários não encontrados');
+          }
+
+          const resultado = await realizarAnalise({
+            nomeAutor: contexto.nome_autor,
+            nomeParceiro: contexto.nome_parceiro,
+            temperamentoParceiro: dadosResultado.temperamento.principal,
+            linguagemParceiro: dadosResultado.linguagem.principal,
+            temperamentoAutor: dadosResultado.temperamentoAutor.principal,
+            linguagemAutor: dadosResultado.linguagemAutor.principal,
+            statusRelacionamento: contexto.status_relacionamento,
+            filhos: contexto.filhos
+          });
+
+          if (resultado.sucesso && resultado.resultado) {
+            const novaAnalise = {
+              ...resultado.resultado,
+              mensagem: resultado.mensagem,
+              provedor: resultado.provedor
+            };
+
+            // Atualizar localStorage
+            const resultadosAtualizados = {
+              ...dadosResultado,
+              analise: novaAnalise
+            };
+            localStorage.setItem('resultados_questionario', JSON.stringify(resultadosAtualizados));
+            
+            setAnaliseGerada(novaAnalise);
+            setAnaliseUnlocked(true);
+          } else {
+            throw new Error('Falha ao gerar análise');
+          }
+        } catch (error) {
+          console.error('Erro ao gerar análise:', error);
+          // Mantem a análise inicial em caso de erro
+          setAnaliseGerada(analise);
+          setAnaliseUnlocked(true);
+        } finally {
+          setIsHeartAnimationActive(false);
+        }
+      }, 8000); // 8 segundos, igual à duração da animação
     }
   };
 
@@ -398,18 +455,23 @@ export function ResultadosIniciais({
               className="mt-12 bg-[#F2E8DC]/30 rounded-2xl p-6 border border-[#D2A878]/20"
             >
               <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#5B7B7A] mb-4">
-                {analise.titulo}
+                {analiseGerada.titulo}
               </h2>
               <h3 className="text-xl md:text-2xl font-serif text-[#C85C40] mb-6">
-                {analise.subtitulo}
+                {analiseGerada.subtitulo}
               </h3>
               <div className="space-y-4">
-                {analise.paragrafos.map((paragrafo, index) => (
-                  <p key={index} className="text-[#5B7B7A] leading-relaxed">
+                {analiseGerada.paragrafos.map((paragrafo, index) => (
+                  <p key={index} className="text-base md:text-lg text-[#5B7B7A] leading-relaxed">
                     {paragrafo}
                   </p>
                 ))}
               </div>
+              {analiseGerada.mensagem && (
+                <p className="mt-6 text-sm text-[#AA8878] italic">
+                  {analiseGerada.mensagem}
+                </p>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
