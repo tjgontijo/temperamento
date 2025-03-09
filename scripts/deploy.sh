@@ -18,9 +18,11 @@ echo "==> Atualizando o repositório (git pull)..."
 git pull
 
 echo "==> Otimizando imagens no diretório public..."
-find public -type f -iname "../*.jpg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
-find public -type f -iname "../*.jpeg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
-find public -type f -iname "../*.png" -exec pngquant --force --ext .png --quality=80-90 --skip-if-larger {} \;
+cd public
+find . -type f -iname "*.jpg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
+find . -type f -iname "*.jpeg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
+find . -type f -iname "*.png" -exec pngquant --force --ext .png --quality=80-90 --skip-if-larger {} \;
+cd ..
 
 echo "==> Executando build do Next.js..."
 npm run build
@@ -38,4 +40,3 @@ echo "==> Reiniciando o Nginx..."
 sudo systemctl restart nginx
 
 echo "==> Deploy concluído com sucesso!"
-
