@@ -256,7 +256,7 @@ export function ResultadosIniciais({
       {/* Animação de corações */}
       <HeartAnimation isActive={isHeartAnimationActive} />
 
-      <div className="relative z-10 max-w-xl mx-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-12 border border-[#D2A878]/20">
+      <div className="relative bg-gradient-to-b from-white via-[#F2E8DC] to-white py-16 md:py-24 px-4 overflow-hidden">
         {/* Título Persuasivo */}
         <div className="text-center bg-gradient-to-r from-[#5B7B7A] to-[#8BA888] p-6 rounded-2xl mb-8 shadow-xl relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/img/texture-paper.png')] opacity-5"></div>

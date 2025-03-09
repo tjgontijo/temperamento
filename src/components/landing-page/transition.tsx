@@ -6,7 +6,7 @@ type TransitionProps = {
 
 export function Transition({ nome_parceiro }: TransitionProps) {
   return (
-    <div className="relative bg-gradient-to-br from-[#F2E8DC] via-white to-[#D2A878]/20 py-16 md:py-24 px-4 overflow-hidden">
+    <div className="relative bg-gradient-to-b from-white via-[#D2A878]/20 to-[#F2E8DC] py-16 md:py-24 px-4 overflow-hidden">
       {/* Elementos decorativos inspirados em mapas */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Grade de coordenadas */}

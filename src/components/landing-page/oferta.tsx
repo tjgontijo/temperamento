@@ -6,7 +6,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
   }
 
   return (
-    <div className="bg-gradient-to-br from-[#F2E8DC] via-white to-[#D2A878]/20 py-16 md:py-20 px-4">
+    <div className="relative bg-gradient-to-b from-white via-[#F2E8DC] to-[#D2A878]/20 py-16 md:py-20 px-4">
       <div className="max-w-4xl mx-auto text-center">
         <div className="relative mb-12">
           <div className="absolute inset-0 bg-gradient-to-r from-[#D2A878]/20 to-[#8BA888]/20 opacity-50 rounded-3xl blur-xl"></div>
@@ -68,7 +68,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
               </ul>
 
               <div className="text-center mb-6">
-                <span className="text-6xl font-bold text-[#5B7B7A]">R$19</span>
+                <span className="text-6xl font-bold text-[#5B7B7A]">R$10</span>
               </div>
 
               <a 
@@ -146,7 +146,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
 
               <div className="text-center mb-6">
                 <div className="inline-block relative">
-                  <span className="text-6xl font-black text-[#5B7B7A]">R$29</span>
+                  <span className="text-6xl font-black text-[#5B7B7A]">R$27</span>
                 </div>
                 <p className="text-xs text-gray-600 mt-2 italic">
                   Aproveite antes que volte para R$49

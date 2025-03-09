@@ -53,7 +53,7 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
   }
 
   return (
-    <div className="bg-gradient-to-br from-[#F2E8DC] to-[#D2A878]/20 py-16 md:py-20 px-4 relative overflow-hidden">
+    <div className="relative bg-gradient-to-b from-[#D2A878]/20 via-[#F2E8DC] to-white py-16 md:py-20 px-4 overflow-hidden">
       {/* Elementos decorativos inspirados em mapas */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(200,92,64,0.2),_transparent_60%)]" />

@@ -2,7 +2,7 @@
 
 export function Bonus() {
   return (
-    <div className="bg-gradient-to-br from-[#F2E8DC] via-white to-[#8BA888]/20 py-16 md:py-20 px-4">
+    <div className="relative bg-gradient-to-b from-[#D2A878]/20 via-[#F2E8DC] to-white py-16 md:py-20 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-serif font-bold tracking-tight mb-4">
