@@ -55,19 +55,39 @@ export default function Resultado() {
     document.title = "Resultado da Análise - Decifrando Corações";
 
     // Adiciona uma entrada artificial no histórico
-    window.history.pushState(null, '', window.location.href);
+    window.history.pushState({ page: 'resultado' }, '', window.location.href);
 
     // Manipula o evento popstate (botão voltar)
-    const handlePopState = () => {
+    const handlePopState = (event: PopStateEvent) => {
       // Previne o comportamento padrão
-      window.history.pushState(null, '', window.location.href);
+      event.preventDefault();
+      window.history.pushState({ page: 'resultado' }, '', window.location.href);
       
       // Redireciona para a página de suporte
       router.push('/suporte');
     };
 
-    // Adiciona o listener
+    // Manipula o evento beforeunload (mobile)
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      // Apenas previne se for navegação para trás
+      if (window.performance && window.performance.navigation.type === 2) {
+        event.preventDefault();
+        router.push('/suporte');
+      }
+    };
+
+    // Adiciona os listeners
     window.addEventListener('popstate', handlePopState);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Adiciona listener para o botão voltar do Android
+    if (typeof history.pushState === 'function') {
+      history.pushState("jibberish", '', null);
+      window.onpopstate = function () {
+        history.pushState('newjibberish', '', null);
+        router.push('/suporte');
+      };
+    }
 
     const carregarResultados = () => {
       try {
@@ -132,6 +152,7 @@ export default function Resultado() {
     // Remove o listener ao desmontar o componente
     return () => {
       window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, [router]);
 
