@@ -18,11 +18,22 @@ echo "==> Atualizando o repositório (git pull)..."
 git pull
 
 echo "==> Otimizando imagens no diretório public..."
+
+# Verifica se o diretório 'public' existe antes de entrar nele
+if [ ! -d "public" ]; then
+  echo "Erro: O diretório 'public' não existe."
+  exit 1
+fi
+
 cd public
-find . -type f -iname "*.jpg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
-find . -type f -iname "*.jpeg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
-find . -type f -iname "*.png" -exec pngquant --force --ext .png --quality=80-90 --skip-if-larger {} \;
-cd ..
+
+# Otimiza imagens JPG/JPEG
+find . -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -exec jpegoptim --strip-all --max=80 --all-progressive {} +
+
+# Otimiza imagens PNG
+find . -type f -iname "*.png" -exec pngquant --force --quality=80-90 --skip-if-larger --ext .png {} +
+
+echo "==> Otimização concluída!"
 
 echo "==> Executando build do Next.js..."
 npm run build
