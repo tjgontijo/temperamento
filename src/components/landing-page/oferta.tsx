@@ -10,19 +10,18 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-12">
           <h2 className="text-4xl md:text-5xl font-serif font-bold tracking-tight mb-8">
-            <span className="block text-[#5B7B7A]">Invista no Seu</span>
+            <span className="block text-[#5B7B7A]">Escolha o Caminho Para Transformar</span>
             <span className="text-[#C85C40]">
-              Futuro com {nome_parceiro}
+            Seu Relacionamento com {nome_parceiro}
             </span>
-          </h2>
+          </h2>          
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
           {/* Plano Básico */}
           <div className="w-full md:w-1/2 max-w-sm">
             <div className="bg-white rounded-2xl p-8 relative border-2 border-[#D2A878]/30 shadow-lg">
-              <h3 className="text-2xl font-bold text-[#5B7B7A] mb-6">Plano Básico</h3>
-              
+              <h3 className="text-2xl font-bold text-[#5B7B7A] mb-6">ACESSO BÁSICO</h3>              
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-3 p-3 rounded-lg bg-[#F2E8DC]/50">
                   <svg className="w-5 h-5 text-[#8BA888] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -73,7 +72,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
               >
                 <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <span className="relative">
-                  QUERO O PLANO BÁSICO
+                COMEÇAR MINHA TRANSFORMAÇÃ
                 </span>
               </a>
 
@@ -88,6 +87,13 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
 
           {/* Pacote Completo */}
           <div id="plano-vip" className="w-full md:w-1/2 max-w-sm relative">
+            {/* Selo "Mais Vendido" */}
+            <div className="absolute -top-5 -right-1 z-10">
+              <div className="bg-[#C85C40] text-white text-sm font-bold py-1 px-4 rounded-full shadow-lg">
+                RECOMENDADO
+              </div>
+            </div>
+            
             {/* Card Principal */}
             <div className="bg-white rounded-2xl p-8 relative transform transition-all duration-300 hover:scale-[1.02] border-2 border-[#D4B483] shadow-[0_8px_40px_-12px_rgba(210,168,120,0.5)]">
               <div className="text-center mb-6 pt-4">
@@ -149,7 +155,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
               >
                 <div className="absolute inset-0 bg-white/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <span className="relative">
-                  QUERO O PLANO VIP AGORA!
+                GARANTIR MEU ACESSO VIP AGORA
                 </span>
               </a>
             </div>
@@ -159,8 +165,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
         {/* Texto de Justificativa */}
         <div className="mt-8 mb-8 text-center max-w-2xl mx-auto">
           <p className="text-gray-600 text-sm">
-            Essa condição especial está disponível apenas por tempo limitado para tornar esse conhecimento acessível a mais mulheres.
-          </p>
+          ATENÇÃO: Esta oferta especial está disponível apenas hoje para as próximas 50 mulheres determinadas a transformar seu relacionamento.          </p>
         </div>
       </div>
     </div>
