@@ -19,7 +19,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="w-full top-0 left-0 z-50 bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md">
+    <header className="w-full top-0 left-0 z-50 bg-gradient-to-r from-[#8BA888] to-[#5B7B7A] text-white shadow-md">
       <div className="container mx-auto flex items-center justify-between py-2 px-4 relative">
         {/* Logo com máscara redonda */}
         <Link href="/" className="flex items-center space-x-3">
@@ -39,19 +39,19 @@ export function Header() {
         <nav className="hidden md:flex space-x-6">
           <Link 
             href="#como-funciona" 
-            className="text-white hover:text-purple-100 transition-colors scroll-smooth"
+            className="text-[#F2E8DC] hover:text-white transition-colors scroll-smooth"
           >
             Como Funciona
           </Link>
           <Link 
             href="#beneficios" 
-            className="text-white hover:text-purple-100 transition-colors scroll-smooth"
+            className="text-[#F2E8DC] hover:text-white transition-colors scroll-smooth"
           >
             Benefícios
           </Link>
           <Link 
             href="#depoimentos" 
-            className="text-white hover:text-purple-100 transition-colors scroll-smooth"
+            className="text-[#F2E8DC] hover:text-white transition-colors scroll-smooth"
           >
             Depoimentos
           </Link>
@@ -60,7 +60,7 @@ export function Header() {
         {/* Botão de Ação */}
         <div className="flex items-center space-x-4">
           <Button 
-            className="hidden md:flex text-purple-600 bg-white hover:bg-purple-100 border-none shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out"
+            className="hidden md:flex text-[#5B7B7A] bg-[#F2E8DC] hover:bg-white border-none shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out"
             onClick={() => window.location.href = '/questionario'}
           >
             Começar Minha Análise
@@ -72,7 +72,7 @@ export function Header() {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="text-white hover:bg-white/20"
+                className="text-[#F2E8DC] hover:bg-white/20"
                 onClick={toggleMobileMenu}
                 aria-label="Toggle Mobile Menu"
               >
@@ -112,33 +112,33 @@ export function Header() {
             onClick={closeMobileMenu}
           >
             <div 
-              className="absolute top-20 left-4 right-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg shadow-xl"
+              className="absolute top-20 left-4 right-4 bg-gradient-to-r from-[#8BA888] to-[#5B7B7A] rounded-lg shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="flex flex-col items-center space-y-4 py-6">
                 <Link 
                   href="#como-funciona" 
-                  className="text-white hover:text-purple-100 transition-colors"
+                  className="text-[#F2E8DC] hover:text-white transition-colors"
                   onClick={closeMobileMenu}
                 >
                   Como Funciona
                 </Link>
                 <Link 
                   href="#beneficios" 
-                  className="text-white hover:text-purple-100 transition-colors"
+                  className="text-[#F2E8DC] hover:text-white transition-colors"
                   onClick={closeMobileMenu}
                 >
                   Benefícios
                 </Link>
                 <Link 
                   href="#depoimentos" 
-                  className="text-white hover:text-purple-100 transition-colors"
+                  className="text-[#F2E8DC] hover:text-white transition-colors"
                   onClick={closeMobileMenu}
                 >
                   Depoimentos
                 </Link>
                 <Button 
-                  className="w-3/4 bg-white text-purple-600 hover:bg-purple-50 whitespace-normal text-center hover:scale-105 transition-transform duration-300"
+                  className="w-3/4 bg-[#F2E8DC] text-[#5B7B7A] hover:bg-white whitespace-normal text-center hover:scale-105 transition-transform duration-300"
                   onClick={() => {
                     closeMobileMenu();
                     window.location.href = '/questionario';
