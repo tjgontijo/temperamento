@@ -24,9 +24,16 @@ else
   echo "Aviso: O diretório 'public' não existe. Pulando otimização de imagens."
 fi
 
+
+
 echo "==> Otimizando imagens no diretório public..."
 if [ -d "public" ]; then
+  
   # Lista todas as imagens antes da otimização para depuração
+  echo "==> Ajustando permissões do diretório public..."
+  chown -R www-data:www-data public
+  chmod -R 644 public
+
   echo "==> Arquivos a serem otimizados:"
   find public -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \)
 
