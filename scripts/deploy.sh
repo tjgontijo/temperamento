@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
 IFS=$'\n\t'
 
 APP_NAME="decifrandocoracoes"
@@ -17,16 +17,25 @@ npm cache clean --force
 echo "==> Atualizando o repositório (git pull)..."
 git pull
 
-echo "==> Otimizando imagens no diretório public..."
-
-# Verifica se o diretório 'public' existe antes de otimizar imagens
+echo "==> Ajustando permissões do diretório public..."
 if [ -d "public" ]; then
-  # Otimiza imagens JPG/JPEG (ignora erros de jpegoptim)
-  find public -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -exec jpegoptim --strip-all --max=80 --all-progressive {} + || true
+  chmod -R 644 public
+else
+  echo "Aviso: O diretório 'public' não existe. Pulando otimização de imagens."
+fi
 
-  # Otimiza imagens PNG (ignora erros de pngquant)
-  find public -type f -iname "*.png" -exec pngquant --force --quality=80-90 --skip-if-larger --ext .png {} + || true
-  
+echo "==> Otimizando imagens no diretório public..."
+if [ -d "public" ]; then
+  # Lista todas as imagens antes da otimização para depuração
+  echo "==> Arquivos a serem otimizados:"
+  find public -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \)
+
+  # Otimiza imagens JPG/JPEG
+  find public -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -exec jpegoptim --strip-all --max=80 --all-progressive --force {} \;
+
+  # Otimiza imagens PNG
+  find public -type f -iname "*.png" -exec pngquant --force --verbose --quality=80-90 --skip-if-larger --ext .png {} \;
+
   echo "==> Otimização concluída!"
 else
   echo "Aviso: O diretório 'public' não existe. Pulando otimização de imagens."
