@@ -40,8 +40,6 @@ type ResultadoCategoriaType = {
 type InformacoesContextoType = {
   nome_autor: string;
   nome_parceiro: string;
-  historia_relacionamento: string;
-  whatsapp: string;
   status_relacionamento: string;
   filhos: string;
 };
@@ -204,21 +202,17 @@ export default function QuestionarioPage() {
           ...resultados,
           informacoes: {
             nome_autor: contexto.nome_autor,
-            whatsapp: contexto.whatsapp,
             nome_parceiro: contexto.nome_parceiro,
-            historia_relacionamento: contexto.historia_relacionamento,
             status_relacionamento: contexto.status_relacionamento,
             filhos: contexto.filhos
           },
           analise: await realizarAnalise({
             nomeAutor: contexto.nome_autor || '',
-            whatsapp: contexto.whatsapp || '',
             nomeParceiro: contexto.nome_parceiro || '',
             temperamentoParceiro: resultados.temperamento.principal,
             linguagemParceiro: resultados.linguagem.principal,
             temperamentoAutor: resultados.temperamentoAutor.principal,
             linguagemAutor: resultados.linguagemAutor.principal,
-            historiaRelacionamento: contexto.historia_relacionamento || '',
             statusRelacionamento: contexto.status_relacionamento || '',
             filhos: contexto.filhos || ''
           }).then(resultado => {
