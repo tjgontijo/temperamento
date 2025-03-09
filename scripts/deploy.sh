@@ -14,6 +14,9 @@ cd "$PROJECT_DIR" || { echo "Erro: diretório do projeto não encontrado!"; exit
 echo "==> Atualizando repositório..."
 git pull
 
+echo "==> Ajustando permissão do script..."
+chmod +x scripts/deploy.sh
+
 echo "==> Removendo build anterior..."
 rm -rf .next
 
@@ -38,6 +41,9 @@ sudo chmod 644 package.json
 sudo chmod 755 public
 sudo chmod 755 src
 sudo chmod 755 scripts
+
+# Garante que scripts sejam executáveis
+sudo chmod +x scripts/*.sh
 
 echo "==> Otimizando imagens no diretório public..."
 cd public
