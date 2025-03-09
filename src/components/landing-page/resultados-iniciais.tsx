@@ -300,20 +300,12 @@ export function ResultadosIniciais({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative"
+      className="relative bg-gradient-to-b from-[#F2E8DC] via-[#F2E8DC]/50 to-[#D2A878]/20"
     >
-      {/* Elementos decorativos inspirados em mapas */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-20 left-12 w-32 h-32 border border-[#D2A878]/30 rounded-lg rotate-12" />
-        <div className="absolute bottom-16 right-16 w-40 h-40 border border-dashed border-[#5B7B7A]/30 rounded-full" />
-        <div className="absolute top-1/3 right-1/4 w-16 h-16 border border-[#8BA888]/30 rounded-full" />
-        <div className="absolute bottom-1/4 left-1/4 w-20 h-20 border-b-2 border-r-2 border-[#C85C40]/20 rotate-45" />
-      </div>
-
       {/* Animação de corações */}
       <HeartAnimation isActive={isHeartAnimationActive} />
 
-      <div className="relative bg-gradient-to-b from-white via-[#F2E8DC] to-white py-16 md:py-24 px-4 overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Título Persuasivo */}
         <div className="text-center bg-gradient-to-r from-[#5B7B7A] to-[#8BA888] p-6 rounded-2xl mb-8 shadow-xl relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('/img/texture-paper.png')] opacity-5"></div>
@@ -326,7 +318,7 @@ export function ResultadosIniciais({
         </div>
 
         {/* Temperamento Parceiro */}
-        <div className="bg-[#F2E8DC]/30 rounded-2xl shadow-lg p-6 mb-8 text-center border border-[#D2A878]/20">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-8 text-center border-2 border-[#D2A878]/20">
           <h2 className="text-2xl md:text-3xl font-serif font-semibold text-[#5B7B7A] mb-6 border-b-2 border-[#D2A878]/20 pb-4">
             Mapa Emocional de {nome_parceiro}
           </h2>
@@ -351,7 +343,7 @@ export function ResultadosIniciais({
         </div>
 
         {/* Linguagem do Amor Parceiro */}
-        <div className="bg-[#F2E8DC]/30 rounded-2xl shadow-lg p-6 mb-8 text-center border border-[#D2A878]/20">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-8 text-center border-2 border-[#D2A878]/20">
           <h2 className="text-2xl md:text-3xl font-serif font-semibold text-[#C85C40] mb-6 border-b-2 border-[#D2A878]/20 pb-4">
             Como {nome_parceiro} Recebe Amor
           </h2>
@@ -376,7 +368,7 @@ export function ResultadosIniciais({
         </div>
 
         {/* Bônus: Perfil do Autor */}
-        <div className="bg-gradient-to-r from-[#F2E8DC] to-[#8BA888]/10 rounded-2xl p-6 mb-8 border-2 border-[#D2A878]/20">
+        <div className="bg-gradient-to-r from-[#F2E8DC]/70 to-[#8BA888]/10 rounded-2xl p-6 mb-8 border-2 border-[#D2A878]/20">
           <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#5B7B7A] mb-4 text-center">
             Tomamos a Liberdade e também mapeamos o seu perfil 😉
           </h2>
@@ -385,7 +377,7 @@ export function ResultadosIniciais({
           </p>
           
           {/* Temperamento Autor */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 text-center border border-[#D2A878]/20">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 text-center border-2 border-[#D2A878]/20">
             <h3 className="text-xl md:text-2xl font-serif font-semibold text-[#5B7B7A] mb-6 border-b-2 border-[#D2A878]/20 pb-4">
               Seu Universo Interno
             </h3>
@@ -410,7 +402,7 @@ export function ResultadosIniciais({
           </div>
 
           {/* Linguagem do Amor Autor */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center border border-[#D2A878]/20">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-6 text-center border-2 border-[#D2A878]/20">
             <h3 className="text-xl md:text-2xl font-serif font-semibold text-[#C85C40] mb-6 border-b-2 border-[#D2A878]/20 pb-4">
               Como Você Expressa Amor
             </h3>
@@ -452,7 +444,7 @@ export function ResultadosIniciais({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.5 }}
-              className="mt-12 bg-[#F2E8DC]/30 rounded-2xl p-6 border border-[#D2A878]/20"
+              className="mt-12 bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-[#D2A878]/20"
             >
               <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#5B7B7A] mb-4">
                 {analiseGerada.titulo}
