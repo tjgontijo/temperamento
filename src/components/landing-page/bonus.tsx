@@ -60,7 +60,7 @@ export function Bonus() {
               <div className="w-full h-1 bg-gradient-to-r from-[#D2A878]/30 to-[#8BA888]/30 rounded-full my-6"></div>
               
               <div className="text-[#AA8878]/60 text-sm italic">
-                <p>Valor individual: R$27</p>
+                <p>Valor Real: R$47</p>
                 <p className="font-bold text-[#8BA888]">Você recebe GRATUITAMENTE</p>
               </div>
             </div>
@@ -102,7 +102,7 @@ export function Bonus() {
               <div className="w-full h-1 bg-gradient-to-r from-[#D2A878]/30 to-[#8BA888]/30 rounded-full my-6"></div>
               
               <div className="text-[#AA8878]/60 text-sm italic">
-                <p>Valor individual: R$37</p>
+                <p>Valor Real: R$37</p>
                 <p className="font-bold text-[#8BA888]">Você recebe GRATUITAMENTE</p>
               </div>
             </div>
