@@ -54,6 +54,21 @@ export default function Resultado() {
     // Define o título da página
     document.title = "Resultado da Análise - Decifrando Corações";
 
+    // Adiciona uma entrada artificial no histórico
+    window.history.pushState(null, '', window.location.href);
+
+    // Manipula o evento popstate (botão voltar)
+    const handlePopState = () => {
+      // Previne o comportamento padrão
+      window.history.pushState(null, '', window.location.href);
+      
+      // Redireciona para a página de suporte
+      router.push('/suporte');
+    };
+
+    // Adiciona o listener
+    window.addEventListener('popstate', handlePopState);
+
     const carregarResultados = () => {
       try {
         if (typeof window === 'undefined') return;
@@ -113,6 +128,11 @@ export default function Resultado() {
     };
 
     sendMetaEvent();
+
+    // Remove o listener ao desmontar o componente
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, [router]);
 
   if (loading) {
