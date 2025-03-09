@@ -7,7 +7,7 @@ interface LoadingProps {
 
 export function Loading({ message }: LoadingProps) {
   return (
-    <div className="fixed inset-0 bg-purple-950/60 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+    <div className="fixed inset-0 bg-[#5B7B7A]/80 backdrop-blur-sm flex flex-col items-center justify-center z-50">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -26,7 +26,7 @@ export function Loading({ message }: LoadingProps) {
           }}
           className="inline-block mb-6"
         >
-          <Heart className="w-16 h-16 text-white" />
+          <Heart className="w-16 h-16 text-[#C85C40]" />
         </motion.div>
         
         <motion.div
@@ -35,20 +35,20 @@ export function Loading({ message }: LoadingProps) {
           transition={{ delay: 0.2 }}
           className="space-y-4"
         >
-          <h2 className="text-2xl font-semibold text-white">
+          <h2 className="text-2xl font-semibold text-[#F2E8DC]">
             {message}
           </h2>
-          <p className="text-gray-200">
+          <p className="text-[#D2A878]">
             Estamos analisando suas respostas para criar um resultado personalizado
           </p>
         </motion.div>
 
         {/* Barra de Progresso */}
         <motion.div 
-          className="mt-8 w-full h-2 bg-white/20 rounded-full overflow-hidden"
+          className="mt-8 w-full h-2 bg-[#F2E8DC]/20 rounded-full overflow-hidden"
         >
           <motion.div
-            className="h-full bg-white"
+            className="h-full bg-[#8BA888]"
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
             transition={{ 
