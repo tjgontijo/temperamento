@@ -31,7 +31,7 @@ export default function Home() {
           {/* Coluna de Texto */}
           <div className="space-y-6 md:space-y-7 text-center md:text-left">
             <h1 className="text-3xl md:text-4xl font-bold text-[#5B7B7A] mb-4 leading-tight uppercase">
-              Por que ele age assim? Sem perceber, você pode estar afastando ele…
+              Por que ele age assim? Quer entender a fundo como ele é?
             </h1>
             <div className="text-lg text-[#AA8878] mb-6 space-y-4">
               <p>
