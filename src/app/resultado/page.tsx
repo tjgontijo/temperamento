@@ -50,28 +50,55 @@ export default function Resultado() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Efeito para lidar com a navegação
   useEffect(() => {
-    // Define o título da página
+    // Verifica se a página atual é "/resultado"
+    if (window.location.pathname !== "/resultado") return;
+  
     document.title = "Resultado da Análise - Decifrando Corações";
-
-    // Previne navegação inicial
-    window.history.pushState(null, '', window.location.href);
-
-    // Manipula o evento popstate (botão voltar)
-    const handlePopState = () => {
-      // Usa window.location para garantir navegação completa
-      window.location.href = '/suporte';
+    const redirectURL = `${window.location.origin}/suporte`;
+  
+    const exitStopper = () => {
+      if (window.location.pathname === "/resultado") {
+        window.location.replace(redirectURL);
+      }
     };
-
-    // Adiciona o listener
-    window.addEventListener('popstate', handlePopState);
-
-    // Remove o listener ao desmontar o componente
+  
+    // Manipula histórico para impedir voltar
+    window.history.pushState(null, "", window.location.href);
+    window.history.pushState(null, "", window.location.href);
+  
+    const handleBack = () => {
+      if (window.location.pathname === "/") {
+        exitStopper();
+      } else {
+        window.history.pushState(null, "", window.location.href);
+      }
+    };
+  
+    // Verificação contínua para evitar voltar para "/"
+    const checkBackInterval = setInterval(() => {
+      if (window.location.pathname === "/") {
+        exitStopper();
+      }
+    }, 500);
+  
+    // Adiciona eventos de saída e back
+    window.addEventListener("pagehide", exitStopper);
+    window.addEventListener("popstate", handleBack);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        exitStopper();
+      }
+    });
+  
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      clearInterval(checkBackInterval);
+      window.removeEventListener("pagehide", exitStopper);
+      window.removeEventListener("popstate", handleBack);
+      document.removeEventListener("visibilitychange", exitStopper);
     };
-  }, []); // Não precisa do router aqui pois usamos window.location
+  }, []);
+  
 
   // Efeito para carregar os resultados
   useEffect(() => {
