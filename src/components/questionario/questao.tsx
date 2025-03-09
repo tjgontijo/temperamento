@@ -165,10 +165,10 @@ export function Questao({
                     key={opcao.valor}
                     onClick={() => handleOpcaoClick(opcao.valor)}
                     variant="questionario"
-                    className={`w-full px-4 py-3 h-auto text-left flex items-start justify-start whitespace-normal font-normal text-sm ${
+                    className={`w-full px-4 py-3 h-auto text-left flex items-start justify-start whitespace-normal font-normal text-sm transition-colors ${
                       opcao.valor === localValor
                         ? 'border-2 border-[#5B7B7A] text-[#5B7B7A] bg-[#F2E8DC]'
-                        : 'bg-white text-[#AA8878] border-2 border-[#D2A878] hover:bg-[#F2E8DC]'
+                        : 'bg-white text-[#AA8878] border-2 border-[#D2A878] md:hover:bg-[#F2E8DC] active:bg-[#F2E8DC]'
                     }`}
                   >
                     <span dangerouslySetInnerHTML={{ 
