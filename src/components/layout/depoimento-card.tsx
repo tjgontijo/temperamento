@@ -10,16 +10,16 @@ interface DepoimentoCardProps {
 
 export function DepoimentoCard({ nome, idade, cidade, texto }: DepoimentoCardProps) {
   return (
-    <Card className="overflow-hidden group hover:shadow-lg transition-shadow">
+    <Card className="overflow-hidden group hover:shadow-lg transition-shadow bg-white">
       <CardContent className="p-6 relative">
-        <QuoteIcon className="w-8 h-8 text-purple-100 absolute top-4 right-4" />
+        <QuoteIcon className="w-8 h-8 text-[#C85C40] absolute top-4 right-4" />
         <div className="space-y-4">
-          <p className="text-gray-600 italic relative z-10">
+          <p className="text-[#AA8878] italic relative z-10">
             &ldquo;{texto}&rdquo;
           </p>
-          <div className="text-sm border-t pt-4">
-            <p className="font-semibold text-purple-900">{nome}, {idade}</p>
-            <p className="text-gray-500">{cidade}</p>
+          <div className="text-sm border-t border-[#F2E8DC] pt-4">
+            <p className="font-semibold text-[#5B7B7A]">{nome}, {idade}</p>
+            <p className="text-[#AA8878]">{cidade}</p>
           </div>
         </div>
       </CardContent>
