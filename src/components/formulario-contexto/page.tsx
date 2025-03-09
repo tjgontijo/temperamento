@@ -30,8 +30,7 @@ const questoesContexto: Array<{
     "id": "status_relacionamento",
     "tipo": "select",
     "pergunta": "Qual dessas opções melhor descreve o relacionamento de vocês?",
-    "opcoes": ["Casual", "Namorados", "Noivos", "Casados", "Pretendente", "Relacionamento Indefinido"],
-    "descricao": "Escolha a opção que mais se aproxima do momento atual entre vocês."
+    "opcoes": ["Namorados", "Noivos", "Casados", "Relacionamento Indefinido"]
   },
   {
     "id": "filhos",
@@ -42,8 +41,7 @@ const questoesContexto: Array<{
       "Sim, temos filho juntos",
       "Sim, de outro relacionamento",
       "Sim, filhos juntos e de outro relacionamento"
-    ],
-    "descricao": "Se tiverem filhos, indique quantos e se são deste relacionamento."
+    ]
   }
 ];
 
