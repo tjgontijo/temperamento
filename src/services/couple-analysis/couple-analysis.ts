@@ -9,13 +9,11 @@ interface ResultadoAnalise {
 
 interface DadosAnalise {
   nomeAutor: string;
-  whatsapp: string;
   nomeParceiro: string;
   temperamentoParceiro: string;
   linguagemParceiro: string;
   temperamentoAutor: string;
   linguagemAutor: string;
-  historiaRelacionamento?: string;
   statusRelacionamento: string;
   filhos: string;
 }
@@ -39,7 +37,6 @@ export async function realizarAnalise(
       dadosAnalise.linguagemParceiro,
       dadosAnalise.temperamentoAutor,
       dadosAnalise.linguagemAutor,
-      dadosAnalise.historiaRelacionamento || '',
       dadosAnalise.statusRelacionamento,
       dadosAnalise.filhos
     );
@@ -61,7 +58,6 @@ export async function realizarAnalise(
         dadosAnalise.linguagemParceiro,
         dadosAnalise.temperamentoAutor,
         dadosAnalise.linguagemAutor,
-        dadosAnalise.historiaRelacionamento || '',
         dadosAnalise.statusRelacionamento,
         dadosAnalise.filhos
       );
