@@ -11,15 +11,6 @@ echo "==> Iniciando deploy..."
 echo "==> Entrando no diretório do projeto: $PROJECT_DIR"
 cd "$PROJECT_DIR" || { echo "Erro: diretório do projeto não encontrado!"; exit 1; }
 
-echo "==> Verificando alterações não commitadas..."
-CHANGES=$(git status --porcelain | grep -v "^[M?] public/" | grep -v "^[M?] scripts/" | grep -v "^[?D] prisma/" | grep -v "^?? sh$" | grep -v "^?? temperamento@")
-if [ -n "$CHANGES" ]; then
-  echo "Existem alterações não relacionadas a imagens ou scripts. Por favor, faça commit antes de continuar."
-  echo "Alterações encontradas:"
-  echo "$CHANGES"
-  exit 1
-fi
-
 echo "==> Atualizando branch main..."
 git checkout main
 git pull
