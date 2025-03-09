@@ -55,11 +55,15 @@ export function Questao({
   const handleChange = (novoValor: string) => {
     setLocalValor(novoValor);
     onResposta(novoValor);
+    // Rola a página para o topo suavemente
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleOpcaoClick = (valor: string) => {
     setLocalValor(valor);
     onResposta(valor);
+    // Rola a página para o topo suavemente
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Formata o texto substituindo as variáveis
@@ -70,7 +74,7 @@ export function Questao({
     
     return texto.replace(
       /\{nome\}/g, 
-      `<span class="font-bold text-purple-600">${nomeDestacado}</span>`
+      `<span class="font-bold text-[#C85C40]">${nomeDestacado}</span>`
     );
   };
 
@@ -78,11 +82,11 @@ export function Questao({
   const opcoesArray = Array.isArray(opcoes) ? opcoes : [];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-purple-50 via-white to-pink-50 px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#F2E8DC] via-white to-[#D2A878] px-4 py-20">
       {/* Barra de Progresso Fixa no Topo */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-gray-100">
+      <div className="fixed top-0 left-0 w-full h-1 bg-[#F2E8DC]">
         <motion.div
-          className="h-full bg-purple-600"
+          className="h-full bg-[#5B7B7A]"
           initial={{ width: 0 }}
           animate={{ width: `${progresso}%` }}
           transition={{ duration: 0.3 }}
@@ -104,7 +108,7 @@ export function Questao({
               className="space-y-3 text-left px-4"
             >
               <motion.h2 
-                className="text-2xl font-medium text-gray-900 leading-tight"
+                className="text-lg font-medium text-[#5B7B7A] leading-tight"
                 dangerouslySetInnerHTML={{ 
                   __html: formatarTextoComDestaque(
                     pergunta, 
@@ -117,7 +121,7 @@ export function Questao({
               />
               {complemento && (
                 <motion.p 
-                  className="text-base font-normal text-gray-500 leading-relaxed"
+                  className="text-base font-normal text-[#AA8878] leading-relaxed"
                   dangerouslySetInnerHTML={{ 
                     __html: formatarTextoComDestaque(
                       complemento, 
@@ -142,7 +146,7 @@ export function Questao({
             {tipo === 'input' || tipo === 'textarea' ? (
               tipo === 'textarea' ? (
                 <textarea
-                  className="w-full text-lg p-6 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-purple-400 transition-colors min-h-[150px] resize-none bg-white shadow-sm"
+                  className="w-full text-lg p-4 border-2 border-[#D2A878] rounded-xl focus:border-[#5B7B7A] focus:ring-[#5B7B7A] transition-colors min-h-[150px] resize-none bg-white shadow-sm"
                   value={localValor}
                   onChange={(e) => handleChange(e.target.value)}
                   placeholder="Digite sua resposta aqui..."
@@ -152,7 +156,7 @@ export function Questao({
                   type="text"
                   value={localValor}
                   onChange={(e) => handleChange(e.target.value)}
-                  className="w-full text-lg p-6 h-14 border-2 border-gray-200 rounded-xl focus:border-purple-400 focus:ring-purple-400 transition-colors text-center bg-white shadow-sm"
+                  className="w-full text-lg p-4 h-12 border-2 border-[#D2A878] rounded-xl focus:border-[#5B7B7A] focus:ring-[#5B7B7A] transition-colors text-center bg-white shadow-sm"
                   placeholder="Digite sua resposta aqui..."
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && localValor.trim()) {
@@ -162,16 +166,16 @@ export function Questao({
                 />
               )
             ) : (
-              <div className="grid gap-3">
+              <div className="grid gap-2">
                 {opcoesArray.map((opcao) => (
                   <Button
                     key={opcao.valor}
                     onClick={() => handleOpcaoClick(opcao.valor)}
                     variant="questionario"
-                    className={`w-full p-6 h-auto text-left flex items-start justify-start whitespace-normal font-normal ${
+                    className={`w-full px-4 py-3 h-auto text-left flex items-start justify-start whitespace-normal font-normal text-sm ${
                       opcao.valor === localValor
-                        ? 'border-2 border-purple-600 text-gray-700 bg-purple-50'
-                        : 'bg-white text-gray-700 border-2 border-gray-200 hover:bg-white'
+                        ? 'border-2 border-[#5B7B7A] text-[#5B7B7A] bg-[#F2E8DC]'
+                        : 'bg-white text-[#AA8878] border-2 border-[#D2A878] hover:bg-[#F2E8DC]'
                     }`}
                   >
                     <span dangerouslySetInnerHTML={{ 
@@ -197,7 +201,7 @@ export function Questao({
               <Button
                 // onClick={handleNext}
                 disabled={!localValor.trim() || isLoading}
-                className="w-full bg-purple-600 h-14 text-base font-medium rounded-xl transition-all transform active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-[#8BA888] to-[#5B7B7A] h-14 text-base font-medium rounded-xl transition-all transform active:scale-[0.98] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed text-white"
               >
                 {isLoading ? (
                   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -213,9 +217,9 @@ export function Questao({
               <Button
                 onClick={onBack}
                 variant="ghost"
-                className="w-full text-gray-400 gap-2"
+                className="w-full text-[#AA8878] gap-2 transition-colors bg-transparent hover:bg-transparent active:bg-transparent"
               >
-                <ArrowLeft className="w-4 h-4" />
+                <ArrowLeft size={20} />
                 Voltar
               </Button>
             )}
