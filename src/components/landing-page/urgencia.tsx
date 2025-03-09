@@ -53,26 +53,18 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
   }
 
   return (
-    <div className="relative bg-gradient-to-b from-[#D2A878]/20 via-[#F2E8DC] to-white py-16 md:py-20 px-4 overflow-hidden">
-      {/* Elementos decorativos inspirados em mapas */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(200,92,64,0.2),_transparent_60%)]" />
-        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,_rgba(91,123,122,0.2),_transparent_60%)]" />
-        <div className="absolute top-10 right-10 w-20 h-20 border border-[#C85C40]/30 rounded-full" />
-        <div className="absolute bottom-10 left-10 rotate-45 w-24 h-24 border-2 border-dashed border-[#5B7B7A]/40" />
-      </div>
-
+    <div className="relative bg-gradient-to-b from-[#8BA888] via-[#8BA888]/90 to-[#5B7B7A] py-16 md:py-20 px-4">
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <div className="inline-flex items-center gap-3 bg-[#C85C40] text-white px-4 py-2 rounded-full mb-6">
+        <div className="inline-flex items-center gap-3 bg-[#C85C40] text-[#F2E8DC] px-4 py-2 rounded-full mb-6">
           <Clock className="w-5 h-5" />
           <span className="font-medium text-sm">Oferta Por Tempo Limitado</span>
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5B7B7A] mb-6 max-w-3xl mx-auto leading-tight">
+        <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#F2E8DC] mb-6 max-w-3xl mx-auto leading-tight">
           Essa <span className="text-[#C85C40]">Oportunidade Única</span> Vai Expirar em Breve
         </h2>
 
-        <p className="text-lg text-[#5B7B7A] mb-8 max-w-2xl mx-auto">
+        <p className="text-lg text-[#F2E8DC]/90 mb-8 max-w-2xl mx-auto">
           Não deixe passar a chance de conquistar {nome_parceiro} com um guia 100% personalizado. 
           Essa oferta especial vai desaparecer em:
         </p>
@@ -86,13 +78,12 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="relative bg-white shadow-md p-4 md:p-6 text-center min-w-[80px] md:min-w-[100px] border border-[#D2A878]/60 rounded-lg"
+              className="relative bg-white/10 backdrop-blur-sm p-4 md:p-6 text-center min-w-[80px] md:min-w-[100px] border border-[#F2E8DC]/20 rounded-lg"
             >
-              <div className="absolute -top-1 -left-1 w-full h-full bg-[#F2E8DC] rounded-lg -z-10 rotate-2"></div>
-              <div className="text-4xl md:text-5xl font-bold text-[#C85C40] mb-2">
+              <div className="text-4xl md:text-5xl font-bold text-[#F2E8DC] mb-2">
                 {item.value}
               </div>
-              <div className="text-xs md:text-sm text-[#5B7B7A] font-medium">
+              <div className="text-xs md:text-sm text-[#F2E8DC]/80 font-medium">
                 {item.label}
               </div>
             </div>
@@ -100,17 +91,15 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
         </div>
 
         <div className="flex flex-col items-center gap-6">
-          <a 
-            href="https://pay.kiwify.com.br/HgJq08Z"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="utmify w-full md:w-auto bg-gradient-to-r from-[#C85C40] to-[#AA8878] hover:from-[#C85C40] hover:to-[#C85C40] text-white text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl"
+          {/* <a 
+            href="#plano-vip"
+            className="utmify w-full md:w-auto bg-gradient-to-r from-[#C85C40] to-[#AA8878] hover:from-[#C85C40] hover:to-[#C85C40] text-[#F2E8DC] text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl"
           >
             QUERO FORTALECER MEU RELACIONAMENTO COM {(nome_parceiro || '').toUpperCase()}
-          </a>
+          </a> */}
           
-          <div className="text-sm text-[#5B7B7A] flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-[#8BA888]" />
+          <div className="text-sm text-[#F2E8DC]/80 flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-[#F2E8DC]" />
             <span>7 dias de garantia incondicional</span>
           </div>
         </div>
