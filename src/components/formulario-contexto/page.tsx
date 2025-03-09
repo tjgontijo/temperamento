@@ -15,48 +15,36 @@ const questoesContexto: Array<{
   pergunta: string;
   descricao?: string;
   opcoes?: string[];
-  }> = [
-    {
-      "id": "nome_autor",
-      "tipo": "input",
-      "pergunta": "Qual é o seu primeiro nome?"
-    },
-    {
-      "id": "nome_parceiro",
-      "tipo": "input",
-      "pergunta": "Qual é o primeiro nome do seu parceiro?"
-    },
-    {
-      "id": "status_relacionamento",
-      "tipo": "select",
-      "pergunta": "Qual dessas opções melhor descreve o relacionamento de vocês?",
-      "opcoes": ["Casual", "Namorados", "Noivos", "Casados", "Pretendente", "Relacionamento Indefinido"],
-      "descricao": "Escolha a opção que mais se aproxima do momento atual entre vocês."
-    },
-    {
-      "id": "filhos",
-      "tipo": "select",
-      "pergunta": "Você têm filhos?",
-      "opcoes": [
-        "Não temos filhos",
-        "Sim, temos filho juntos",
-        "Sim, de outro relacionamento",
-        "Sim, filhos juntos e de outro relacionamento"
-      ],
-      "descricao": "Se tiverem filhos, indique quantos e se são deste relacionamento."
-    },
-    {
-      "id": "historia_relacionamento",
-      "tipo": "textarea",
-      "pergunta": "Poderia contar um pouco sobre a história de vocês dois e o que mais te incomoda ou preocupa no relacionamento atualmente?",
-      "descricao": "Esta pergunta é opcional, porém quanto mais detalhes você se sentir à vontade em compartilhar, melhor poderemos entender sua situação."
-    },
-    {
-      "id": "whatsapp",
-      "tipo": "input_whatsapp",
-      "pergunta": "Quer receber seu resultado também via WhatsApp?",
-      "descricao": "Para sua comodidade, também podemos enviar o resultado via Whatsapp"
-    }    
+}> = [
+  {
+    "id": "nome_autor",
+    "tipo": "input",
+    "pergunta": "Qual é o seu primeiro nome?"
+  },
+  {
+    "id": "nome_parceiro",
+    "tipo": "input",
+    "pergunta": "Qual é o primeiro nome do seu parceiro?"
+  },
+  {
+    "id": "status_relacionamento",
+    "tipo": "select",
+    "pergunta": "Qual dessas opções melhor descreve o relacionamento de vocês?",
+    "opcoes": ["Casual", "Namorados", "Noivos", "Casados", "Pretendente", "Relacionamento Indefinido"],
+    "descricao": "Escolha a opção que mais se aproxima do momento atual entre vocês."
+  },
+  {
+    "id": "filhos",
+    "tipo": "select",
+    "pergunta": "Você têm filhos?",
+    "opcoes": [
+      "Não temos filhos",
+      "Sim, temos filho juntos",
+      "Sim, de outro relacionamento",
+      "Sim, filhos juntos e de outro relacionamento"
+    ],
+    "descricao": "Se tiverem filhos, indique quantos e se são deste relacionamento."
+  }
 ];
 
 export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
@@ -76,7 +64,6 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
       return;
     }
 
-    // Última questão
     const validarCampo = (campo: string) => {
       if (!campo || campo.trim() === '') {
         return false;
@@ -85,38 +72,30 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
     };
 
     const nomeAutorValido = validarCampo(respostas.nome_autor);
-    const whatsappValido = validarCampo(respostas.whatsapp);
     const nomeParceiroValido = validarCampo(respostas.nome_parceiro);
     const statusValido = validarCampo(respostas.status_relacionamento);
     const filhosValido = validarCampo(respostas.filhos);
 
-    if (!nomeAutorValido || !whatsappValido || !nomeParceiroValido || !statusValido || !filhosValido) {
+    if (!nomeAutorValido || !nomeParceiroValido || !statusValido || !filhosValido) {
       return;
     }
 
-    // Preparar dados para salvar
     const dadosContexto = {
       nome_autor: respostas.nome_autor.trim(),
-      whatsapp: respostas.whatsapp.trim(),
       nome_parceiro: respostas.nome_parceiro.trim(),
       status_relacionamento: respostas.status_relacionamento,
-      filhos: respostas.filhos,
-      historia_relacionamento: (respostas.historia_relacionamento || '').trim()
+      filhos: respostas.filhos
     };
 
     try {
-      // Salvamos as respostas
       await salvarDadosContexto(dadosContexto);
       
-      // Verificar se os dados foram realmente salvos
       const dadosSalvos = obterDadosContexto();
       
-      // Verificação adicional
       if (!dadosSalvos) {
         return;
       }
 
-      // Notifica o componente pai que o formulário foi concluído
       if (onConcluido) {
         onConcluido();
       }
