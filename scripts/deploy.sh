@@ -12,8 +12,8 @@ echo "==> Entrando no diretório do projeto: $PROJECT_DIR"
 cd "$PROJECT_DIR" || { echo "Erro: diretório do projeto não encontrado!"; exit 1; }
 
 echo "==> Verificando alterações não commitadas..."
-if [ -n "$(git status --porcelain)" ]; then
-  echo "Existem alterações não commitadas. Por favor, faça commit antes de continuar."
+if [ -n "$(git status --porcelain | grep -v "^[M?] public/" | grep -v "^[M?] scripts/" | grep -v "^?? prisma/migrations/" | grep -v "^?? sh$" | grep -v "^ D prisma/migrations/")" ]; then
+  echo "Existem alterações não relacionadas a imagens ou scripts. Por favor, faça commit antes de continuar."
   exit 1
 fi
 
@@ -46,15 +46,16 @@ sudo chmod 755 public
 sudo chmod 755 src
 sudo chmod 755 scripts
 
-echo "==> Instalando dependências..."
-npm install
-
 echo "==> Otimizando imagens no diretório public..."
 cd public
 find . -type f -iname "*.jpg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
 find . -type f -iname "*.jpeg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
 find . -type f -iname "*.png" -exec pngquant --force --ext .png --quality=80-90 --skip-if-larger {} \;
 cd ..
+
+echo "==> Commitando alterações de otimização..."
+git add public/*.jpg public/*.jpeg public/*.png scripts/*.sh prisma/migrations/
+git commit -m "chore: otimização de imagens e ajustes de scripts [deploy]" || true
 
 echo "==> Executando build do Next.js..."
 npm run build
