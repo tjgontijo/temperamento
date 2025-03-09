@@ -41,13 +41,24 @@ sudo chmod 755 scripts
 
 echo "==> Otimizando imagens no diretório public..."
 cd public
-find . -type f -iname "*.jpg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
-find . -type f -iname "*.jpeg" -exec jpegoptim --strip-all --max=80 --all-progressive {} \;
-find . -type f -iname "*.png" -exec pngquant --force --ext .png --quality=80-90 --skip-if-larger {} \;
+# Otimiza JPG/JPEG
+find . -type f -iname "*.jpg" -o -iname "*.jpeg" | while read img; do
+    echo "Otimizando: $img"
+    jpegoptim --strip-all --max=80 --all-progressive "$img"
+done
+
+# Otimiza PNG
+find . -type f -iname "*.png" | while read img; do
+    echo "Otimizando: $img"
+    pngquant --force --ext .png --quality=80-90 --skip-if-larger "$img"
+done
 cd ..
 
 echo "==> Commitando alterações de otimização..."
-git add public/*.jpg public/*.jpeg public/*.png scripts/*.sh prisma/migrations/
+# Adiciona apenas os arquivos que existem
+git add public/
+git add scripts/*.sh
+git add prisma/migrations/ || true
 git commit -m "chore: otimização de imagens e ajustes de scripts [deploy]" || true
 
 echo "==> Executando build do Next.js..."
