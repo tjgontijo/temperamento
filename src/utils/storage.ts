@@ -7,7 +7,6 @@ const RESULTADOS_STORAGE_KEY = 'resultados_questionario';
 const TIPOS_STORAGE_KEY = 'tipos_questionario';
 
 import { webhookService } from '@/services/webhook/webhook.service';
-import { cleanPhone } from '@/lib/masks/phone';
 
 // Tipos de Resposta
 type RespostaData = {
@@ -17,13 +16,11 @@ type RespostaData = {
 };
 
 // Tipos de Contexto
-type ContextoData = {
+export type ContextoData = {
   nome_autor: string;
-  whatsapp: string;
   nome_parceiro: string;
   status_relacionamento: string;
   filhos: string;
-  historia_relacionamento: string;
 };
 
 // Tipo de Resultado de Categoria
@@ -116,27 +113,15 @@ export const obterRespostas = (): Record<string, RespostaData> => {
 };
 
 export const salvarDadosContexto = (dados: ContextoData) => {
-  if (!dados.nome_autor || !dados.whatsapp || !dados.nome_parceiro || !dados.status_relacionamento || !dados.filhos) {
-    throw new Error('Nome do autor, WhatsApp, nome do parceiro, status do relacionamento e filhos são obrigatórios');
+  if (typeof window === 'undefined') {
+    console.error('Ambiente de navegador não detectado');
+    return;
   }
 
   try {
-    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
-      throw new Error('localStorage não suportado');
-    }
-
-    const dadosSerializados = JSON.stringify({
-      nome_autor: dados.nome_autor.trim(),
-      whatsapp: cleanPhone(dados.whatsapp),
-      nome_parceiro: dados.nome_parceiro.trim(),
-      status_relacionamento: dados.status_relacionamento,
-      filhos: dados.filhos,
-      historia_relacionamento: (dados.historia_relacionamento || '').trim()
-    });
-
-    localStorage.setItem(CONTEXTO_STORAGE_KEY, dadosSerializados);
-  } catch {
-    // Silenciosamente lida com erros de salvamento
+    localStorage.setItem(CONTEXTO_STORAGE_KEY, JSON.stringify(dados));
+  } catch (error) {
+    console.error('Erro ao salvar dados de contexto:', error);
   }
 };
 
@@ -154,7 +139,7 @@ export const obterDadosContexto = (): ContextoData | null => {
 
     const dadosParseados = JSON.parse(data);
 
-    if (!dadosParseados.nome_autor || !dadosParseados.whatsapp || !dadosParseados.nome_parceiro || !dadosParseados.status_relacionamento || !dadosParseados.filhos) {
+    if (!dadosParseados.nome_autor || !dadosParseados.nome_parceiro || !dadosParseados.status_relacionamento || !dadosParseados.filhos) {
       return null;
     }
 
