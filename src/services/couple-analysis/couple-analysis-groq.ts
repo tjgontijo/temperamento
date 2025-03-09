@@ -11,7 +11,6 @@ export async function analisarCasalGroq(
   linguagemParceiro: string,
   temperamentoAutor: string,
   linguagemAutor: string,
-  historiaRelacionamento: string,
   statusRelacionamento: string,
   filhos: string
 ): Promise<ResultadoAnalise> {
@@ -32,8 +31,7 @@ export async function analisarCasalGroq(
       - Filhos = ${filhos}
 
     ## Análise da Dor  
-      - Se ${historiaRelacionamento} estiver presente, leia atentamente e identifique a **maior dor emocional** que ${nomeAutor} expressou. Use essa dor que ela mencionou para criar identificação imediata.  
-      - Se **não** houver história, foque nos desafios naturais da combinação de temperamentos e linguagem do amor, trazendo **exemplos de situações rotineiras** que podem ilustrar as diferenças.  
+      - Foque nos desafios naturais da combinação de temperamentos e linguagem do amor, trazendo **exemplos de situações rotineiras** que podem ilustrar as diferenças.  
       - A copy deve ser construída de forma que ${nomeAutor} sinta que **essa análise foi feita exclusivamente para ela** e não é algo genérico.
 
     ## Análise de Temperamentos  
@@ -44,8 +42,7 @@ export async function analisarCasalGroq(
     ## Estrutura da Copy  
 
     ### 1 - Abertura Impactante (Dor & Conflito)  
-      - **Use a dor** que você identificou anteriormente na "Análise da Dor" para **criar uma empatia imediata**.
-      - Se **não** houver dor identificada, faça uma **pergunta ou provocação genérica** baseada nas diferenças de temperamento e linguagem do amor, de modo que ${nomeAutor} se identifique.  
+      - Faça uma **pergunta ou provocação** baseada nas diferenças de temperamento e linguagem do amor, de modo que ${nomeAutor} se identifique.  
       - O objetivo é que ela pense: **"Isso é exatamente o que estou passando!"**
 
     ### 2 - Por Que Isso Acontece (Validação & Autoridade)  
