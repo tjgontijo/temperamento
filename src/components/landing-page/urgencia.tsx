@@ -106,7 +106,7 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
             rel="noopener noreferrer"
             className="utmify w-full md:w-auto bg-gradient-to-r from-[#C85C40] to-[#AA8878] hover:from-[#C85C40] hover:to-[#C85C40] text-white text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl"
           >
-            QUERO FORTALECER MEU RELACIONAMENTO COM {(nome_parceiro || '').toUpperCase()} JÁ!
+            QUERO FORTALECER MEU RELACIONAMENTO COM {(nome_parceiro || '').toUpperCase()}
           </a>
           
           <div className="text-sm text-[#5B7B7A] flex items-center gap-2">
