@@ -11,8 +11,7 @@ echo "==> Iniciando deploy..."
 echo "==> Entrando no diretório do projeto: $PROJECT_DIR"
 cd "$PROJECT_DIR" || { echo "Erro: diretório do projeto não encontrado!"; exit 1; }
 
-echo "==> Atualizando branch main..."
-git checkout main
+echo "==> Atualizando repositório..."
 git pull
 
 echo "==> Removendo build anterior..."
