@@ -6,20 +6,15 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
   }
 
   return (
-    <div className="relative bg-gradient-to-b from-white via-[#F2E8DC] to-[#D2A878]/20 py-16 md:py-20 px-4">
+    <div id="oferta" className="relative bg-gradient-to-b from-white via-[#F2E8DC] to-[#D2A878]/20 py-16 md:py-20 px-4">
       <div className="max-w-4xl mx-auto text-center">
-        <div className="relative mb-12">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#D2A878]/20 to-[#8BA888]/20 opacity-50 rounded-3xl blur-xl"></div>
-          
-          <div className="relative z-10 p-8">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold tracking-tight mb-8">
-              <span className="block text-[#5B7B7A]">Invista no Seu</span>
-              <span className="text-[#C85C40]">
-                Futuro com {nome_parceiro}
-              </span>
-              <div className="mt-4 h-1 w-24 mx-auto bg-[#D4B483] rounded-full"></div>
-            </h2>
-          </div>
+        <div className="mb-12">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold tracking-tight mb-8">
+            <span className="block text-[#5B7B7A]">Invista no Seu</span>
+            <span className="text-[#C85C40]">
+              Futuro com {nome_parceiro}
+            </span>
+          </h2>
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
@@ -92,15 +87,9 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
           </div>
 
           {/* Pacote Completo */}
-          <div className="w-full md:w-1/2 max-w-sm relative">
+          <div id="plano-vip" className="w-full md:w-1/2 max-w-sm relative">
             {/* Card Principal */}
             <div className="bg-white rounded-2xl p-8 relative transform transition-all duration-300 hover:scale-[1.02] border-2 border-[#D4B483] shadow-[0_8px_40px_-12px_rgba(210,168,120,0.5)]">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                <div className="bg-[#C85C40] text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                  ⭐ Mais Vendido ⭐
-                </div>
-              </div>
-              
               <div className="text-center mb-6 pt-4">
                 <h3 className="text-2xl font-bold text-[#5B7B7A] uppercase tracking-wider">Plano VIP</h3>
               </div>
@@ -149,7 +138,7 @@ export function Oferta({ nome_parceiro }: { nome_parceiro: string }) {
                   <span className="text-6xl font-black text-[#5B7B7A]">R$27</span>
                 </div>
                 <p className="text-xs text-gray-600 mt-2 italic">
-                  Aproveite antes que volte para R$49
+                  Aproveite antes que volte para R$47
                 </p>
               </div>
 
