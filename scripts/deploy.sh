@@ -21,11 +21,11 @@ echo "==> Otimizando imagens no diretório public..."
 
 # Verifica se o diretório 'public' existe antes de otimizar imagens
 if [ -d "public" ]; then
-  # Otimiza imagens JPG/JPEG
-  find public -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -exec jpegoptim --strip-all --max=80 --all-progressive {} +
+  # Otimiza imagens JPG/JPEG (ignora erros de jpegoptim)
+  find public -type f \( -iname "*.jpg" -o -iname "*.jpeg" \) -exec jpegoptim --strip-all --max=80 --all-progressive {} + || true
 
-  # Otimiza imagens PNG
-  find public -type f -iname "*.png" -exec pngquant --force --quality=80-90 --skip-if-larger --ext .png {} +
+  # Otimiza imagens PNG (ignora erros de pngquant)
+  find public -type f -iname "*.png" -exec pngquant --force --quality=80-90 --skip-if-larger --ext .png {} + || true
   
   echo "==> Otimização concluída!"
 else
