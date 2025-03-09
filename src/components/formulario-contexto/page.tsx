@@ -50,55 +50,57 @@ export function FormularioContexto({ onConcluido }: FormularioContextoProps) {
   const [questaoAtual, setQuestaoAtual] = useState(0);
   const [respostas, setRespostas] = useState<Record<string, string>>({});
 
-  const handleResposta = (valor: string) => {
+  const handleResposta = async (valor: string) => {
     const questao = questoesContexto[questaoAtual];
     const novasRespostas = { ...respostas, [questao.id]: valor };
     setRespostas(novasRespostas);
-  };
 
-  const handleNext = async () => {
-    if (questaoAtual < questoesContexto.length - 1) {
-      setQuestaoAtual(prev => prev + 1);
-      return;
-    }
+    // Se for a última questão, salva e conclui
+    if (questaoAtual === questoesContexto.length - 1) {
+      const validarCampo = (campo: string) => {
+        if (!campo || campo.trim() === '') {
+          return false;
+        }
+        return true;
+      };
 
-    const validarCampo = (campo: string) => {
-      if (!campo || campo.trim() === '') {
-        return false;
-      }
-      return true;
-    };
+      const nomeAutorValido = validarCampo(novasRespostas.nome_autor);
+      const nomeParceiroValido = validarCampo(novasRespostas.nome_parceiro);
+      const statusValido = validarCampo(novasRespostas.status_relacionamento);
+      const filhosValido = validarCampo(novasRespostas.filhos);
 
-    const nomeAutorValido = validarCampo(respostas.nome_autor);
-    const nomeParceiroValido = validarCampo(respostas.nome_parceiro);
-    const statusValido = validarCampo(respostas.status_relacionamento);
-    const filhosValido = validarCampo(respostas.filhos);
-
-    if (!nomeAutorValido || !nomeParceiroValido || !statusValido || !filhosValido) {
-      return;
-    }
-
-    const dadosContexto = {
-      nome_autor: respostas.nome_autor.trim(),
-      nome_parceiro: respostas.nome_parceiro.trim(),
-      status_relacionamento: respostas.status_relacionamento,
-      filhos: respostas.filhos
-    };
-
-    try {
-      await salvarDadosContexto(dadosContexto);
-      
-      const dadosSalvos = obterDadosContexto();
-      
-      if (!dadosSalvos) {
+      if (!nomeAutorValido || !nomeParceiroValido || !statusValido || !filhosValido) {
         return;
       }
 
-      if (onConcluido) {
-        onConcluido();
+      const dadosContexto = {
+        nome_autor: novasRespostas.nome_autor.trim(),
+        nome_parceiro: novasRespostas.nome_parceiro.trim(),
+        status_relacionamento: novasRespostas.status_relacionamento,
+        filhos: novasRespostas.filhos
+      };
+
+      try {
+        await salvarDadosContexto(dadosContexto);
+        
+        const dadosSalvos = obterDadosContexto();
+        
+        if (!dadosSalvos) {
+          return;
+        }
+
+        if (onConcluido) {
+          onConcluido();
+        }
+      } catch {
+        // Silenciosamente lida com erros de salvamento
       }
-    } catch {
-      // Silenciosamente lida com erros de salvamento
+    }
+  };
+
+  const handleNext = () => {
+    if (questaoAtual < questoesContexto.length - 1) {
+      setQuestaoAtual(prev => prev + 1);
     }
   };
 
