@@ -53,24 +53,26 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
   }
 
   return (
-    <div className="bg-gradient-to-br from-red-50 to-pink-50 py-16 md:py-20 px-4 relative overflow-hidden">
-      {/* Elementos decorativos */}
+    <div className="bg-gradient-to-br from-[#F2E8DC] to-[#D2A878]/20 py-16 md:py-20 px-4 relative overflow-hidden">
+      {/* Elementos decorativos inspirados em mapas */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(255,0,0,0.1),_transparent_50%)]" />
-        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,_rgba(255,0,0,0.1),_transparent_50%)]" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_rgba(200,92,64,0.2),_transparent_60%)]" />
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_bottom_left,_rgba(91,123,122,0.2),_transparent_60%)]" />
+        <div className="absolute top-10 right-10 w-20 h-20 border border-[#C85C40]/30 rounded-full" />
+        <div className="absolute bottom-10 left-10 rotate-45 w-24 h-24 border-2 border-dashed border-[#5B7B7A]/40" />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10 text-center">
-        <div className="inline-flex items-center gap-3 bg-red-100 text-red-800 px-4 py-2 rounded-full mb-6">
+        <div className="inline-flex items-center gap-3 bg-[#C85C40] text-white px-4 py-2 rounded-full mb-6">
           <Clock className="w-5 h-5" />
           <span className="font-medium text-sm">Oferta Por Tempo Limitado</span>
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 max-w-3xl mx-auto leading-tight">
-          Essa Oportunidade Única Vai Expirar em Breve
+        <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#5B7B7A] mb-6 max-w-3xl mx-auto leading-tight">
+          Essa <span className="text-[#C85C40]">Oportunidade Única</span> Vai Expirar em Breve
         </h2>
 
-        <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+        <p className="text-lg text-[#5B7B7A] mb-8 max-w-2xl mx-auto">
           Não deixe passar a chance de conquistar {nome_parceiro} com um guia 100% personalizado. 
           Essa oferta especial vai desaparecer em:
         </p>
@@ -84,12 +86,13 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
           ].map((item, index) => (
             <div 
               key={index} 
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md p-4 md:p-6 text-center min-w-[80px] md:min-w-[100px]"
+              className="relative bg-white shadow-md p-4 md:p-6 text-center min-w-[80px] md:min-w-[100px] border border-[#D2A878]/60 rounded-lg"
             >
-              <div className="text-4xl md:text-5xl font-bold text-red-600 mb-2">
+              <div className="absolute -top-1 -left-1 w-full h-full bg-[#F2E8DC] rounded-lg -z-10 rotate-2"></div>
+              <div className="text-4xl md:text-5xl font-bold text-[#C85C40] mb-2">
                 {item.value}
               </div>
-              <div className="text-xs md:text-sm text-gray-600">
+              <div className="text-xs md:text-sm text-[#5B7B7A] font-medium">
                 {item.label}
               </div>
             </div>
@@ -101,13 +104,13 @@ export function Urgencia({ nome_parceiro }: { nome_parceiro: string }) {
             href="https://pay.kiwify.com.br/HgJq08Z"
             target="_blank"
             rel="noopener noreferrer"
-            className="utmify w-full md:w-auto bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 text-white text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl"
+            className="utmify w-full md:w-auto bg-gradient-to-r from-[#C85C40] to-[#AA8878] hover:from-[#C85C40] hover:to-[#C85C40] text-white text-lg font-bold py-4 px-12 rounded-xl shadow-lg transform transition-all hover:scale-105 hover:shadow-xl"
           >
             QUERO FORTALECER MEU RELACIONAMENTO COM {(nome_parceiro || '').toUpperCase()} JÁ!
           </a>
           
-          <div className="text-sm text-gray-600 flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-green-500" />
+          <div className="text-sm text-[#5B7B7A] flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-[#8BA888]" />
             <span>7 dias de garantia incondicional</span>
           </div>
         </div>

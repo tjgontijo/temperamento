@@ -24,16 +24,16 @@ const PercentageCircle = ({
       }}
     >
       <div className="absolute w-20 h-20 md:w-28 md:h-28 bg-white rounded-full flex items-center justify-center shadow-inner">
-        <span className="text-2xl md:text-3xl font-bold text-gray-800">
+        <span className="text-2xl md:text-3xl font-bold text-[#5B7B7A]">
           {Math.round(percentage * 100)}%
         </span>
       </div>
     </div>
     <div className="mt-4 text-center">
-      <p className="text-sm md:text-base font-semibold text-gray-900 group-hover:text-indigo-700 transition">
+      <p className="text-sm md:text-base font-semibold text-[#5B7B7A] group-hover:text-[#C85C40] transition">
         {label}
       </p>
-      <p className="text-xs md:text-sm text-gray-600 italic font-light group-hover:text-indigo-600 transition">
+      <p className="text-xs md:text-sm text-[#5B7B7A]/80 italic font-light group-hover:text-[#C85C40]/80 transition">
         {isDominant === 'dominant' 
           ? 'Característica Dominante' 
           : isDominant === 'secondary' 
@@ -159,14 +159,14 @@ const UnlockButton = ({
         relative overflow-hidden rounded-full px-6 py-3 text-white font-bold 
         transition-all duration-300 ease-in-out
         ${isUnlocked 
-          ? 'bg-green-500 cursor-not-allowed' 
-          : 'bg-purple-600 hover:bg-purple-700'}
+          ? 'bg-[#8BA888] cursor-not-allowed' 
+          : 'bg-[#C85C40] hover:bg-[#AA8878]'}
       `}
     >
       {/* Background de loading */}
       {!isUnlocked && (
         <motion.div
-          className="absolute inset-0 bg-purple-400 z-0"
+          className="absolute inset-0 bg-[#AA8878] z-0"
           initial={{ width: '0%' }}
           animate={{ 
             width: isHeartAnimationActive ? '100%' : '0%'
@@ -226,7 +226,7 @@ export function ResultadosIniciais({
   if (!dadosResultado) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <p className="text-xl text-gray-600">Carregando resultados...</p>
+        <p className="text-xl text-[#5B7B7A]">Carregando resultados...</p>
       </div>
     );
   }
@@ -243,25 +243,34 @@ export function ResultadosIniciais({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative"
     >
+      {/* Elementos decorativos inspirados em mapas */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 left-12 w-32 h-32 border border-[#D2A878]/30 rounded-lg rotate-12" />
+        <div className="absolute bottom-16 right-16 w-40 h-40 border border-dashed border-[#5B7B7A]/30 rounded-full" />
+        <div className="absolute top-1/3 right-1/4 w-16 h-16 border border-[#8BA888]/30 rounded-full" />
+        <div className="absolute bottom-1/4 left-1/4 w-20 h-20 border-b-2 border-r-2 border-[#C85C40]/20 rotate-45" />
+      </div>
+
       {/* Animação de corações */}
       <HeartAnimation isActive={isHeartAnimationActive} />
 
-      <div className="relative z-10 max-w-xl mx-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-12">
+      <div className="relative z-10 max-w-xl mx-auto bg-white rounded-3xl shadow-2xl p-6 md:p-8 lg:p-12 border border-[#D2A878]/20">
         {/* Título Persuasivo */}
-        <div className="text-center bg-gradient-to-r from-indigo-600 to-purple-600 p-6 rounded-2xl mb-8 shadow-xl">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+        <div className="text-center bg-gradient-to-r from-[#5B7B7A] to-[#8BA888] p-6 rounded-2xl mb-8 shadow-xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/img/texture-paper.png')] opacity-5"></div>
+          <h1 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4 leading-tight">
             O Código Secreto do Amor de {nome_parceiro}
           </h1>
-          <p className="text-base md:text-xl text-indigo-100 max-w-2xl mx-auto text-center">
+          <p className="text-base md:text-xl text-white/90 max-w-2xl mx-auto text-center">
             Com base em suas respostas conseguimos revelar com profundidade como {nome_parceiro} se conecta emocionalmente.
           </p>
         </div>
 
         {/* Temperamento Parceiro */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-4">
+        <div className="bg-[#F2E8DC]/30 rounded-2xl shadow-lg p-6 mb-8 text-center border border-[#D2A878]/20">
+          <h2 className="text-2xl md:text-3xl font-serif font-semibold text-[#5B7B7A] mb-6 border-b-2 border-[#D2A878]/20 pb-4">
             Mapa Emocional de {nome_parceiro}
           </h2>
           <div className="flex justify-center space-x-8 md:space-x-12">
@@ -269,7 +278,7 @@ export function ResultadosIniciais({
               <PercentageCircle 
                 percentage={temperamento.percentualPrincipal} 
                 label={temperamento.principal}
-                color="#6366f1"
+                color="#5B7B7A"
                 isDominant={temperamento.percentualPrincipal > temperamento.percentualSecundario ? 'dominant' : temperamento.percentualPrincipal < temperamento.percentualSecundario ? 'secondary' : 'equal'}
               />
             </div>
@@ -277,7 +286,7 @@ export function ResultadosIniciais({
               <PercentageCircle 
                 percentage={temperamento.percentualSecundario} 
                 label={temperamento.secundario}
-                color="#a855f7"
+                color="#8BA888"
                 isDominant={temperamento.percentualSecundario > temperamento.percentualPrincipal ? 'dominant' : temperamento.percentualSecundario < temperamento.percentualPrincipal ? 'secondary' : 'equal'}
               />
             </div>
@@ -285,8 +294,8 @@ export function ResultadosIniciais({
         </div>
 
         {/* Linguagem do Amor Parceiro */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-semibold text-pink-800 mb-6 border-b-2 border-pink-200 pb-4">
+        <div className="bg-[#F2E8DC]/30 rounded-2xl shadow-lg p-6 mb-8 text-center border border-[#D2A878]/20">
+          <h2 className="text-2xl md:text-3xl font-serif font-semibold text-[#C85C40] mb-6 border-b-2 border-[#D2A878]/20 pb-4">
             Como {nome_parceiro} Recebe Amor
           </h2>
           <div className="flex justify-center space-x-8 md:space-x-12">
@@ -294,7 +303,7 @@ export function ResultadosIniciais({
               <PercentageCircle 
                 percentage={linguagem.percentualPrincipal} 
                 label={linguagem.principal}
-                color="#ec4899"
+                color="#C85C40"
                 isDominant={linguagem.percentualPrincipal > linguagem.percentualSecundario ? 'dominant' : linguagem.percentualPrincipal < linguagem.percentualSecundario ? 'secondary' : 'equal'}
               />
             </div>
@@ -302,7 +311,7 @@ export function ResultadosIniciais({
               <PercentageCircle 
                 percentage={linguagem.percentualSecundario} 
                 label={linguagem.secundario}
-                color="#f472b6"
+                color="#AA8878"
                 isDominant={linguagem.percentualSecundario > linguagem.percentualPrincipal ? 'dominant' : linguagem.percentualSecundario < linguagem.percentualPrincipal ? 'secondary' : 'equal'}
               />
             </div>
@@ -310,17 +319,17 @@ export function ResultadosIniciais({
         </div>
 
         {/* Bônus: Perfil do Autor */}
-        <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 mb-8 border-2 border-purple-200">
-          <h2 className="text-2xl md:text-3xl font-bold text-indigo-800 mb-4 text-center">
+        <div className="bg-gradient-to-r from-[#F2E8DC] to-[#8BA888]/10 rounded-2xl p-6 mb-8 border-2 border-[#D2A878]/20">
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#5B7B7A] mb-4 text-center">
             Tomamos a Liberdade e também mapeamos o seu perfil 😉
           </h2>
-          <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6 text-center">
+          <p className="text-base md:text-lg text-[#5B7B7A] leading-relaxed mb-6 text-center">
             O amor não é uma via de mão única. Por isso, além de desvendar como {nome_parceiro} sente e se conecta, revelamos também o que torna você única na forma de amar. Saber como você ama e se conecta pode mudar completamente a forma como essa relação se desenvolve.
           </p>
           
           {/* Temperamento Autor */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 text-center">
-            <h3 className="text-xl md:text-2xl font-semibold text-indigo-800 mb-6 border-b-2 border-indigo-200 pb-4">
+          <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 text-center border border-[#D2A878]/20">
+            <h3 className="text-xl md:text-2xl font-serif font-semibold text-[#5B7B7A] mb-6 border-b-2 border-[#D2A878]/20 pb-4">
               Seu Universo Interno
             </h3>
             <div className="flex justify-center space-x-8 md:space-x-12">
@@ -328,7 +337,7 @@ export function ResultadosIniciais({
                 <PercentageCircle 
                   percentage={temperamentoAutor.percentualPrincipal} 
                   label={temperamentoAutor.principal}
-                  color="#6366f1"
+                  color="#5B7B7A"
                   isDominant={temperamentoAutor.percentualPrincipal > temperamentoAutor.percentualSecundario ? 'dominant' : temperamentoAutor.percentualPrincipal < temperamentoAutor.percentualSecundario ? 'secondary' : 'equal'}
                 />
               </div>
@@ -336,7 +345,7 @@ export function ResultadosIniciais({
                 <PercentageCircle 
                   percentage={temperamentoAutor.percentualSecundario} 
                   label={temperamentoAutor.secundario}
-                  color="#a855f7"
+                  color="#8BA888"
                   isDominant={temperamentoAutor.percentualSecundario > temperamentoAutor.percentualPrincipal ? 'dominant' : temperamentoAutor.percentualSecundario < temperamentoAutor.percentualPrincipal ? 'secondary' : 'equal'}
                 />
               </div>
@@ -344,8 +353,8 @@ export function ResultadosIniciais({
           </div>
 
           {/* Linguagem do Amor Autor */}
-          <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <h3 className="text-xl md:text-2xl font-semibold text-pink-800 mb-6 border-b-2 border-pink-200 pb-4">
+          <div className="bg-white rounded-2xl shadow-lg p-6 text-center border border-[#D2A878]/20">
+            <h3 className="text-xl md:text-2xl font-serif font-semibold text-[#C85C40] mb-6 border-b-2 border-[#D2A878]/20 pb-4">
               Como Você Expressa Amor
             </h3>
             <div className="flex justify-center space-x-8 md:space-x-12">
@@ -353,7 +362,7 @@ export function ResultadosIniciais({
                 <PercentageCircle 
                   percentage={linguagemAutor.percentualPrincipal} 
                   label={linguagemAutor.principal}
-                  color="#ec4899"
+                  color="#C85C40"
                   isDominant={linguagemAutor.percentualPrincipal > linguagemAutor.percentualSecundario ? 'dominant' : linguagemAutor.percentualPrincipal < linguagemAutor.percentualSecundario ? 'secondary' : 'equal'}
                 />
               </div>
@@ -361,7 +370,7 @@ export function ResultadosIniciais({
                 <PercentageCircle 
                   percentage={linguagemAutor.percentualSecundario} 
                   label={linguagemAutor.secundario}
-                  color="#f472b6"
+                  color="#AA8878"
                   isDominant={linguagemAutor.percentualSecundario > linguagemAutor.percentualPrincipal ? 'dominant' : linguagemAutor.percentualSecundario < linguagemAutor.percentualPrincipal ? 'secondary' : 'equal'}
                 />
               </div>
@@ -382,34 +391,29 @@ export function ResultadosIniciais({
         <AnimatePresence>
           {analiseUnlocked && (
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              className="mt-8 p-6 bg-purple-50 rounded-2xl"
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.5 }}
+              className="mt-12 bg-[#F2E8DC]/30 rounded-2xl p-6 border border-[#D2A878]/20"
             >
-              <h3 className="text-2xl font-bold text-purple-800 mb-4 text-center">
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#5B7B7A] mb-4">
                 {analise.titulo}
-              </h3>
-              <p className="text-lg text-purple-700 mb-6 text-center">
+              </h2>
+              <h3 className="text-xl md:text-2xl font-serif text-[#C85C40] mb-6">
                 {analise.subtitulo}
-              </p>
-              {analise.paragrafos.map((paragrafo, index) => (
-                <p key={index} className="text-base text-gray-700 mb-4">
-                  {paragrafo}
-                </p>
-              ))}
-               {analise.mensagem && (
-        <p 
-          className="text-right text-xs italic text-gray-500 mt-4"
-        >
-          {analise.mensagem}
-        </p>
-      )}
+              </h3>
+              <div className="space-y-4">
+                {analise.paragrafos.map((paragrafo, index) => (
+                  <p key={index} className="text-[#5B7B7A] leading-relaxed">
+                    {paragrafo}
+                  </p>
+                ))}
+              </div>
             </motion.div>
           )}
-        </AnimatePresence>       
+        </AnimatePresence>
       </div>
-      
     </motion.div>
   );
 }
