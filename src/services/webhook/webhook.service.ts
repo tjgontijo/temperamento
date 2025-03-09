@@ -40,11 +40,9 @@ export interface WebhookPayload {
   };
   contexto: {
     nome_autor: string;
-    whatsapp: string;
     nome_parceiro: string;
     status_relacionamento: string;
     filhos: string;
-    historia_relacionamento: string;
   };
 }
 
