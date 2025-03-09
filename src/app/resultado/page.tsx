@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Hero } from '@/components/landing-page/hero';
-// import { Introducao } from '@/components/landing-page/introducao';
+import { Introducao } from '@/components/landing-page/introducao';
 import { ResultadosIniciais } from '@/components/landing-page/resultados-iniciais';
 import { ApresentacaoGuia } from '@/components/landing-page/apresentacao-guia';
 import { Oferta } from '@/components/landing-page/oferta';
@@ -11,7 +11,7 @@ import { Bonus } from '@/components/landing-page/bonus';
 import { Urgencia } from '@/components/landing-page/urgencia';
 import { Transition } from '@/components/landing-page/transition';
 import { FAQ } from '@/components/landing-page/faq';
-// import { Depoimentos } from '@/components/landing-page/depoimentos';
+import { Depoimentos } from '@/components/landing-page/depoimentos';
 
 type ResultadoCategoriaType = {
   principal: string;
@@ -194,13 +194,13 @@ export default function Resultado() {
   return (
     <div className="min-h-screen bg-white">
       <Hero nome_autor={resultado.informacoes.nome_autor} nome_parceiro={resultado.informacoes.nome_parceiro} />
-      {/* <Introducao nome_parceiro={resultado.informacoes.nome_parceiro} /> */}
+      <Introducao nome_parceiro={resultado.informacoes.nome_parceiro} />
       <ResultadosIniciais nome_parceiro={resultado.informacoes.nome_parceiro} analise={resultado.analise || { titulo: 'Análise Personalizada', subtitulo: 'Compreendendo Sua Dinâmica de Relacionamento', paragrafos: ['Não foi possível gerar a análise completa.'] }} />
       <Transition nome_parceiro={resultado.informacoes.nome_parceiro} />
       <ApresentacaoGuia />
       <Bonus />      
       <Oferta nome_parceiro={resultado.informacoes.nome_parceiro} />   
-      {/* <Depoimentos />    */}
+      <Depoimentos />   
       <Urgencia nome_parceiro={resultado.informacoes.nome_parceiro} />
       <FAQ />      
     </div>
