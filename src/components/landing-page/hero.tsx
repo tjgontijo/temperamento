@@ -30,17 +30,17 @@ export function Hero({ nome_autor, nome_parceiro }: HeroProps) {
             <div className="mt-4 bg-white/10 backdrop-blur-sm rounded-xl p-5">
               <div className="flex items-center p-3 border-b border-white/10">
                 <span className="text-[#C85C40] text-xl mr-3">✓</span>
-                <p className="text-[#F2E8DC]">O Verdadeiro Motivo da Distância Entre Vocês</p>
+                <p className="text-[#5B7B7A]">O Verdadeiro Motivo da Distância Entre Vocês</p>
               </div>
               
               <div className="flex items-center p-3 border-b border-white/10">
                 <span className="text-[#C85C40] text-xl mr-3">✓</span>
-                <p className="text-[#F2E8DC]">Por Que Seus Esforços Não Estão Funcionando</p>
+                <p className="text-[#5B7B7A]">Por Que Seus Esforços Não Estão Funcionando</p>
               </div>
               
               <div className="flex items-center p-3">
                 <span className="text-[#C85C40] text-xl mr-3">✓</span>
-                <p className="text-[#F2E8DC]">O Que Realmente Faz <span className="text-[#C85C40]/90">{nome_parceiro}</span> Se Conectar</p>
+                <p className="text-[#5B7B7A]">O Que Realmente Faz <span className="text-[#C85C40]/90">{nome_parceiro}</span> Se Conectar</p>
               </div>
             </div>
           </div>
