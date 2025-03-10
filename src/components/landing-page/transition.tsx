@@ -14,9 +14,9 @@ export function Transition({ nome_parceiro }: TransitionProps) {
       <div className="max-w-2xl mx-auto space-y-8 relative z-10">
         {/* 1️⃣ Headline Forte e Direta */}
         <div className="text-center">
-          <div className="inline-block px-6 py-3 bg-gradient-to-r from-[#C85C40] to-[#D2A878] rounded-lg shadow-lg mb-2">
+          <div className="inline-block px-8 py-6 bg-gradient-to-r from-[#C85C40] to-[#b38450] rounded-lg shadow-lg mb-4">
             <h2 className="text-2xl md:text-3xl font-serif font-bold text-white leading-tight">
-              🚨 ATENÇÃO: O Que Você Descobriu Até Agora é Apenas 3% do Que Pode Mudar Seu Relacionamento
+              🚨 ATENÇÃO: O Que Você Descobriu Até Agora é Apenas 3% do Segredo Por Trás dos Relacionamentos de Cinema
             </h2>
           </div>
         </div>
