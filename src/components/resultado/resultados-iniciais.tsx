@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp, FaExclamationTriangle } from 'react-icons/fa';
 import ModalWhatsApp from './modal-whatsapp';
 
 type PercentageCircleProps = {
@@ -75,29 +75,6 @@ export type DadosResultadoType = {
   };
 };
 
-const WhatsAppButton = ({ 
-  onClick,
-  isDisabled,
-  text
-}: { 
-  onClick: () => void,
-  isDisabled: boolean,
-  text: string
-}) => {
-  return (
-    <button
-      onClick={onClick}
-      disabled={isDisabled}
-      className={`relative flex items-center justify-center h-12 px-6 font-semibold text-white transition-colors duration-200 transform rounded-lg focus:outline-none ${isDisabled ? 'bg-gray-400' : 'bg-[#247742]'} hover:bg-[#128C7E]`}
-    >
-      <div className="relative z-10 flex items-center justify-center space-x-2">
-        <FaWhatsapp className="w-5 h-5" />
-        <span>{text}</span>
-      </div>
-    </button>
-  );
-};
-
 export function ResultadosIniciais({
   nome_parceiro,
 }: ResultadosIniciaisProps) {
@@ -162,15 +139,14 @@ export function ResultadosIniciais({
               <div className="h-0.5 w-12 bg-[#C85C40]"></div>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#5B7B7A] mb-6 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-serif font-bold text-[#5B7B7A] mb-6 leading-tight">
               Revelamos o Código Emocional de <span className="text-[#C85C40]">{nome_parceiro}</span>
             </h1>
             <p className="text-lg md:text-xl text-[#AA8878] max-w-2xl mx-auto">
-              Agora você vai entender por que ele age de formas que antes pareciam inexplicáveis
+              Agora você vai ter nas mãos a chance de entender por que ele age de formas que antes pareciam inexplicáveis
             </p>
           </div>
         </div>
-
         <div className="max-w-5xl mx-auto">
           <div className="relative mb-8">
             <div className="absolute inset-0 flex items-center">
@@ -344,31 +320,85 @@ export function ResultadosIniciais({
 
           <div className="max-w-3xl mx-auto">
             <div className="relative">
-              <div className="absolute -inset-3 bg-gradient-to-r from-[#5B7B7A]/20 via-[#8BA888]/20 to-[#5B7B7A]/20 rounded-3xl blur-lg opacity-75"></div>
-              <div className="relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-[#D2A878]/20 text-center p-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-[#5B7B7A] to-[#8BA888] text-white mb-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+              <div className="absolute -inset-3 bg-gradient-to-r from-[#C85C40]/30 via-[#D2A878]/30 to-[#C85C40]/30 rounded-3xl blur-lg opacity-90 animate-pulse"></div>
+              <div className="relative bg-white rounded-2xl shadow-xl border-2 border-[#C85C40] text-center py-8 px-2">
+                <div className="absolute -top-5 right-0 left-0 mx-auto w-auto">
+                  <span className="bg-[#C85C40] text-white text-sm px-4 py-1 rounded-full font-bold shadow-lg">
+                    TEMPO LIMITADO
+                  </span>
+                </div>
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#C85C40] text-white mb-6 shadow-lg">
+                  <FaExclamationTriangle size={36} />
                 </div>
                 <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#5B7B7A] mb-4">
-                  Descoberta Importante
+                  ATENÇÃO! Algo Essencial Está Faltando…
                 </h2>
-                <p className="text-lg md:text-xl text-[#5B7B7A] font-medium leading-relaxed mb-2">
-                  Existe um padrão crucial entre seus perfis que explica exatamente por que algumas de suas tentativas de conexão não funcionaram como esperado.</p>
-                <p className="text-lg md:text-xl text-[#5B7B7A] font-medium leading-relaxed mb-8">
-                  Estamos disponibilizando algo único para você hoje: uma análise aprofundada sobre como essas informações estão impactando seu relacionamento com Thiago.
-                </p>
-                <div className="flex justify-center mb-4">
-                  <WhatsAppButton 
-                    onClick={handleOpenWhatsAppModal} 
-                    isDisabled={isButtonDisabled} 
-                    text={buttonText} 
-                  />
+                <div className="p-4 mb-6 w-full text-center text-[#5B7B7A] font-medium">
+                  <p className="mb-3 text-lg">
+                    O que o teste revelou até agora é apenas a <span className="font-bold text-[#C85C40]">superfície</span>. Existe um padrão oculto entre vocês dois que pode ser a <span className="underline decoration-[#C85C40] decoration-2">chave para transformar</span> sua conexão com <span className="font-bold">{nome_parceiro}</span>.
+                  </p>
+                  <p className="mb-3 text-lg">
+                    Seus esforços não deram certo até agora por um motivo específico e ele está no jeito como vocês interagem <span className="italic">sem perceber</span>.
+                  </p>
+                  <p className="mb-3 text-lg">
+                    Agora você tem a chance de descobrir <span className="font-bold text-[#C85C40]">exatamente o que está acontecendo</span> nos bastidores do seu relacionamento… e como corrigir isso rapidamente!
+                  </p>
+                  <div className="my-5 py-3 px-4 bg-[#F2E8DC] rounded-lg border-l-4 border-[#D2A878]">
+                    <p className="font-bold">
+                      Uma análise personalizada foi preparada exclusivamente para você.
+                    </p>
+                    <p className="text-sm mt-1">
+                      Mas atenção: essa oportunidade está disponível por tempo limitado.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-xs italic text-[#5B7B7A] text-center mt-2">
-                  Análise personalizada disponível por tempo limitado
-                </p>
+                
+                <div className="flex flex-col items-center">
+                  <p className="text-lg mb-4 font-medium text-[#5B7B7A]">
+                    Toque no botão abaixo e receba sua análise completa agora no WhatsApp!
+                  </p>
+                  
+                  <div className="relative w-full max-w-md mb-3">
+                    {!isButtonDisabled && (
+                      <div className="absolute -inset-1 bg-gradient-to-r from-[#8BA888] to-[#5B7B7A] rounded-full blur opacity-70 animate-pulse"></div>
+                    )}
+                    <button 
+                      onClick={handleOpenWhatsAppModal}
+                      disabled={isButtonDisabled}
+                      className={`relative w-full rounded-full px-8 py-4 text-xl font-bold transition-all duration-300 shadow-lg flex items-center justify-center gap-2 ${
+                        isButtonDisabled 
+                        ? 'bg-gray-400 text-white/80 cursor-not-allowed opacity-70' 
+                        : 'bg-gradient-to-r from-[#8BA888] to-[#5B7B7A] hover:from-[#C85C40] hover:to-[#D2A878] text-white transform hover:scale-105'
+                      }`}
+                    >
+                      <FaWhatsapp className="text-xl" />
+                      {buttonText}
+                    </button>
+                  </div>
+                  
+                  <div className="mt-4 flex items-center justify-center space-x-1">
+                    <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <span className="text-[#AA8878] font-medium ml-1">+3.572 Análises Enviadas</span>
+                  </div>
+                  
+                  <p className="text-xs italic text-[#5B7B7A] text-center mt-4">
+                    Análise personalizada disponível por tempo limitado
+                  </p>
+                </div>
               </div>
             </div>
           </div>
