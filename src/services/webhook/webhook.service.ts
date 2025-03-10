@@ -36,14 +36,20 @@ export interface WebhookPayload {
       percentualPrincipal: number;
       percentualSecundario: number;
     };
+    informacoes: {
+      nome_autor: string;
+      nome_parceiro: string;
+      status_relacionamento: string;
+      filhos: string;
+      whatsappNumber: string;
+    };        
+    analise: {
+      titulo: string;
+      subtitulo: string;
+      paragrafos: string[];
+    };
     timestamp: number;
-  };
-  contexto: {
-    nome_autor: string;
-    nome_parceiro: string;
-    status_relacionamento: string;
-    filhos: string;
-  };
+  }
 }
 
 export class WebhookService {
