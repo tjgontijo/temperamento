@@ -50,55 +50,6 @@ export default function Resultado() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Verifica se a página atual é "/resultado"
-    if (window.location.pathname !== "/resultado") return;
-  
-    document.title = "Resultado da Análise - Decifrando Corações";
-    const redirectURL = `${window.location.origin}/suporte`;
-  
-    const exitStopper = () => {
-      if (window.location.pathname === "/resultado") {
-        window.location.replace(redirectURL);
-      }
-    };
-  
-    // Manipula histórico para impedir voltar
-    window.history.pushState(null, "", window.location.href);
-    window.history.pushState(null, "", window.location.href);
-  
-    const handleBack = () => {
-      if (window.location.pathname === "/") {
-        exitStopper();
-      } else {
-        window.history.pushState(null, "", window.location.href);
-      }
-    };
-  
-    // Verificação contínua para evitar voltar para "/"
-    const checkBackInterval = setInterval(() => {
-      if (window.location.pathname === "/") {
-        exitStopper();
-      }
-    }, 500);
-  
-    // Adiciona eventos de saída e back
-    window.addEventListener("pagehide", exitStopper);
-    window.addEventListener("popstate", handleBack);
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        exitStopper();
-      }
-    });
-  
-    return () => {
-      clearInterval(checkBackInterval);
-      window.removeEventListener("pagehide", exitStopper);
-      window.removeEventListener("popstate", handleBack);
-      document.removeEventListener("visibilitychange", exitStopper);
-    };
-  }, []);
-  
 
   // Efeito para carregar os resultados
   useEffect(() => {
@@ -195,7 +146,7 @@ export default function Resultado() {
     <div className="min-h-screen bg-white">
       <Hero nome_autor={resultado.informacoes.nome_autor} nome_parceiro={resultado.informacoes.nome_parceiro} />
       <Introducao nome_parceiro={resultado.informacoes.nome_parceiro} />
-      <ResultadosIniciais nome_parceiro={resultado.informacoes.nome_parceiro} analise={resultado.analise || { titulo: 'Análise Personalizada', subtitulo: 'Compreendendo Sua Dinâmica de Relacionamento', paragrafos: ['Não foi possível gerar a análise completa.'] }} />
+      <ResultadosIniciais nome_parceiro={resultado.informacoes.nome_parceiro} />
       <Transition nome_parceiro={resultado.informacoes.nome_parceiro} />
       <ApresentacaoGuia />
       <Bonus />      
