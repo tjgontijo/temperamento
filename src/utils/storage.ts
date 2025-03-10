@@ -6,8 +6,6 @@ const ANALISE_STORAGE_KEY = 'analise_data';
 const RESULTADOS_STORAGE_KEY = 'resultados_questionario';
 const TIPOS_STORAGE_KEY = 'tipos_questionario';
 
-import { webhookService } from '@/services/webhook/webhook.service';
-
 // Tipos de Resposta
 type RespostaData = {
   tipoQuestaoId: string;
@@ -203,11 +201,7 @@ export const salvarResultadosQuestionario = async (resultado: ResultadoCalculado
     // Obtém o contexto
     const contexto = obterDadosContexto();
     if (contexto) {
-      // Envia para o webhook
-      await webhookService.enviarResultados({
-        resultados: resultadoComTimestamp,
-        contexto
-      });
+      // Removido o envio do webhook aqui
     }
   } catch (error) {
     console.error('Erro ao salvar resultados:', error);
