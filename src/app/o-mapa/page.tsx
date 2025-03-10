@@ -2,16 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Hero } from '@/components/resultado/hero';
-import { Introducao } from '@/components/resultado/introducao';
-import { ResultadosIniciais } from '@/components/resultado/resultados-iniciais';
-// import { ApresentacaoGuia } from '@/components/landing-page/apresentacao-guia';
-// import { Oferta } from '@/components/landing-page/oferta';
-// import { Bonus } from '@/components/landing-page/bonus';
-// import { Urgencia } from '@/components/landing-page/urgencia';
-// import { Transition } from '@/components/landing-page/transition';
-// import { FAQ } from '@/components/landing-page/faq';
-// import { Depoimentos } from '@/components/landing-page/depoimentos';
+import { Hero } from '@/components/lp-mapa/hero';
+import { ApresentacaoGuia } from '@/components/lp-mapa/apresentacao-guia';
+import { Oferta } from '@/components/lp-mapa/oferta';
+import { Bonus } from '@/components/lp-mapa/bonus';
+import { Urgencia } from '@/components/lp-mapa/urgencia';
+import { Transition } from '@/components/lp-mapa/transition';
+import { FAQ } from '@/components/lp-mapa/faq';
+import { Depoimentos } from '@/components/lp-mapa/depoimentos';
 
 type ResultadoCategoriaType = {
   principal: string;
@@ -89,7 +87,7 @@ export default function Resultado() {
         const utmifyLead = JSON.parse(localStorage.getItem('lead') || '{}');
 
         const eventData = {
-          event_name: 'result_page',
+          event_name: 'lp_mapa',
           event_time: Math.floor(new Date().getTime() / 1000),
           event_source_url: window.location.href,
           traffic_source: document.referrer || undefined,
@@ -106,11 +104,10 @@ export default function Resultado() {
           client_user_agent: navigator.userAgent,
           client_ip_address: utmifyLead.ip || utmifyLead.ipv6 || undefined,
         };
-
-        console.log('Enviando evento result_page para Meta Ads:', eventData);
-        window.fbq('trackCustom', 'result_page', eventData);
+        console.log('Enviando evento lp_mapa para Meta Ads:', eventData);
+        window.fbq('trackCustom', 'lp_mapa', eventData);
       } catch (error) {
-        console.error('Erro ao enviar evento result_page para Meta Ads:', error);
+        console.error('Erro ao enviar evento lp_mapa para Meta Ads:', error);
       }
     };
 
@@ -145,15 +142,13 @@ export default function Resultado() {
   return (
     <div className="min-h-screen bg-white">
       <Hero nome_autor={resultado.informacoes.nome_autor} nome_parceiro={resultado.informacoes.nome_parceiro} />
-      <Introducao nome_parceiro={resultado.informacoes.nome_parceiro} />
-      <ResultadosIniciais nome_parceiro={resultado.informacoes.nome_parceiro} />
-      {/* <Transition nome_parceiro={resultado.informacoes.nome_parceiro} /> */}
-      {/* <ApresentacaoGuia />
+      <Transition nome_parceiro={resultado.informacoes.nome_parceiro} />
+      <ApresentacaoGuia />
       <Bonus />      
       <Oferta nome_parceiro={resultado.informacoes.nome_parceiro} />   
       <Depoimentos />   
       <Urgencia nome_parceiro={resultado.informacoes.nome_parceiro} />
-      <FAQ />       */}
+      <FAQ />      
     </div>
   );
 }
