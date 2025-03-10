@@ -16,6 +16,7 @@ interface DadosAnalise {
   linguagemAutor: string;
   statusRelacionamento: string;
   filhos: string;
+  whatsappNumber?: string; // Número do WhatsApp validado
 }
 
 interface RetornoAnalise {
