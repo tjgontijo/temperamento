@@ -77,7 +77,7 @@ export function Questao({
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-[#F2E8DC] via-white to-[#D2A878] px-4 py-20">
       {/* Barra de Progresso Fixa no Topo */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-[#F2E8DC]">
+      <div className="fixed top-0 left-0 w-full h-2 bg-[#F2E8DC]">
         <motion.div
           className="h-full bg-[#5B7B7A]"
           initial={{ width: 0 }}
