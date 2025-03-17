@@ -59,12 +59,13 @@ export function Header() {
 
         {/* Botão de Ação */}
         <div className="flex items-center space-x-4">
-          <Button 
-            className="hidden md:flex text-[#5B7B7A] bg-[#F2E8DC] hover:bg-white border-none shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out"
-            onClick={() => window.location.href = '/questionario'}
-          >
-            Começar Minha Análise
-          </Button>
+          <Link href="/questionario">
+            <Button 
+              className="hidden md:flex text-[#5B7B7A] bg-[#F2E8DC] hover:bg-white border-none shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out"
+            >
+              Começar Minha Análise
+            </Button>
+          </Link>
 
           {/* Menu Mobile */}
           {isMobile && (
@@ -139,12 +140,10 @@ export function Header() {
                 </Link>
                 <Button 
                   className="w-3/4 bg-[#F2E8DC] text-[#5B7B7A] hover:bg-white whitespace-normal text-center hover:scale-105 transition-transform duration-300"
-                  onClick={() => {
-                    closeMobileMenu();
-                    window.location.href = '/questionario';
-                  }}
                 >
-                  Começar Minha Análise
+                  <Link href="/questionario" onClick={closeMobileMenu}>
+                    Começar Minha Análise
+                  </Link>
                 </Button>
               </nav>
             </div>
